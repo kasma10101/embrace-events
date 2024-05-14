@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/embrace-events/static/css/main.d6fe6d8d.css",
+    "main.js": "/embrace-events/static/js/main.b120d7bc.js",
+    "static/media/banner.png": "/embrace-events/static/media/banner.c55adc20a0a054e15efc.png",
+    "static/media/embraceLogo.png": "/embrace-events/static/media/embraceLogo.45b63a023608861955eb.png",
+    "index.html": "/embrace-events/index.html",
+    "main.d6fe6d8d.css.map": "/embrace-events/static/css/main.d6fe6d8d.css.map",
+    "main.b120d7bc.js.map": "/embrace-events/static/js/main.b120d7bc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d6fe6d8d.css",
+    "static/js/main.b120d7bc.js"
+  ]
+}
