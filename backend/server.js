@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
+const paymentRoute = require('./routes/paymentRoute');
 
 
 const app = express();
@@ -18,6 +19,13 @@ app.use(cors(
 ));
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//routes
+app.get('/', (req, res) => {
+    res.send('Home page');
+});
+//routes
+app.use('/api/payment', paymentRoute);
 
 
 
