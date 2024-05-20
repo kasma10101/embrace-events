@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Freeman&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+:root {
+  --clr-dark: #12372a;
+  --clr-nav: #789461;
+  --clr-font: #f1f8ff;
+}
+.events {
+  font-family: "Work Sans", sans-serif;
+  background-color: var(--clr-font);
+}
+.events h2 {
+  text-align: center;
+  padding: 3rem 0 1rem;
+  font-size: 2em;
+  color: var(--clr-dark);
+}
+.event__para {
+  text-align: center;
+}
+/* hr {
+  color: var(--clr-dark);
+  width: 46%;
+  margin: 2rem auto;
+} */
+.upcoming {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin: 2rem 6rem;
+}
+.showall__btn {
+  background: var(--clr-dark);
+  display: flex;
+  margin: 4rem auto 0;
+  padding: 14px 85px;
+  border-radius: 10px;
+  border: 2px solid var(--clr-dark);
+  cursor: pointer;
+}
+.showall__btn a {
+  font-size: 1.4em;
+  text-decoration: none;
+  font-family: "Work Sans", sans-serif;
+  color: #f1f8ff;
+}
+@media (max-width: 900px) {
+  .upcoming {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 780px) {
+  .upcoming {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin: 2rem 6rem;
+  }
+}
+@media (max-width: 460px) {
+  .upcoming {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+    margin: 2rem 6rem;
+  }
+}

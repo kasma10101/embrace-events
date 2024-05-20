@@ -1,0 +1,64 @@
+:root {
+  --clr-dark: #12372a;
+  --clr-nav: #789461;
+  --clr-font: #f1f8ff;
+}
+.create {
+  background-color: var(--clr-font);
+  text-align: center;
+}
+.create h2 {
+  margin: 0rem 20rem;
+  padding: 3rem 0 1rem;
+  font-size: 2em;
+  text-align: center;
+  color: var(--clr-dark);
+}
+.create p {
+  margin: 0rem 16rem;
+  padding-bottom: 3rem;
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+.create .create__line {
+  color: var(--clr-dark);
+  width: 70%;
+  margin: 0 auto;
+}
+
+@media (max-width: 870px) {
+  .create h2 {
+    margin: 0rem 14rem;
+    padding: 3rem 0 1rem;
+    font-size: 2em;
+  }
+  .create p {
+    margin: 0rem 10rem;
+    padding-bottom: 3rem;
+    font-size: 1.1em;
+  }
+}
+@media (max-width: 660px) {
+  .create h2 {
+    margin: 0rem 10rem;
+    padding: 3rem 0 1rem;
+    font-size: 2em;
+  }
+  .create p {
+    margin: 0rem 8rem;
+    padding-bottom: 3rem;
+    font-size: 1em;
+  }
+}
+@media (max-width: 510px) {
+  .create h2 {
+    margin: 0rem 4rem;
+    padding: 3rem 0 1rem;
+    font-size: 2em;
+  }
+  .create p {
+    margin: 0rem 2rem;
+    padding-bottom: 3rem;
+    font-size: 1em;
+  }
+}

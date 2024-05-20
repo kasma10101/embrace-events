@@ -1,0 +1,142 @@
+.footer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  overflow: hidden;
+  background-color: var(--clr-font);
+  padding-top: 4rem;
+}
+.bottom {
+  background-color: var(--clr-font);
+}
+.footer .first img {
+  max-width: 10rem;
+  margin: 0rem 5rem;
+}
+.footer .first p {
+  padding: 1rem 5rem 2rem;
+  text-align: center;
+  line-height: 1.4;
+}
+.footer .first p:last-child {
+  padding: 1rem 5rem;
+}
+.subscribe {
+  margin: 0rem 5rem;
+}
+.subscribe input {
+  background-color: transparent;
+  padding: 1rem 5rem;
+  border: 2px solid var(--clr-dark);
+}
+.subscribe button {
+  background: var(--clr-dark);
+  padding: 12px 24px;
+  border-radius: 4px;
+  border: 1px solid var(--clr-dark);
+  cursor: pointer;
+}
+.subscribe button a {
+  color: var(--clr-font);
+  font-size: 1.4em;
+  text-decoration: none;
+  font-family: "Work Sans", sans-serif;
+  color: #f1f8ff;
+}
+.second {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.one h6,
+.two h6,
+.three h6 {
+  padding-bottom: 1rem;
+  font-size: 1.2em;
+  color: var(--clr-dark);
+}
+.one a,
+.two a,
+.three a {
+  padding: 0.8rem 0.8rem;
+  display: block;
+  text-decoration: none;
+  color: black;
+}
+.one a:hover,
+.two a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--clr-dark);
+  text-decoration-thickness: 2px;
+}
+
+.footer__line {
+  color: var(--clr-dark);
+  width: 90%;
+  margin: 2rem auto;
+}
+.bottom__two {
+  display: flex;
+  width: 100%;
+  padding-bottom: 2rem;
+}
+.left p {
+  padding: 0 6rem;
+}
+.right {
+  display: flex;
+  margin-left: auto;
+  padding-right: 6rem;
+}
+.right a {
+  padding: 0 1rem;
+  text-decoration: none;
+  color: black;
+}
+.right a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--clr-dark);
+  text-decoration-thickness: 2px;
+}
+@media (max-width: 1020px) {
+  .footer {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .footer .first {
+    text-align: center;
+  }
+  .footer .second {
+    text-align: center;
+    padding-top: 2rem;
+  }
+}
+@media (max-width: 690px) {
+  .left p {
+    padding: 0 4rem;
+  }
+  .right {
+    display: flex;
+    margin-left: auto;
+    padding-right: 2rem;
+  }
+  .right a {
+    padding: 0 0.1rem;
+  }
+}
+@media (max-width: 5070px) {
+  .subscribe button {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .second {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    text-align: center;
+  }
+  .one h6,
+  .two h6,
+  .three h6 {
+    padding: 3rem 0 1rem;
+    font-size: 1.2em;
+  }
+}

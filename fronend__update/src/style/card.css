@@ -1,0 +1,34 @@
+.poster {
+  border: 2px solid var(--clr-dark);
+}
+.box {
+  padding-top: 4rem;
+}
+.box img {
+  max-width: 100%;
+}
+.box .content {
+  text-align: left;
+  padding-top: 1rem;
+  padding-left: 1rem;
+}
+.box .content p {
+  padding-bottom: 1rem;
+}
+.event__btn {
+  background: var(--clr-dark);
+  padding: 12px 20px;
+  border-radius: 7px;
+  border: 1px solid var(--clr-dark);
+  display: flex;
+  margin: 1rem auto;
+}
+
+.event__btn:hover a {
+  color: #f1f8ff;
+}
+.event__btn a {
+  font-size: 1.4em;
+  color: var(--clr-font);
+  text-decoration: none;
+}

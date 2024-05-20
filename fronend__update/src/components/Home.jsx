@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FaAngleRight } from "react-icons/fa";
 import home from "../assets/logo/home.png";
 import "../style/home.css";
+import Popup from "./Popup";
 
 function Countdown() {
   let targetDate = new Date("Sep 11, 2024 00:00:00").getTime();
@@ -65,15 +66,13 @@ function Countdown() {
         entertainment.
       </p>
       <div className="btn">
-        <button>
+        <button className="learnmore">
           <a href="">
             Learn More{" "}
             <FaAngleRight style={{ position: "relative", top: "0.2rem" }} />
           </a>
         </button>
-        <button>
-          <a href="">Buy ticket</a>
-        </button>
+        <Popup />
       </div>
     </div>
   );
