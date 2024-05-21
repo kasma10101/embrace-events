@@ -28,15 +28,13 @@ const createBlog = async (req, res) => {
                 console.log(`File saved to ${filepath}`);
             });
         }
-
         else filename = null
-        console.log(filename);
         const blog = await Blogs.create({
             blogTitle: blogTitle,
             blogDescription: blogDescription,
             blogImage: blogImage ? filename : null
         })
-        res.status(201).json({status: 'SUCCESS', blog })
+        res.status(201).json({status: 'SUCCESS' })
     } catch (error) {
         res.status(500).json(error)
     }

@@ -9,7 +9,6 @@ const tiicketRoute = require('./routes/ticketRoute');
 const blogRoute = require('./routes/blogRoute')
 const adminRoute = require('./routes/adminRoute')
 const cookieParser = require('cookie-parser')
-const path = require('path')
 
 const app = express();
 

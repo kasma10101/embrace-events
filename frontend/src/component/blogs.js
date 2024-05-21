@@ -26,18 +26,17 @@ export default function Blogs() {
                 <div className="blogs-container">
                     {blogs ? blogs.map((eachBlog, index) => {
                         return (
-                            <Link className="each-blog-container" to={`${eachBlog._id}`} key={index}>
+                            <div className="each-blog-container" key={index}>
                                 <div><img className="blog-image" src={`http://localhost:5000/Images/${eachBlog.blogImage}`} /></div>
                                 <div className="each-blog-container-description">
                                     <div className="each-blog-container-title">{eachBlog.blogTitle}<div className="title-underline"></div></div>
                                     <div>{eachBlog.blogDescription}</div>
                                 </div>
-                            </Link>
+                            </div>
                         )
                     }) : <></>}
                 </div>
             </div>
-            <Link to='/addBlogs'>Add blog</Link>
         </>
     )
 }

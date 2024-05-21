@@ -19,6 +19,7 @@ export default function AddBlog() {
         
         try {
             const response = await axios.post('http://localhost:5000/api/blogs', {blogTitle, blogDescription, blogImage}, {withCredentials: true})
+            console.log(response);
             navigate('/blogs')
             setBlog({ blogTitle: response.data.blogTitle, blogDescription: response.data.blogDescription, blogImage: response.data.blogImage });
         } catch (error) {
