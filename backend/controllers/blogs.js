@@ -1,8 +1,6 @@
 const express = require('express')
 const Blogs = require('../models/blogModel')
 const fs = require('fs')
-const path = require('path')
-
 
 const getBlogs = async (req, res)=>{
     try {
@@ -14,27 +12,15 @@ const getBlogs = async (req, res)=>{
 }
 
 const createBlog = async (req, res) => {
-    const { blogTitle, blogDescription, blogImage } = req.body;
+    const { blogTitle, blogDescription } = req.body;
     try {
-        let filename = null
-        if (blogImage) {
-            const base64Data = blogImage.name.split(';base64,').pop();
-            const ext = base64Data.split('.')[1];
-            filename = `${Date.now()}.${ext}`;
-            const filepath = path.join(__dirname, 'Images', filename);
-            const bufferData = Buffer.from(blogImage.data.split(',')[1], 'base64')
-            fs.writeFile(filepath, bufferData, (err) => {
-                if (err) throw err
-                console.log(`File saved to ${filepath}`);
-            });
-        }
-        else filename = null
         const blog = await Blogs.create({
             blogTitle: blogTitle,
             blogDescription: blogDescription,
-            blogImage: blogImage ? filename : null
+            blogImage: req.file.filename
         })
-        res.status(201).json({status: 'SUCCESS' })
+        console.log(req.file);
+        res.status(201).json({status: 'SUCCESS', blog })
     } catch (error) {
         res.status(500).json(error)
     }
@@ -42,25 +28,12 @@ const createBlog = async (req, res) => {
 
 const editBlog = async(req, res)=>{
     const id = req.params.id;
-    const {blogTitle, blogImage, blogDescription} = req.body;
+    const {blogTitle, blogDescription} = req.body;
     try {
-        let filename = null;
-        if (blogImage&&blogImage.data?.startsWith('data:image')) {
-            const base64Data = blogImage.name.split(';base64,').pop();
-            const ext = base64Data.split('.')[1];
-            filename = `${Date.now()}.${ext}`;
-            const filepath = path.join(__dirname, 'Images', filename);
-            const bufferData = Buffer.from(blogImage.data.split(',')[1], 'base64');
-
-            fs.writeFileSync(filepath, bufferData, (err) => {
-                if (err) throw err
-                console.log(`File saved to ${filepath}`);
-            });
-        }
         const updateData = {
             blogTitle: blogTitle,
             blogDescription: blogDescription,
-            ...(blogImage && { blogImage: filename }),
+            blogImage: req?.file?.filename
         };
         const editedBlog = await Blogs.findByIdAndUpdate(id, updateData)
         res.status(200).json({status: 'SUCCESS', editedBlog})

@@ -20,7 +20,7 @@ app.use(cors(
         credentials: true
     }
 ));
-app.use('/Images', express.static((path.join__dirname + 'controllers','Images')))
+app.use(express.static('Images'))
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser())

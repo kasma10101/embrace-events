@@ -4,6 +4,7 @@ import Footer from "./component/Footer"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HeroSection from "./component/HeroSection";
 import Blogs from "./component/blogs";
+import EachBlog from "./component/eachBlog";
 
 function App() {
   return (
@@ -15,7 +16,9 @@ function App() {
             <HeroSection />
           </>
         } />
-        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogs" element={<Blogs />} >
+          <Route path="/blogs/:id" element={<EachBlog />} />
+        </Route>
       </Routes>
       <Footer />
     </BrowserRouter>

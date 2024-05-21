@@ -1,0 +1,24 @@
+.each-blog{
+    width: 600px;
+    background-color: white;
+}
+.each-blog-image{
+    width: 100%;
+    border: 2px solid #799a63;
+    height: 300px;
+}
+.each-blog-description{
+    width: 90%;
+    color: #799a63;
+    padding: 10px 30px;
+}
+.each-blog-title{
+    font-family: "Krona One", sans-serif;
+    font-size: 21px;
+    padding: 0px 0px 10px;
+}
+.title-underline{
+    border: 2px solid #799a63;
+    width: 100px;
+    border-radius: 10px;
+}

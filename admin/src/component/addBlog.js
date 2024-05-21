@@ -13,12 +13,12 @@ export default function AddBlog() {
     const navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const blogTitle = blog.blogTitle
-        const blogDescription = blog.blogDescription
-        const blogImage = blog.blogImage
-        
+        const fromData = new FormData();
+        fromData.append('blogTitle', blog.blogTitle)
+        fromData.append('blogDescription', blog.blogDescription)
+        fromData.append('file', blog.blogImage)
         try {
-            const response = await axios.post('http://localhost:5000/api/blogs', {blogTitle, blogDescription, blogImage}, {withCredentials: true})
+            const response = await axios.post('http://localhost:5000/api/blogs', fromData)
             console.log(response);
             navigate('/blogs')
             setBlog({ blogTitle: response.data.blogTitle, blogDescription: response.data.blogDescription, blogImage: response.data.blogImage });
@@ -41,7 +41,7 @@ export default function AddBlog() {
             <form onSubmit={handleSubmit}>
                 <input placeholder="blog title" onChange={(e) => setBlog({ ...blog, blogTitle: e.target.value })} />
                 <input placeholder="blog description" onChange={(e) => setBlog({ ...blog, blogDescription: e.target.value })} />
-                <input placeholder="blog image" type="file" onChange={sendImage} />
+                <input placeholder="blog image" type="file" onChange={(e)=>setBlog({...blog, blogImage: e.target.files[0]})} />
                 <button type="submit">add</button>
             </form>
         </>

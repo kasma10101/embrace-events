@@ -13,7 +13,7 @@
 }
 .each-blog-container{
     width: 350px;
-    height: 350px;
+    height: 320px;
     text-decoration: none;
     margin: 20px;
     color: #799a63;
@@ -44,6 +44,12 @@
     height: 150px;
 }
 
+.blog-modal{
+    width: 600px;
+    display: flex;
+    align-items: center;
+    margin: 0px auto;
+}
 
 @media(max-width: 1300px){
     .blog-whole-body{
