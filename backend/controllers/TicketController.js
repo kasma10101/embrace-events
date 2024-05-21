@@ -9,6 +9,7 @@ const ticketSchema = Joi.object({
     endDate: Joi.date().iso().required(),
     standardAmount: Joi.number().required(),
     vipAmount: Joi.number().required(),
+    location: Joi.string().required(),
 });
 
 // Create a new ticket
