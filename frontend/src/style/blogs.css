@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+.blog-whole-body{
+    /* height: 85vh;
+    overflow-y: auto;
+    scrollbar-width: none; */
+    width: 80%;
+    margin: 3% auto;
+}
+.blogs-container{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    align-items: center;
+}
+.each-blog-container{
+    width: 350px;
+    height: 350px;
+    text-decoration: none;
+    margin: 20px;
+    color: #799a63;
+    font-family: "Krub", sans-serif;
+    /* border-radius: 15px; */
+    box-shadow: 0 10px 10px 5px rgba(100, 100, 100, .2);
+}
+.blog-image{
+    width: 100%;
+    height: 200px;
+    /* border-radius: 15px; */
+    border: 2px solid #799a63;
+}
+.each-blog-container-title{
+    font-family: "Krona One", sans-serif;
+    font-size: 21px;
+    padding: 10px 0px;
+}
+.title-underline{
+    border: 2px solid #799a63;
+    width: 100px;
+    border-radius: 10px;
+}
+.each-blog-container-description{
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding: 10px 20px 5px;
+    height: 150px;
+}
+
+
+@media(max-width: 1300px){
+    .blog-whole-body{
+        width: 100%;
+    }
+}
+@media(max-width: 1170px){
+    .blog-whole-body{
+        width: 70%;
+    }
+    .blogs-container{
+        grid-template-columns: auto auto;
+    }
+}
+@media(max-width: 930px){
+    .blog-whole-body{
+        width: 85%;
+    }
+}
+@media(max-width: 850px){
+    .blog-whole-body{
+        width: 100%;
+    }
+}
+@media(max-width: 777px){
+    .blog-whole-body{
+        width: 90%;
+    }
+    .each-blog-container{
+        width: 300px;
+    }
+}
+@media(max-width: 710px){
+    .blog-whole-body{
+        width: 100%;
+    }
+}
+@media(max-width: 680px){
+    .blogs-container{
+        grid-template-columns: auto;
+    }
+    .each-blog-container{
+        width: 350px;
+    }
+    .blog-whole-body{
+        width: 70%;
+    }
+}
+@media(max-width: 579px){
+ 
+}
+@media(max-width: 520px){
+    .blogs-container{
+        grid-template-columns: auto;
+    }
+    .blog-whole-body{
+        width: 70%;
+    }
+    .each-blog-container{
+        width: 300px;
+        height: 300px;
+    }
+    .blog-image{
+        height: 150px;
+    }
+    .each-blog-container-description{
+        height: 140px;
+    }
+}
+@media(max-width: 420px){
+    .blog-whole-body{
+        width: 90%;
+    }
+}
+@media(max-width: 354px){
+    .blog-whole-body{
+        width: 100%;
+    }
+}

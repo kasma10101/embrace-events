@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Nav } from 'react-bootstrap';
 import '../style/style.css'
 import banner from '../assets/banner.png';
 
@@ -48,6 +48,8 @@ const HeroSection = () => {
         </Row>
       </Container>
       <img src={banner} alt="banner" className="img-fluid start-0 w-100" style={{ objectFit: 'cover' }} />
+      <Nav.Link href='/login'>login</Nav.Link>
+      <Nav.Link href='/signup'>signup</Nav.Link>
     </div>
   );
 }

@@ -6,7 +6,10 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const paymentRoute = require('./routes/paymentRoute');
 const tiicketRoute = require('./routes/ticketRoute');
-
+const blogRoute = require('./routes/blogRoute')
+const adminRoute = require('./routes/adminRoute')
+const cookieParser = require('cookie-parser')
+const path = require('path')
 
 const app = express();
 
@@ -18,8 +21,12 @@ app.use(cors(
         credentials: true
     }
 ));
+app.use('/Images', express.static((path.join__dirname + 'controllers','Images')))
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser())
+
+//blog images
 
 //routes
 app.get('/', (req, res) => {
@@ -28,6 +35,8 @@ app.get('/', (req, res) => {
 //routes
 app.use('/api/payment', paymentRoute);
 app.use('/api/tickets', tiicketRoute);
+app.use('/api/blogs', blogRoute)
+app.use('/api/admin', adminRoute)
 
 
 
