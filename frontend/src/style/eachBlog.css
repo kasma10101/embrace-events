@@ -23,3 +23,14 @@
     border-radius: 10px;
     margin: 0px 0px 10px;
 }
+
+@media(max-width: 620px){
+    .each-blog{
+        width: 500px;
+    }
+}
+@media(max-width: 500px){
+    .each-blog{
+        width: 350px;
+    }
+}

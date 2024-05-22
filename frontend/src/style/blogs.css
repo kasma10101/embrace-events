@@ -104,6 +104,11 @@
         width: 70%;
     }
 }
+@media(max-width: 620px){
+    .blog-modal{
+        width: 500px;
+    }
+}
 @media(max-width: 579px){
  
 }
@@ -128,6 +133,11 @@
 @media(max-width: 420px){
     .blog-whole-body{
         width: 90%;
+    }
+}
+@media(max-width: 500px){
+    .blog-modal{
+        width: 350px;
     }
 }
 @media(max-width: 354px){

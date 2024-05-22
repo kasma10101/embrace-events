@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { FaAngleRight } from "react-icons/fa";
+import { FaAngleRight, FaBullseye, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import home from "../assets/logo/home.png";
 import "../style/home.css";
 import Popup from "./Popup";
-import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
-import poster from "../assets/images/poster.png";
+import { FiCircle } from "react-icons/fi";
+import eventTicket from "../assets/images/ticket.png";
 
 const faqs = [
   {
@@ -29,70 +29,71 @@ const faqs = [
   },
 ];
 const event = [
-    {
-      id: 1,
-      name: "Test",
-      description: "description",
-      date: "May 20 - 28",
-      price: 650,
-      location: "Meskel Square, A.A Bazar & Exhibition Center,",
-    },
-    {
-      id: 2,
-      name: "Focaccia",
-      description: "Bread with italian olive oil and rosemary",
-      date: "May 22 - 29",
-      price: 800,
-      location: "Meskel Square, A.A Bazar & Exhibition Center,",
-    },
-    {
-      id: 3,
-      name: "Focaccia",
-      description: "Bread with italian olive oil and rosemary",
-      date: "June 02 - 10",
-      price: 500,
-      location: "Meskel Square, A.A Bazar & Exhibition Center,",
-    },
-    {
-      id: 4,
-      name: "Focaccia",
-      description: "Bread with italian olive oil and rosemary",
-      date: "June 09 - 17",
-      price: 1200,
-      location: "Meskel Square, A.A Bazar & Exhibition Center,",
-    },
-    {
-      id: 5,
-      name: "Focaccia",
-      description: "Bread with italian olive oil and rosemary",
-      date: "June 14 - 22",
-      price: 1500,
-      location: "Meskel Square, A.A Bazar & Exhibition Center,",
-    },
-    {
-      id: 6,
-      name: "Focaccia",
-      description: "Bread with italian olive oil and rosemary",
-      date: "June 15 - 23",
-      price: 250,
-      location: "Meskel Square, A.A Bazar & Exhibition Center,",
-    },
-    {
-      id: 7,
-      name: "Focaccia",
-      description: "Bread with italian olive oil and rosemary",
-      date: "August 22 - 28",
-      price: 600,
-      location: "Meskel Square, A.A Bazar & Exhibition Center,",
-    },
-    {
-      id: 8,
-      name: "Focaccia",
-      description: "Bread with italian olive oil and rosemary",
-      price: 400,
-      location: "Meskel Square, A.A Bazar & Exhibition Center,",
-    },
-  ];
+  {
+    id: 1,
+    name: "Test",
+    description: "description",
+    date: "May 20 - 28, 12:00AM",
+    price: 650,
+    location: "Meskel Square, A.A Bazar & Exhibition Center,",
+  },
+  {
+    id: 2,
+    name: "Focaccia",
+    description: "Bread with italian olive oil and rosemary",
+    date: "May 22 - 29, 5:00PM",
+    price: 800,
+    location: "Meskel Square, A.A Bazar & Exhibition Center,",
+  },
+  {
+    id: 3,
+    name: "Focaccia",
+    description: "Bread with italian olive oil and rosemary",
+    date: "June 02 - 10, 7:00PM",
+    price: 500,
+    location: "Meskel Square, A.A Bazar & Exhibition Center,",
+  },
+  {
+    id: 4,
+    name: "Focaccia",
+    description: "Bread with italian olive oil and rosemary",
+    date: "June 09 - 17, 3:30AM",
+    price: 1200,
+    location: "Meskel Square, A.A Bazar & Exhibition Center,",
+  },
+  {
+    id: 5,
+    name: "Focaccia",
+    description: "Bread with italian olive oil and rosemary",
+    date: "June 14 - 22, 6:00AM",
+    price: 1500,
+    location: "Meskel Square, A.A Bazar & Exhibition Center,",
+  },
+  {
+    id: 6,
+    name: "Focaccia",
+    description: "Bread with italian olive oil and rosemary",
+    date: "June 15 - 23, 8:00PM",
+    price: 250,
+    location: "Meskel Square, A.A Bazar & Exhibition Center,",
+  },
+  {
+    id: 7,
+    name: "Focaccia",
+    description: "Bread with italian olive oil and rosemary",
+    date: "August 22 - 28, 4:00AM",
+    price: 600,
+    location: "Meskel Square, A.A Bazar & Exhibition Center,",
+  },
+  {
+    id: 8,
+    name: "Focaccia",
+    date: "August 22 - 28, 4:00AM",
+    description: "Bread with italian olive oil and rosemary",
+    price: 400,
+    location: "Meskel Square, A.A Bazar & Exhibition Center,",
+  },
+];
 
 function Home() {
   let targetDate = new Date("Sep 11, 2024 00:00:00").getTime();
@@ -132,59 +133,59 @@ function Home() {
   //   //   let month = months[date.getMonth()];
   return (
     <>
-    <div className="home">
-      <div className="home__logo">
-        <img src={home} alt="the ethiopia holi" className="home__img" />
+      <div className="home">
+        <div className="home__logo">
+          <img src={home} alt="the ethiopia holi" className="home__img" />
+        </div>
+        <div className="countdown">
+          <div className="time">
+            <span> {days}</span>
+            <p> days</p>
+          </div>
+          <div className="time">
+            <span>{hours}</span>
+            <p>hours</p>{" "}
+          </div>
+          <div className="time">
+            <span> {minutes}</span> <p>minutes</p>{" "}
+          </div>
+          <div className="time">
+            <span>{seconds}</span> <p>seconds</p>
+          </div>
+        </div>
+        <p className="home__para">
+          Join us for an unforgettable experience filled with excitement and
+          entertainment.
+        </p>
+        <div className="btn">
+          <button className="learnmore">
+            <a href="">
+              Learn More{" "}
+              <FaAngleRight style={{ position: "relative", top: "0.2rem" }} />
+            </a>
+          </button>
+          <Popup />
+        </div>
       </div>
-      <div className="countdown">
-        <div className="time">
-          <span> {days}</span>
-          <p> days</p>
-        </div>
-        <div className="time">
-          <span>{hours}</span>
-          <p>hours</p>{" "}
-        </div>
-        <div className="time">
-          <span> {minutes}</span> <p>minutes</p>{" "}
-        </div>
-        <div className="time">
-          <span>{seconds}</span> <p>seconds</p>
-        </div>
+      <div className="create">
+        <hr className="create__line" />
+        <h2>Create memorable events with us.</h2>
+        <p>
+          Our personalized event planning service ensures that every detail is
+          tailored to your unique vision. From start to finish, we work closely
+          with you to create an unforgettable experience that exceeds your
+          expectations.
+        </p>
+        <hr className="create__line" />
       </div>
-      <p className="home__para">
-        Join us for an unforgettable experience filled with excitement and
-        entertainment.
-      </p>
-      <div className="btn">
-        <button className="learnmore">
-          <a href="">
-            Learn More{" "}
-            <FaAngleRight style={{ position: "relative", top: "0.2rem" }} />
-          </a>
-        </button>
-        <Popup />
-      </div>
-    </div>
-    <div className="create">
-      <hr className="create__line" />
-      <h2>Create memorable events with us.</h2>
-      <p>
-        Our personalized event planning service ensures that every detail is
-        tailored to your unique vision. From start to finish, we work closely
-        with you to create an unforgettable experience that exceeds your
-        expectations.
-      </p>
-      <hr className="create__line" />
-    </div>
-    <div className="events">
-      <h2>Upcoming Events</h2>
-      <p className="event__para">
-        Browse through our list of exciting upcoming events.
-      </p>
-      {/* <hr /> */}
-      <div className="upcoming">
-        {/* <Card />
+      <div className="events">
+        <h2>Upcoming Events</h2>
+        <p className="event__para">
+          Browse through our list of exciting upcoming events.
+        </p>
+        {/* <hr /> */}
+        <div className="upcoming">
+          {/* <Card />
         <Card />
         <Card />
         <Card />
@@ -192,87 +193,108 @@ function Home() {
         <Card />
         <Card />
         <Card /> */}
-        {event.map((event) => (
-          <div className="box">
-      <div className="poster">
-        {" "}
-        <img src={poster} alt="poster" />
+          {event.map((event) => (
+            <div className="box">
+              <div className="poster">
+                <img src={eventTicket} alt="event ticket" />
+              </div>
+              <div className="content">
+                <div>
+                  <div style={{fontSize: 25, fontWeight: 500}}>{event.name}</div>
+                  <div style={{border: '2px solid #12372a', width: 90}}></div>
+                </div>
+                <div style={{ display: 'flex', gap: 5, }}>
+                  <span><FiCircle /></span>
+                  <span>{event.description.split(' ').slice(0, 4) + '...'}</span>
+                </div>
+                <div style={{ display: 'flex', gap: 5, }}>
+                  <span><FiCircle /></span>
+                  <span>{event.location.split(' ').slice(0, 4) + '...'}</span>
+                </div>
+                <div style={{ display: 'flex', gap: 5, }}>
+                  <span><FiCircle /></span>
+                  <span>{event.price}</span>
+                </div>
+                <div style={{ display: 'flex', gap: 5, }}>
+                  <span><FiCircle /></span>
+                  <span>{event.date}</span>
+                </div>
+                {/* <u1>
+                  <li>{event.description.split(' ').length > 5 ? event.description.split(' ').slice(0, 5).join(' ') + '...' : event.description}</li>
+                  <li>{event.location.split(' ').length > 5 ? event.location.split(' ').slice(0, 5).join(' ') + '...' : event.location}</li>
+                  <li>{event.price}</li>
+                  <li>{event.date}</li>
+                </u1> */}
+              </div>
+            </div>
+          ))}
+        </div>
+        <button className="showall__btn">
+          <a href="">
+            Show All{" "}
+            <FaAngleRight style={{ position: "relative", top: "0.2rem" }} />
+          </a>
+        </button>
       </div>
-      <div className="content">
-        <p>{event.name}</p>
-        <p>{event.date}</p>
-        {/* <p>{props.eventObj.location}</p> */}
-        {/* <p>{props.eventObj.price} birr</p> */}
-      </div>
-    </div>
-        ))}
-      </div>
-      <button className="showall__btn">
-        <a href="">
-          Show All{" "}
-          <FaAngleRight style={{ position: "relative", top: "0.2rem" }} />
-        </a>
-      </button>
-    </div>
-    <div className="faq">
-      <h2 className="faq__title">FAQs</h2>
-      <p className="faq__para">
-        Find answers to common questions about event organization, ticket
-        purchasing, and event attendance.
-      </p>
-      <div className="accordion">
-        {faqs.map((el, i) => (
-          <AccordionItem
-            title={el.title}
-            text={el.text}
-            num={i}
-            key={el.title}
-          />
-        ))}
-      </div>
-      <h2 className="faq__title__two">Still have questions?</h2>
-      <p className="faq__par__two">Contact us for further assistance.</p>
-      <div className="phone">
-        <span>
-          {" "}
-          <FaPhoneAlt />
-        </span>
-        <p>+251 987 298989</p>
-      </div>
-      <div className="location">
-        <span>
-          {" "}
-          <FaMapMarkerAlt />
-        </span>
-        <p>
-          Meskel Square, A.A Bazar & Exhibition Center, Addis Ababa, Ethiopia{" "}
+      <div className="faq">
+        <h2 className="faq__title">FAQs</h2>
+        <p className="faq__para">
+          Find answers to common questions about event organization, ticket
+          purchasing, and event attendance.
         </p>
+        <div className="accordion">
+          {faqs.map((el, i) => (
+            <AccordionItem
+              title={el.title}
+              text={el.text}
+              num={i}
+              key={el.title}
+            />
+          ))}
+        </div>
+        <h2 className="faq__title__two">Still have questions?</h2>
+        <p className="faq__par__two">Contact us for further assistance.</p>
+        <div className="phone">
+          <span>
+            {" "}
+            <FaPhoneAlt />
+          </span>
+          <p>+251 987 298989</p>
+        </div>
+        <div className="location">
+          <span>
+            {" "}
+            <FaMapMarkerAlt />
+          </span>
+          <p>
+            Meskel Square, A.A Bazar & Exhibition Center, Addis Ababa, Ethiopia{" "}
+          </p>
+        </div>
+        <button className="contact__btn">
+          <a href="">Contact</a>
+        </button>
       </div>
-      <button className="contact__btn">
-        <a href="">Contact</a>
-      </button>
-    </div>
     </>
   );
 }
 
 
 function AccordionItem({ num, title, text }) {
-    const [isOpen, setIsOpen] = useState(false);
-  
-    function handleToggle() {
-      setIsOpen((isOpen) => !isOpen);
-    }
-  
-    return (
-      <div className={`item ${isOpen ? "open" : ""}`} onClick={handleToggle}>
-        <p className="number n">{num < 9 ? `0${num + 1}` : num + 1}</p>
-        <p className="title2">{title}</p>
-        <p className="icon2">{isOpen ? "-" : "+"}</p>
-  
-        {isOpen && <div className="content-box">{text}</div>}
-      </div>
-    );
+  const [isOpen, setIsOpen] = useState(false);
+
+  function handleToggle() {
+    setIsOpen((isOpen) => !isOpen);
   }
+
+  return (
+    <div className={`item ${isOpen ? "open" : ""}`} onClick={handleToggle}>
+      <p className="number n">{num < 9 ? `0${num + 1}` : num + 1}</p>
+      <p className="title2">{title}</p>
+      <p className="icon2">{isOpen ? "-" : "+"}</p>
+
+      {isOpen && <div className="content-box">{text}</div>}
+    </div>
+  );
+}
 
 export default Home;
