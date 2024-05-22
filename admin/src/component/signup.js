@@ -1,5 +1,8 @@
+import { FormGroup, TextField } from "@mui/material"
 import axios from "axios"
 import { useState } from "react"
+import { Button, Form, Nav } from "react-bootstrap"
+import { FaUser } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 
 
@@ -22,11 +25,33 @@ export default function Signup (){
 
     return(
         <>
-        <form onSubmit={handleSubmit}>
-            <input onChange={(e)=>setUsername(e.target.value)} placeholder="username" />
-            <input onChange={(e)=>setPassword(e.target.value)} placeholder="password"/>
-            <button type="submit">Signup</button>
-        </form>
+        <div className="login-container">
+            <div className="user-icon" >
+                <FaUser style={{ fontSize: 80, color: '#fff' }} />
+            </div>
+            <div style={{marginTop: '10%'}}>
+                <Form onSubmit={handleSubmit}>
+                    <FormGroup style={{ marginTop: 20 }}>
+                        <TextField
+                            placeholder="Enter username"
+                            onChange={(e) => setUsername(e.target.value)}
+                            type="text"
+                            style={{ width: 300 }}
+                        />
+                    </FormGroup>
+                    <FormGroup style={{ marginTop: 15 }}>
+                        <TextField
+                            placeholder="Enter Password"
+                            onChange={(e) => setPassword(e.target.value)}
+                            type="password"
+                            style={{ width: 300 }}
+                        />
+                    </FormGroup>
+                    <Button className="login-button" type="submit" variant="outline-dark">Signup</Button>
+                </Form>
+                <Nav.Link href="/login" style={{textAlign: 'center'}}>login</Nav.Link>
+            </div>
+        </div>
         </>
     )
 }

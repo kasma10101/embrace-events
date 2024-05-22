@@ -5,7 +5,10 @@ const blogSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    blogDescription: String,
+    blogDescription: {
+        type: String,
+        required: true
+    },
     blogImage:{
         type: String,
         required: true

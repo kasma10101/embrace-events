@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./component/NavBar";
 import Footer from "./component/Footer"
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HeroSection from "./component/HeroSection";
-import Blogs from "./component/blogs";
-import EachBlog from "./component/eachBlog";
+import Blogs from "./component/Blogs";
+import EachBlog from "./component/EachBlog";
+import Home from "./component/home";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={
           <>
-            <HeroSection />
+            <Home />
           </>
         } />
         <Route path="/blogs" element={<Blogs />} >

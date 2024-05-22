@@ -19,7 +19,6 @@ const createBlog = async (req, res) => {
             blogDescription: blogDescription,
             blogImage: req.file.filename
         })
-        console.log(req.file);
         res.status(201).json({status: 'SUCCESS', blog })
     } catch (error) {
         res.status(500).json(error)

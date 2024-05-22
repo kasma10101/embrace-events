@@ -30,7 +30,7 @@ export default function Blogs() {
                     {blogs ? blogs.map((eachBlog, index) => {
                         return (
                             <Link onClick={()=>setShowModal(true)} to={`${eachBlog._id}`} className="each-blog-container" key={index}>
-                                <div><img className="blog-image" src={`http://localhost:5000/Images/${eachBlog.blogImage}`} /></div>
+                                <div><img className="blog-image" src={`http://localhost:5000/${eachBlog.blogImage}`} /></div>
                                 <div className="each-blog-container-description">
                                     <div className="each-blog-container-title">{eachBlog.blogTitle}<div className="title-underline"></div></div>
                                     <div>{eachBlog.blogDescription.split(' ').length > 15 ? eachBlog.blogDescription.split(' ').slice(0, 15).join(' ') + '...' : eachBlog.blogDescription}</div>

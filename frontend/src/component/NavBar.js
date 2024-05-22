@@ -1,29 +1,77 @@
-import React from 'react';
-import { Navbar, Nav, Button, Container } from 'react-bootstrap';
-import embraceLogo from '../assets/embraceLogo.png';
+import { useState } from "react";
+import embraceLogo from "../assets/logo/embraceLogo.png";
+import { FaBars, FaTimes } from "react-icons/fa";
+import "../style/navbar.css";
 
-const NavBar = () => {
+export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [icon, setIcon] = useState(true);
+  const [text, setText] = useState(true);
+
+  function handleClick() {
+    setIcon((icon) => !icon);
+    setText((text) => !text);
+    setIsMenuOpen(!isMenuOpen);
+  }
   return (
-    <Navbar bg="light" variant="light" expand="lg" style={{ fontFamily: 'Ubuntu Sans, sans-serif' }} className="sticky-top">
-      <Container className="justify-content-between">
-        <Navbar.Brand href="#home">
-          <img src={embraceLogo} alt="Embrace Logo" style={{ maxWidth: '120px', maxHeight: '100px', marginRight: '10px' }} />
-          <span>Events.</span>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="m-auto text-dark">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#about">About</Nav.Link>
-            <Nav.Link href="#schedule">Events</Nav.Link>
-            <Nav.Link href="/blogs">Blog</Nav.Link>
-            <Nav.Link href="#contact">Contact</Nav.Link>
-            <Button variant="outline-dark">Buy ticket</Button>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <>
+      <nav>
+        <ul>
+          <div className="logo">
+            <img src={embraceLogo} alt="embraceLogo" />
+            <li>
+              <span>Events.</span>
+            </li>
+          </div>
+
+          <div className={isMenuOpen ? "none" : "nav__link__two close"}>
+            <li>
+              <a href="/">Home</a>
+            </li>
+            <li>
+              <a href="">About</a>
+            </li>
+            <li>
+              <a href="/blogs">Blog</a>
+            </li>
+            <li>
+              <a href="">Contact</a>
+            </li>
+          </div>
+          <div
+            className="toggle"
+            onClick={handleClick}
+            style={icon ? { width: "100%" } : {}}
+          >
+            <div className="icon">
+              {icon ? (
+                <FaBars cursor={"pointer"} />
+              ) : (
+                <FaTimes cursor={"pointer"} />
+              )}
+            </div>
+            <div className="text">{text ? "MENU" : "CLOSE"}</div>
+          </div>
+        </ul>
+      </nav>
+
+      <div className={isMenuOpen ? "nav__link open" : "none"}>
+        <li>
+          <a href="">Home</a>
+        </li>
+        <li>
+          <a href="">About</a>
+        </li>
+        <li>
+          <a href="">Events</a>
+        </li>
+        <li>
+          <a href="/blogs">Blog</a>
+        </li>
+        <li>
+          <a href="">Contact</a>
+        </li>
+      </div>
+    </>
   );
 }
-
-export default NavBar;

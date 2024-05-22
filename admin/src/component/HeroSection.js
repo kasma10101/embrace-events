@@ -48,8 +48,6 @@ const HeroSection = () => {
         </Row>
       </Container>
       <img src={banner} alt="banner" className="img-fluid start-0 w-100" style={{ objectFit: 'cover' }} />
-      <Nav.Link href='/login'>login</Nav.Link>
-      <Nav.Link href='/signup'>signup</Nav.Link>
     </div>
   );
 }
