@@ -30,6 +30,9 @@ export default function Navbar({loggedIn}) {
       if(paths.length>1 && (paths[1] ==='login' || paths[1] ==='signup')){
         navigate("/profile")
        }
+       else{
+        navigate(paths[1])
+       }
        
      }
     

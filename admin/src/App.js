@@ -19,6 +19,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [adminData, setAdminData] = useState(false)
   const [isSignUpAllowed, setIsSignUpAllowed] = useState(false)
+  const [equilizer, setEquilizer] = useState(1)
   const token = document.cookie
 
   .split("; ")
@@ -92,9 +93,9 @@ function App() {
       <Routes>
         {loggedIn?
         <>
-          <Route path="/blogs" element={<Blogs token={token} setshowAddModal={setshowAddModal} setshowEditModal={setshowEditModal} showAddModal={showAddModal} showEditModal={showEditModal} />} >
-            <Route path='/blogs/:id' element={<EachBlog token={token} setshowEditModal={setshowEditModal} />} />
-            <Route path="/blogs/addBlogs" element={<AddBlog token={token} setshowAddModal={setshowAddModal} />} />
+          <Route path="/blogs"  element={<Blogs equilizer={equilizer} setEquilizer={setEquilizer} token={token} setshowAddModal={setshowAddModal} setshowEditModal={setshowEditModal} showAddModal={showAddModal} showEditModal={showEditModal} />} >
+            <Route path='/blogs/:id' element={<EachBlog equilizer={equilizer} setEquilizer={setEquilizer}  token={token} setshowEditModal={setshowEditModal} />} />
+            <Route path="/blogs/addBlogs" element={<AddBlog equilizer={equilizer} setEquilizer={setEquilizer}  token={token} setshowAddModal={setshowAddModal} />} />
           </Route>
           <Route path="/profile" element={<Profile token={token} adminData={adminData} />} />
         
