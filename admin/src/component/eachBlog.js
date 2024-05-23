@@ -15,7 +15,7 @@ export default function EachBlog({ setshowEditModal }) {
         blogImage: null
     })
     const [previewImage, setPreviewImage] = useState(null)
-
+    const [edit, setEdit] = useState(false)
     const navigate = useNavigate()
 
     const fetchBlogDetail = async () => {
@@ -37,6 +37,7 @@ export default function EachBlog({ setshowEditModal }) {
         fromData.append('blogTitle', editedBlog.blogTitle)
         fromData.append('blogDescription', editedBlog.blogDescription)
         fromData.append('file', editedBlog.blogImage)
+        navigate('/blogs')
         try {
             const response = await axios.put(`http://localhost:5000/api/blogs/${id}`, fromData)
             setshowEditModal(false)
@@ -50,6 +51,8 @@ export default function EachBlog({ setshowEditModal }) {
         e.preventDefault()
         try {
             const response = await axios.delete(`http://localhost:5000/api/blogs/${id}`, { withCredentials: true })
+            navigate('/blogs')
+            setshowEditModal(false)
         } catch (error) {
             console.log(error);
         }
@@ -68,40 +71,58 @@ export default function EachBlog({ setshowEditModal }) {
     }
 
     return (
-        <div className="edit-blog-container">
-            <h1 style={{ color: '#1C3C07' }}>Edit Blog</h1>
-            <Form onSubmit={handleSubmit}>
-                <FormGroup style={{ marginTop: 20 }}>
-                    <TextField
-                        value={editedBlog.blogTitle}
-                        onChange={(e) => setEditedBlog({ ...editedBlog, blogTitle: e.target.value })}
-                        type="text"
-                        style={{ width: 300 }}
-                    />
-                </FormGroup>
-                <FormGroup style={{ marginTop: 20 }}>
-                    <TextField
-                        value={editedBlog.blogDescription}
-                        onChange={(e) => setEditedBlog({ ...editedBlog, blogDescription: e.target.value })}
-                        type="text"
-                        style={{ width: 300 }}
-                        multiline
-                    />
-                </FormGroup>
-                <FormGroup style={{ marginTop: 20 }}>
-                    <InputLabel style={{ width: 300, border: '.3px solid rgba(0, 0, 0, .2)', padding: '13px', borderRadius: 5 }}>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: 5 }}><FaFileImage style={{ fontSize: 25 }} /> <span>Edit Blog Image</span></span>
-                        <TextField
-                            onChange={handleImageChange}
-                            type="file"
-                            style={{ display: 'none' }}
-                        />
-                    </InputLabel>
-                </FormGroup>
-                <Button type="submit" variant="outline-dark" style={{ width: 300, marginTop: 20 }}>Edit</Button>
-            </Form>
-            <Button variant="outline-dark" style={{ width: 300, marginTop: 20 }} onClick={handleDelete}>Delete</Button>
-            {previewImage ? <div><img src={previewImage} style={{ width: 80, height: 80, marginTop: 20 }} /></div> : <div><img style={{ width: 80, height: 80, marginTop: 20 }} src={`http://localhost:5000/${editedBlog.blogImage}`} /></div>}
-        </div>
+        <>
+            {
+                edit ?
+                    <div className="each-blog">
+                        <Form onSubmit={handleSubmit} >
+                            <div style={{ height: '70vh', overflowY: 'auto', scrollbarWidth: 'none' }}>
+                                <FormGroup style={{ marginTop: 20 }}>
+                                    <InputLabel>
+                                        {previewImage ? <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}><img src={previewImage} className="each-blog-image" /></div> : <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}><img className="each-blog-image" src={`http://localhost:5000/${editedBlog.blogImage}`} /></div>}
+                                        <TextField
+                                            onChange={handleImageChange}
+                                            type="file"
+                                            style={{ display: 'none' }}
+                                        />
+                                    </InputLabel>
+                                </FormGroup>
+                                <FormGroup style={{ marginTop: 20, paddingLeft: 20 }}>
+                                    <TextField
+                                        value={editedBlog.blogTitle}
+                                        onChange={(e) => setEditedBlog({ ...editedBlog, blogTitle: e.target.value })}
+                                        type="text"
+                                        style={{ width: 300 }}
+                                    />
+                                </FormGroup>
+                                <FormGroup style={{ marginTop: 20, paddingLeft: 20 }}>
+                                    <TextField
+                                        value={editedBlog.blogDescription}
+                                        onChange={(e) => setEditedBlog({ ...editedBlog, blogDescription: e.target.value })}
+                                        type="text"
+                                        style={{ width: 300 }}
+                                        multiline
+                                    />
+                                </FormGroup>
+                            </div>
+                            <Button type="submit" variant="outline-dark" style={{ width: 300, margin: '20px 0px 20px 40px' }}>Edit</Button>
+                        </Form>
+                    </div> :
+                    <div className="each-blog" style={{ borderBottom: '1px solid #12372a' }}>
+                        <div style={{ height: '70vh', overflowY: 'auto', scrollbarWidth: 'none' }}>
+                            <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}><img className="each-blog-image" src={`http://localhost:5000/${editedBlog.blogImage}`} /></div>
+                            <div className="each-blog-description">
+                                <div className="each-blog-title">{editedBlog.blogTitle}</div>
+                                <div className="title-underline"></div>
+                                <div style={{ marginTop: 20 }}>{editedBlog.blogDescription}</div>
+                            </div>
+                        </div>
+                        <div style={{ display: 'flex', gap: '20px', margin: '20px auto', width: 220 }}>
+                            <Button variant="outline-dark" onClick={() => setEdit(true)} style={{ width: 100 }}>Edit</Button>
+                            <Button variant="outline-dark" onClick={handleDelete} style={{ width: 100 }}>Delete</Button>
+                        </div>
+                    </div>
+            }
+        </>
     )
 }

@@ -16,6 +16,7 @@ const adminSignUp =  async (req, res)=>{
                 adminSignedUp: true
             })
             jwt.sign({adminId: signedAdmin._id, username}, JWT_PASSWORD, {}, (err, token)=>{
+                console.log(token);
                 if (err) throw err
                 res.cookie('token', token, {secure: true, httpOnly: true, sameSite: true}).status(201).json({status: 'SUCCESS'})
             })
@@ -94,17 +95,36 @@ const editAdminProfile = async(req, res)=>{
 
 const adminSignedUp = async(req, res)=>{
     try {
-        const admin = await adminModel.findOne({adminSignedUp: true})
-        const adminSignedUp = !!admin
-        res.status(200).json({adminSignedUp})
+        const admin = await Admin.findOne({adminSignedUp: true})
+        res.status(200).json(admin.adminSignedUp)
     } catch (error) {
-        
+        console.log(error);
     }
 }
 
-const logout = async (req, res)=>{
-    res.cookie('token', '', { sameSite: 'none', secure: true, httpOnly: true }).status(200).json('logout successful')
+const loggedIn = async (req, res, next)=>{
+    const token = req.headers.authorization?.split(' ')[1];
+    console.log(token, req.headers);
+
+    if (!token) {
+        return res.status(401).json({ status: 'FAIL', message: 'No token provided' });
+    }
+
+    jwt.verify(token, JWT_PASSWORD, {expiresIn: '2d'}, (err, decoded) => {
+        if (err) {
+          return res.status(403).json({ error: 'Failed to authenticate token' });
+        }
+        res.status(201).json('Verified')
+        next();
+    });
 }
+
+const logout = async (req, res) => {
+    res
+      .cookie('token', '')
+      .status(200)
+      .json({ message: 'Logout successful' });
+  }
 
 module.exports = {
     adminSignUp,
@@ -113,5 +133,6 @@ module.exports = {
     getAdminProfile,
     editAdminProfile,
     adminSignedUp,
-    logout
+    logout,
+    loggedIn
 }

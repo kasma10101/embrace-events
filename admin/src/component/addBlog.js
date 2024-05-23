@@ -4,6 +4,7 @@ import '../style/addBlog.css'
 import { Button, Form } from "react-bootstrap";
 import { FormGroup, InputLabel, TextField } from "@mui/material";
 import { FaFileImage } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function AddBlog({ setshowAddModal }) {
     const [blog, setBlog] = useState({
@@ -17,7 +18,7 @@ export default function AddBlog({ setshowAddModal }) {
         blogImage: false
     })
     const [previewImage, setPreviewImage] = useState(null)
-
+    const navigate = useNavigate()
     const handleSubmit = async (e) => {
         e.preventDefault();
         const fromData = new FormData();
@@ -26,8 +27,10 @@ export default function AddBlog({ setshowAddModal }) {
         fromData.append('file', blog.blogImage)
         try {
             const response = await axios.post('http://localhost:5000/api/blogs', fromData)
+            console.log(response);
             setshowAddModal(false)
             setBlog({ blogTitle: response.data.blogTitle, blogDescription: response.data.blogDescription, blogImage: response.data.blogImage });
+            navigate('/blogs')
         } catch (error) {
             if (!blog.blogTitle || !blog.blogTitle.trim()) setError((prev) => ({ ...prev, blogTitle: true }));
             if (!blog.blogDescription || !blog.blogDescription.trim()) setError((prev) => ({ ...prev, blogDescription: true }));

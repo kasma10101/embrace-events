@@ -12,6 +12,10 @@ const blogSchema = mongoose.Schema({
     blogImage:{
         type: String,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now()
     }
 }, {timestamp: true})
 

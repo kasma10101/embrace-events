@@ -7,7 +7,7 @@
     flex-direction: column;
     gap: 10px;
     height: 50vh;
-    margin: 8% auto;
+    margin: 0px auto;
     padding: 10px;
 }
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap');
@@ -32,27 +32,40 @@
         width: 35%;
     }
 }
-@media(max-width: 1025px){
+@media(max-width: 1241px){
     .user-icon{
         top: 11%;
     }
 }
-@media(max-width: 963px){
+@media(max-width: 1039px){
     .login-container{
         width: 45%;
+    }
+    .user-icon{
+        top: 8%;
+    }
+}
+@media(max-width: 867px){
+    .user-icon{
+        padding: 20px;
     }
 }
 @media(max-width: 740px){
     .login-container{
         width: 55%;
     }
+}
+@media(max-width: 709px){
+    .login-container{
+        margin-top: 10%;
+    }
     .user-icon{
-        top: 9%;
+        top: 15%;
     }
 }
-@media(max-width: 670px){
+@media(max-width: 627px){
     .user-icon{
-        padding: 25px;
+        top: 13%;
     }
 }
 @media(max-width: 600px){
@@ -61,14 +74,24 @@
         margin: 10% auto;
     }
 }
+@media(max-width: 627px){
+    .user-icon{
+        top: 10%;
+    }
+}
 @media(max-width: 500px){
     .login-container{
         width: 85%;
     }
 }
+@media(max-width: 627px){
+    .user-icon{
+        top: 8%;
+    }
+}
 @media(max-width: 420px){
     .login-container{
-        margin: 11% auto;
+        margin: 15% auto;
     }
 }
 @media(max-width: 350px){
