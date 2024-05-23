@@ -10,54 +10,103 @@ import { useEffect, useState } from "react";
 import Profile from "./component/Profile";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import PageNotFound from "./component/pageNotFound";
 
 function App() {
 
   const [showAddModal, setshowAddModal] = useState(false)
   const [showEditModal, setshowEditModal] = useState(false)
-  const [adminSignedUp, setAdminSignedUp] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
-  const [cookies, setCookies] = useCookies(['token'])
+  const [adminData, setAdminData] = useState(false)
+  const [isSignUpAllowed, setIsSignUpAllowed] = useState(false)
+  const token = document.cookie
+
+  .split("; ")
+  .find((row) => row.startsWith("token="))
+  ?.split("=")[1];
+
+  console.log(token);
 
   const fetchAdminSignedUpStatus = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/admin-signed-up')
-      setAdminSignedUp(response.data)
+    
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_API}/api/admin/adminProfile`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const user = await response.json();
+      setAdminData(user)
+      if(user?._id){
+        setLoggedIn(true)
+      }
+      else setLoggedIn(false)
     } catch (error) {
       console.log(error);
+      setLoggedIn(false)
     }
   }
-  axios.defaults.headers.common['Authorization'] = `Bearer ${cookies.token}`
 
-
-  const fetchLoggedinStatus = async () => {
+  const signUpPermission = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/logged-in')
-      setLoggedIn(true)
+     
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_API}/api/admin/signUpPermission`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const user = await response.json();
+      console.log(user);
+      if(user.isAllowed){
+        setIsSignUpAllowed(true)
+      }
+      else{
+        setIsSignUpAllowed(false)
+      }
+      
     } catch (error) {
       console.log(error);
+      setIsSignUpAllowed(false)
     }
   }
+
 
   useEffect(() => {
     fetchAdminSignedUpStatus()
+    signUpPermission()
   }, [])
   
-  useEffect(()=>{
-    fetchLoggedinStatus()
-  }, [cookies])
 
   return (
     <BrowserRouter>
       <Navbar loggedIn={loggedIn}/>
       <Routes>
-        <Route path="/" element={<Login setCookies={setCookies} />} />
-        {loggedIn && <><Route path="/blogs" element={<Blogs setshowAddModal={setshowAddModal} setshowEditModal={setshowEditModal} showAddModal={showAddModal} showEditModal={showEditModal} />} >
-          <Route path='/blogs/:id' element={<EachBlog setshowEditModal={setshowEditModal} />} />
-          <Route path="/blogs/addBlogs" element={<AddBlog setshowAddModal={setshowAddModal} />} />
-        </Route>
-          <Route path="/profile" element={<Profile />} /></>}
-        {!adminSignedUp && <Route path="/signup" element={<Signup />} />}
+        {loggedIn?
+        <>
+          <Route path="/blogs" element={<Blogs token={token} setshowAddModal={setshowAddModal} setshowEditModal={setshowEditModal} showAddModal={showAddModal} showEditModal={showEditModal} />} >
+            <Route path='/blogs/:id' element={<EachBlog token={token} setshowEditModal={setshowEditModal} />} />
+            <Route path="/blogs/addBlogs" element={<AddBlog token={token} setshowAddModal={setshowAddModal} />} />
+          </Route>
+          <Route path="/profile" element={<Profile token={token} adminData={adminData} />} />
+        
+        </> 
+       
+       :
+       <>
+          <Route path="/login" element={<Login isSignUpAllowed={isSignUpAllowed} />} />
+          {isSignUpAllowed && <Route path="/signup" element={<Signup />} />}
+       </>
+        }
+         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
   );

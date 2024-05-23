@@ -4,18 +4,26 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Grid, Modal } from '@mui/material'
 import '../style/blogs.css'
 
-export default function Blogs({ showAddModal, showEditModal, setshowAddModal, setshowEditModal }) {
+export default function Blogs({ token,showAddModal, showEditModal, setshowAddModal, setshowEditModal }) {
 
     const [blogs, setBlogs] = useState([])
     const navigate = useNavigate()
+
     const fetchBlogs = async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/api/blogs');
-            setBlogs(response.data);
-        } catch (error) {
-            console.log(error);
-        }
+        const response = await fetch(
+            `${process.env.REACT_APP_BACKEND_API}/api/blogs`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          const blogs = await response.json();
+          console.log(blogs);
     }
+    
     useEffect(() => {
         fetchBlogs()
     }, [blogs])
