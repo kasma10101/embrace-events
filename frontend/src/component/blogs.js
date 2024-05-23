@@ -33,7 +33,8 @@ export default function Blogs() {
                                 <div><img className="blog-image" src={`http://localhost:5000/${eachBlog.blogImage}`} /></div>
                                 <div className="each-blog-container-description">
                                     <div className="each-blog-container-title">{eachBlog.blogTitle}<div className="title-underline"></div></div>
-                                    <div>{eachBlog.blogDescription.split(' ').length > 15 ? eachBlog.blogDescription.split(' ').slice(0, 15).join(' ') + '...' : eachBlog.blogDescription}</div>
+                                    <div>{eachBlog.blogDescription.length > 55 ? eachBlog.blogDescription.slice(0, 55) + '...' : eachBlog.blogDescription}</div>
+                                    <div style={{ float: "right", fontSize: 13, padding: 10 }}>{new Date(eachBlog?.createdAt).toLocaleString()}</div>
                                 </div>
                             </Link>
                         )

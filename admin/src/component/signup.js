@@ -16,7 +16,7 @@ export default function Signup (){
     const handleSubmit = (e) => {
         e.preventDefault()
         try {
-            const response = axios.post('http://localhost:3001/signup', {username, password})
+            const response = axios.post('http://localhost:5000/api/admin/signup', {username, password})
             navigate('/')
         } catch (error) {
          console.log(error);   

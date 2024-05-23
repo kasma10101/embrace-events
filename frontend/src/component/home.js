@@ -3,7 +3,7 @@ import { FaAngleRight, FaBullseye, FaPhoneAlt, FaMapMarkerAlt } from "react-icon
 import home from "../assets/logo/home.png";
 import "../style/home.css";
 import Popup from "./Popup";
-import { FiCircle } from "react-icons/fi";
+import { FaCircle } from "react-icons/fa";
 import eventTicket from "../assets/images/ticket.png";
 
 const faqs = [
@@ -200,23 +200,19 @@ function Home() {
               </div>
               <div className="content">
                 <div>
-                  <div style={{fontSize: 25, fontWeight: 500}}>{event.name}</div>
-                  <div style={{border: '2px solid #12372a', width: 90}}></div>
+                  <div style={{fontSize: 25, fontWeight: 500, color: '#789461'}}>{event.name}</div>
+                  <div style={{border: '2px solid #789461', width: 90}}></div>
                 </div>
                 <div style={{ display: 'flex', gap: 5, }}>
-                  <span><FiCircle /></span>
+                  <span><FaCircle style={{color: '#789461'}}/></span>
                   <span>{event.description.split(' ').slice(0, 4) + '...'}</span>
                 </div>
                 <div style={{ display: 'flex', gap: 5, }}>
-                  <span><FiCircle /></span>
+                  <span><FaCircle style={{color: '#789461'}}/></span>
                   <span>{event.location.split(' ').slice(0, 4) + '...'}</span>
                 </div>
                 <div style={{ display: 'flex', gap: 5, }}>
-                  <span><FiCircle /></span>
-                  <span>{event.price}</span>
-                </div>
-                <div style={{ display: 'flex', gap: 5, }}>
-                  <span><FiCircle /></span>
+                  <span><FaCircle style={{color: '#789461'}} /></span>
                   <span>{event.date}</span>
                 </div>
                 {/* <u1>

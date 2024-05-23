@@ -12,13 +12,15 @@ const getBlogs = async (req, res)=>{
 }
 
 const createBlog = async (req, res) => {
-    const { blogTitle, blogDescription } = req.body;
+    const { blogTitle, blogDescription, createdAt } = req.body;
     try {
         const blog = await Blogs.create({
             blogTitle: blogTitle,
             blogDescription: blogDescription,
-            blogImage: req.file.filename
+            blogImage: req.file.filename,
+            createdAt
         })
+        console.log(req.file.filename );
         res.status(201).json({status: 'SUCCESS', blog })
     } catch (error) {
         res.status(500).json(error)

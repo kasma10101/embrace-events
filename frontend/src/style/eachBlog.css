@@ -1,9 +1,9 @@
 .each-blog{
-    width: 600px;
+    width: 400px;
     background-color: white;
 }
 .each-blog-image{
-    width: 100%;
+    width: fit-content;
     border: 2px solid #799a63;
     height: 300px;
 }

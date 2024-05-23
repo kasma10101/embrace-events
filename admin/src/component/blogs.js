@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Grid, Modal } from '@mui/material'
 import '../style/blogs.css'
 
-export default function Blogs({showAddModal, showEditModal, setshowAddModal, setshowEditModal}) {
+export default function Blogs({ showAddModal, showEditModal, setshowAddModal, setshowEditModal }) {
 
     const [blogs, setBlogs] = useState([])
-    
+    const navigate = useNavigate()
     const fetchBlogs = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/blogs');
@@ -16,7 +16,6 @@ export default function Blogs({showAddModal, showEditModal, setshowAddModal, set
             console.log(error);
         }
     }
-
     useEffect(() => {
         fetchBlogs()
     }, [blogs])
@@ -27,24 +26,36 @@ export default function Blogs({showAddModal, showEditModal, setshowAddModal, set
                 <div className="blogs-container">
                     {blogs ? blogs.map((eachBlog, index) => {
                         return (
-                            <Link onClick={()=>setshowEditModal(true)} className="each-blog-container" to={`${eachBlog._id}`} key={index}>
+                            <Link onClick={() => setshowEditModal(true)} className="each-blog-container" to={`${eachBlog._id}`} key={index}>
                                 <div><img className="blog-image" src={`http://localhost:5000/${eachBlog.blogImage}`} /></div>
                                 <div className="each-blog-container-description">
-                                    <div className="each-blog-container-title">{eachBlog.blogTitle}<div className="title-underline"></div></div>
-                                    <div>{eachBlog.blogDescription.split(' ').length > 15 ? eachBlog.blogDescription.split(' ').slice(0, 15).join(' ') + '...' : eachBlog.blogDescription}</div>
+                                    <div className="each-blog-container-title">{eachBlog.blogTitle.length>10?eachBlog.blogTitle.slice(0, 10) + '...' : eachBlog.blogTitle}<div className="title-underline"></div></div>
+                                    <div>{eachBlog.blogDescription.length > 55 ? eachBlog.blogDescription.slice(0, 55) + '...' : eachBlog.blogDescription}</div>
                                 </div>
+                                    <div style={{ float: "right", fontSize: 13, padding: 10 }}>{new Date(eachBlog?.createdAt).toLocaleString()}</div>
                             </Link>
                         )
                     }) : <></>}
                 </div>
             </div>
-            <Link onClick={()=>setshowAddModal(true)} to='/blogs/addBlogs'>Add blog</Link>
-            <Modal open={showAddModal} onClose={()=>setshowAddModal(false)} className="blog-modal">
+            <div style={{ width: '87%', marginTop: 15 }}>
+                <Link className="add-blog-button" style={{ border: '1.5px solid #12372a', borderRadius: '15px', padding: '10px 15px', float: 'right', width: 120, textDecoration: 'none', textAlign: 'center' }} onClick={() => setshowAddModal(true)} to='/blogs/addBlogs'>Add blog</Link>
+            </div>
+            <Modal open={showAddModal} onClose={
+                () => {
+                    setshowAddModal(false)
+                    navigate('/blogs')
+                }
+            } className="blog-modal">
                 <Grid>
                     <Outlet />
                 </Grid>
             </Modal>
-            <Modal open={showEditModal} onClose={()=>setshowEditModal(false)} className="blog-modal">
+            <Modal open={showEditModal} onClose={
+                () => {
+                    setshowEditModal(false)
+                    navigate('/blogs')
+                }} className="blog-modal">
                 <Grid>
                     <Outlet />
                 </Grid>
