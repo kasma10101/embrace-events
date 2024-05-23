@@ -18,7 +18,7 @@ const createPayment = async (req, res) => {
 
     const publicUrl = 'https://embrace-events.onrender.com'; // Replace with your actual Localtunnel URL
     const callback_url = `${publicUrl}/api/payment/verifypayment`;
-    const return_url = `${publicUrl}`;
+    const return_url = `${publicUrl}/payment/success?tx_ref=${tx_ref}&ticketID=${ticketID}`;
 
     const amount = await Ticket.findOne({ _id: ticketID }).then((ticket) => {
         if (ticketType === 'standard') {

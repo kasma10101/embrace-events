@@ -3,7 +3,9 @@ const TicketTransaction = require('../models/ticketTransactionModel');
 // Get all transactions
 const getAllTransactions = async (req, res) => {
     try {
-        const transactions = await TicketTransaction.find();
+        const transactions = await TicketTransaction.find()
+        .populate('ticketID', 'title')
+        .sort({ createdAt: -1 });
         res.status(200).json(transactions);
     } catch (error) {
         res.status(500).json({ message: error.message });

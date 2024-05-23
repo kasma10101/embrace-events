@@ -21,6 +21,9 @@ app.use(cors(
 ));
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// Serve static files from the 'uploads' directory
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 
 //routes
 app.get('/', (req, res) => {
