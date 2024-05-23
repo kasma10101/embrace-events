@@ -1,0 +1,19 @@
+.add-blog-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    background-color: #fff;
+    padding: 20px;
+    flex-direction: column;
+}
+@media(max-width: 680px){
+    .add-blog-container{
+        width: 400px;
+    }
+}
+@media(max-width: 420px){
+    .add-blog-container{
+        width: 350px;
+    }
+}
