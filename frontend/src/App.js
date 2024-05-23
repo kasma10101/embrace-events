@@ -27,13 +27,13 @@ function App() {
           </>
         } />
 
-        {/* <Route path="/payment/success" element={
+        <Route path="/payment/success" element={
           <>
           <Layout>
             <PaymentSuccess />
           </ Layout>
         </>
-        } /> */}
+        } />
 
         <Route path="/tickets" element={
           <>
