@@ -14,9 +14,13 @@ const getAllTransactions = async (req, res) => {
 
 // Get transaction by ticketID
 const getTransactionByTicketID = async (req, res) => {
-    const { ticketID } = req.params;
+    const { tx_ref } = req.params;
+    console.log("ouuuuuuuuuuu",req.params);
+    console.log("okkk", req.params.tx_ref);
+    console.log(tx_ref);
     try {
-        const transaction = await TicketTransaction.find({ ticketID });
+        const transaction = await TicketTransaction.find({ tx_ref });
+        console.log("ouuuuuuuuuuu",transaction);
         res.status(200).json(transaction);
     } catch (error) {
         res.status(500).json({ message: error.message });

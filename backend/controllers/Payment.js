@@ -17,9 +17,8 @@ const createPayment = async (req, res) => {
     const tx_ref = `${chapa_tx_ref}-${date}-${time}`;
 
     const publicUrl = 'https://embrace-events.onrender.com'; // Replace with your actual Localtunnel URL
-    const frontEndUrl = 'https://embrace-events.vercel.app'
     const callback_url = `${publicUrl}/api/payment/verifypayment`;
-    const return_url = `${frontEndUrl}/payment/success?tx_ref=${tx_ref}`;
+    const return_url = `${publicUrl}`;
 
     const amount = await Ticket.findOne({ _id: ticketID }).then((ticket) => {
         if (ticketType === 'standard') {
@@ -29,6 +28,8 @@ const createPayment = async (req, res) => {
         }
     });
 
+    console.log("amount", amount);
+    console.log(req.body)
 
     try {
         const response = await chapa.initialize({
@@ -46,6 +47,7 @@ const createPayment = async (req, res) => {
             },
         });
 
+        console.log("response", response);
         // Create TicketTransaction with pending status
         const ticketTransaction = new TicketTransaction({
             ticketID: ticketID,
@@ -62,17 +64,19 @@ const createPayment = async (req, res) => {
         });
 
         await ticketTransaction.save();
-
+        console.log(response);
+        console.log("tx", ticketTransaction)
 
         res.status(200).json({ response, tx_ref });
     } catch (error) {
-
+        console.log(error);
         res.status(500).json({ error });
     }
 }
 
 const verifyPayment = async (req, res) => {
     const { trx_ref} = req.body;
+    console.log(req.body, trx_ref)
 
     try {
         const response = await chapa.verify({ tx_ref: trx_ref });
@@ -82,9 +86,11 @@ const verifyPayment = async (req, res) => {
             await TicketTransaction.findOneAndUpdate({ tx_ref: trx_ref }, { status: 'paid' });
         }
 
+        console.log(response);
 
         res.status(200).json(response);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 }
@@ -94,19 +100,7 @@ function generateTicketNumber() {
     return Math.floor(10000 + Math.random() * 90000);
 }
 
-const paymentSuccess = (req, res) => {
-    const { tx_ref, ticketID } = req.query;
-    res.status(200).send(`Payment successful for transaction ${tx_ref} and ticket ${ticketID}`);
-};
-
 module.exports = {
     createPayment,
-    verifyPayment,
-    paymentSuccess
-};
-
-module.exports = {
-    createPayment,
-    verifyPayment,
-    paymentSuccess
+    verifyPayment
 };

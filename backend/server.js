@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(cors(
     {
-        origin: ['http://localhost:3000'], 
+        origin: ['http://localhost:3000', 'https://embrace-events.vercel.app'], 
         credentials: true
     }
 ));
@@ -39,6 +39,6 @@ app.use('/api/transactions', transactionRoute);
 const port = process.env.PORT || 5000;
 mongoose.connect(process.env.MONGO_URI) 
 .then(() => {
-    console.log('connected to db');
+    console.log('connected to databaseb');
     app.listen(port, () => console.log(`server started on port ${port}`));
 }).catch(err => console.log(err));

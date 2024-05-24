@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { verifyPaymentThunk } from '../redux/paymentSlice';
 import { getTransactionByTicketIDThunk } from '../redux/transactionSlice';
 import ButtonLoading from './loader/ButtonLoader';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './PaymentSuccess.css';
 
 const PaymentSuccess = () => {
     const location = useLocation();
@@ -16,11 +18,13 @@ const PaymentSuccess = () => {
     const { transaction, loading, error } = useSelector((state) => state.transactions);
 
     useEffect(() => {
-        if (tx_ref && ticketID) {
-            dispatch(verifyPaymentThunk({ tx_ref }));
-            dispatch(getTransactionByTicketIDThunk(ticketID));
+        if (tx_ref) {
+            dispatch(getTransactionByTicketIDThunk(tx_ref));
         }
     }, [dispatch, tx_ref, ticketID]);
+
+    console.log("tx_ref succ", tx_ref);
+    console.log("ticketID succ", ticketID);
 
     const handlePrint = () => {
         window.print();
@@ -39,19 +43,28 @@ const PaymentSuccess = () => {
         );
     }
 
+    const transactionDetails = transaction ? transaction[0] : null;
+
     return (
         <div className="container">
-            <h3>Payment Successful</h3>
-            {transaction && (
-                <div>
-                    <p><strong>Transaction Reference:</strong> {transaction.tx_ref}</p>
-                    <p><strong>Ticket Type:</strong> {transaction.ticketType}</p>
-                    <p><strong>Amount Paid:</strong> {transaction.amount} {transaction.currency}</p>
-                    <p><strong>Payer Name:</strong> {transaction.fname} {transaction.lname}</p>
-                    <p><strong>Email:</strong> {transaction.email}</p>
-                    <p><strong>Phone:</strong> {transaction.phone}</p>
-                    <p><strong>Ticket Number:</strong> {transaction.ticketNumber}</p>
-                    <button onClick={handlePrint} className="btn btn-primary">Print Ticket</button>
+            <h3 className="my-4">Payment Successful</h3>
+            {transactionDetails && (
+                <div className="ticket" id="ticket">
+                    <div className="ticket-header">
+                        <h4 className="ticket-title">Event Ticket</h4>
+                    </div>
+                    <div className="ticket-body">
+                        <p><strong>Transaction Reference:</strong> {transactionDetails.tx_ref}</p>
+                        <p><strong>Ticket Type:</strong> {transactionDetails.ticketType}</p>
+                        <p><strong>Amount Paid:</strong> {transactionDetails.amount} {transactionDetails.currency}</p>
+                        <p><strong>Payer Name:</strong> {transactionDetails.fname} {transactionDetails.lname}</p>
+                        <p><strong>Email:</strong> {transactionDetails.email}</p>
+                        <p><strong>Phone:</strong> {transactionDetails.phone}</p>
+                        <p><strong>Ticket Number:</strong> {transactionDetails.ticketNumber}</p>
+                    </div>
+                    <div className="ticket-footer">
+                        <button onClick={handlePrint} className="btn btn-primary">Print Ticket</button>
+                    </div>
                 </div>
             )}
         </div>

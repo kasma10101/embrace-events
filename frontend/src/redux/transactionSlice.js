@@ -6,8 +6,9 @@ export const getAllTransactionsThunk = createAsyncThunk('transactions/getAll', a
     return response;
 });
 
-export const getTransactionByTicketIDThunk = createAsyncThunk('transactions/getByTicketID', async (ticketID) => {
-    const response = await getTransactionByTicketID(ticketID);
+export const getTransactionByTicketIDThunk = createAsyncThunk('transactions/getByTicketID', async (tx_ref) => {
+    console.log('iddddddddddd', tx_ref);
+    const response = await getTransactionByTicketID(tx_ref);
     return response;
 });
 

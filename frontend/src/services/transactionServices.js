@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/transactions';
+const API_URL = `${process.env.REACT_APP_BACKEND_URL}/transactions`;
+
 
 export const getAllTransactions = async () => {
     try {
@@ -11,9 +12,11 @@ export const getAllTransactions = async () => {
     }
 };
 
-export const getTransactionByTicketID = async (ticketID) => {
+export const getTransactionByTicketID = async (tx_ref) => {
     try {
-        const response = await axios.get(`${API_URL}/${ticketID}`);
+        console.log('iddddddddddd', tx_ref);
+        const response = await axios.get(`${API_URL}/${tx_ref}`);
+        console.log('response', response);
         return response.data;
     } catch (error) {
         throw error.response.data;
