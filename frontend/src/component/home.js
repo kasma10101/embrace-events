@@ -7,7 +7,8 @@ import { FaCircle } from "react-icons/fa";
 import eventTicket from "../assets/images/ticket.png";
 import {useDispatch, useSelector} from 'react-redux'
 import { useNavigate, Link } from "react-router-dom";
-import { getTicketsThunk } from "../redux/ticketSlice";
+import { getAvailableTicketsThunk, getTicketsThunk, getUpcomingTicketsThunk } from "../redux/ticketSlice";
+import axios from "axios";
 
 const faqs = [
   {
@@ -31,88 +32,23 @@ const faqs = [
     text: "Ticket transfer policies vary depending on the event organizer. Please refer to the event details or contact our customer support for more information.",
   },
 ];
-const event = [
-  {
-    id: 1,
-    name: "Test",
-    description: "description",
-    date: "May 20 - 28, 12:00AM",
-    price: 650,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 2,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "May 22 - 29, 5:00PM",
-    price: 800,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 3,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "June 02 - 10, 7:00PM",
-    price: 500,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 4,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "June 09 - 17, 3:30AM",
-    price: 1200,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 5,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "June 14 - 22, 6:00AM",
-    price: 1500,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 6,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "June 15 - 23, 8:00PM",
-    price: 250,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 7,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "August 22 - 28, 4:00AM",
-    price: 600,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 8,
-    name: "Focaccia",
-    date: "August 22 - 28, 4:00AM",
-    description: "Bread with italian olive oil and rosemary",
-    price: 400,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-];
 
 function Home() {
   let targetDate = new Date("Sep 11, 2024 00:00:00").getTime();
-  
   const dispatch = useDispatch();
-  const { tickets, loading, error } = useSelector((state) => state.tickets);
+  const { tickets, loading, error, availableTickets, upComingTickets } = useSelector((state) => state.tickets);
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getTicketsThunk());
+    dispatch(getUpcomingTicketsThunk());
+    dispatch(getAvailableTicketsThunk())
   }, [dispatch]);
 
   const handleClick = (ticket) => {
     navigate('/payment', {state: {ticket}})
   }
-
+console.log(availableTickets, upComingTickets);
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);

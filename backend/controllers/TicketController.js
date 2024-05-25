@@ -134,7 +134,7 @@ const upcomingTickets = async (req, res) => {
     try {
         const currentDate = new Date();
         const upcomingTickets = await Ticket.find({
-            startDate: { $gt: currentDate },
+            startDate: { $gt: currentDate.toISOString },
         });
         res.status(200).json(upcomingTickets);
     } catch (error) {
@@ -146,8 +146,8 @@ const availableTickets = async (req, res) => {
     try {
         const currentDate = new Date();
         const availableTickets = await Ticket.find({
-            startDate: { $lte: currentDate },
-            endDate: { $gte: currentDate },
+            startDate: { $lte: currentDate.toISOString() },
+            endDate: { $gte: currentDate.toISOString },
         });
         res.status(200).json(availableTickets);
     } catch (error) {

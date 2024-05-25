@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { createTicket, getTickets, getTicketById, updateTicket, deleteTicket } from '../services/ticketService';
+import { createTicket, getTickets, getTicketById, updateTicket, deleteTicket, getAvailableTickets, getUpcomingTickets } from '../services/ticketService';
 
 export const createTicketThunk = createAsyncThunk('tickets/create', async (ticketData) => {
     const response = await createTicket(ticketData);
@@ -10,6 +10,16 @@ export const getTicketsThunk = createAsyncThunk('tickets/getAll', async () => {
     const response = await getTickets();
     return response;
 });
+
+export const getAvailableTicketsThunk = createAsyncThunk('tickets/getAvailableTickets', async()=>{
+    const response = await getAvailableTickets()
+    return response
+})
+
+export const getUpcomingTicketsThunk = createAsyncThunk('tickets/getUpcomingTickets', async()=>{
+    const response = await getUpcomingTickets()
+    return response
+})
 
 export const getTicketByIdThunk = createAsyncThunk('tickets/getById', async (id) => {
     const response = await getTicketById(id);
@@ -32,7 +42,9 @@ const ticketSlice = createSlice({
         tickets: [],
         ticket: null,
         loading: false,
-        error: null
+        error: null,
+        availableTickets: [],
+        upComingTickets: []
     },
     extraReducers: (builder) => {
         builder
@@ -55,6 +67,28 @@ const ticketSlice = createSlice({
                 state.tickets = action.payload;
             })
             .addCase(getTicketsThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+            .addCase(getAvailableTicketsThunk.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(getAvailableTicketsThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.availableTickets = action.payload;
+            })
+            .addCase(getAvailableTicketsThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            })
+            .addCase(getUpcomingTicketsThunk.pending, (state, action) => {
+                state.loading = true;
+            })
+            .addCase(getUpcomingTicketsThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.upComingTickets = action.payload;
+            })
+            .addCase(getUpcomingTicketsThunk.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
             })

@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTable, usePagination } from 'react-table';
-import { getTicketsThunk, deleteTicketThunk } from '../redux/ticketSlice';
+import { getTicketsThunk, deleteTicketThunk, getUpcomingTicketsThunk } from '../redux/ticketSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import moment from 'moment'
 
 const Ticket = () => {
     const dispatch = useDispatch();
-    const { tickets, loading, error } = useSelector((state) => state.tickets);
+    const { tickets, loading, error, upcomingTickets } = useSelector((state) => state.tickets);
     const [showForm, setShowForm] = useState(false);
     const [editingTicket, setEditingTicket] = useState(null);
 
     useEffect(() => {
         dispatch(getTicketsThunk());
+        dispatch(getUpcomingTicketsThunk())
     }, [dispatch]);
+
 
     const data = useMemo(() => tickets, [tickets]);
     const columns = useMemo(() => [
