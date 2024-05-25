@@ -6,7 +6,7 @@ import { FaFileImage } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom"
 
 
-export default function EachBlog({ setshowEditModal }) {
+export default function EachBlog({ setshowEditModal,token, setEquilizer, equilizer }) {
 
     const { id } = useParams()
     const [editedBlog, setEditedBlog] = useState({
@@ -20,7 +20,7 @@ export default function EachBlog({ setshowEditModal }) {
 
     const fetchBlogDetail = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/blogs/${id}`)
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/api/blogs/${id}`)
             setEditedBlog({ ...editedBlog, blogTitle: response.data.blogTitle, blogDescription: response.data.blogDescription, blogImage: response.data.blogImage })
         } catch (error) {
             console.log(error);
@@ -34,12 +34,18 @@ export default function EachBlog({ setshowEditModal }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const fromData = new FormData()
-        fromData.append('blogTitle', editedBlog.blogTitle)
-        fromData.append('blogDescription', editedBlog.blogDescription)
-        fromData.append('file', editedBlog.blogImage)
-        navigate('/blogs')
+        // fromData.append('blogTitle', editedBlog.blogTitle)
+        // fromData.append('blogDescription', editedBlog.blogDescription)
+        // fromData.append('file', editedBlog.blogImage)
         try {
-            const response = await axios.put(`http://localhost:5000/api/blogs/${id}`, fromData)
+            const response = await axios.put(`${process.env.REACT_APP_BACKEND_API}/api/blogs/${id}`, editedBlog, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+               },
+            })
+            console.log(response);
+            setEquilizer(equilizer+2)
             setshowEditModal(false)
 
         } catch (error) {
@@ -50,25 +56,19 @@ export default function EachBlog({ setshowEditModal }) {
     const handleDelete = async (e) => {
         e.preventDefault()
         try {
-            const response = await axios.delete(`http://localhost:5000/api/blogs/${id}`, { withCredentials: true })
-            navigate('/blogs')
+            const response = await axios.delete(`${process.env.REACT_APP_BACKEND_API}/api/blogs/${id}`, {  headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+           } })
+            console.log(response);
             setshowEditModal(false)
+            setEquilizer(equilizer+2)
+
         } catch (error) {
             console.log(error);
         }
     }
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0]
-        if (file) {
-            setEditedBlog({ ...editedBlog, blogImage: file })
-            const reader = new FileReader();
-            reader.readAsDataURL(e.target.files[0])
-            reader.onload = () => {
-                setPreviewImage(reader.result)
-            }
-        }
-    }
 
     return (
         <>
@@ -76,23 +76,27 @@ export default function EachBlog({ setshowEditModal }) {
                 edit ?
                     <div className="each-blog">
                         <Form onSubmit={handleSubmit} >
-                            <div style={{ height: '70vh', overflowY: 'auto', scrollbarWidth: 'none' }}>
-                                <FormGroup style={{ marginTop: 20 }}>
+                            <div style={{ maxHeight: '70vh', overflowY: 'auto', scrollbarWidth: 'none' }}>
+                                <FormGroup >
                                     <InputLabel>
-                                        {previewImage ? <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}><img src={previewImage} className="each-blog-image" /></div> : <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}><img className="each-blog-image" src={`http://localhost:5000/${editedBlog.blogImage}`} /></div>}
-                                        <TextField
-                                            onChange={handleImageChange}
-                                            type="file"
-                                            style={{ display: 'none' }}
-                                        />
+                                        {previewImage ? 
+                                           <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                             <img src={previewImage}  style={{height: '300px', width: '100%'}} className="each-blog-image" />
+                                          </div> : 
+                                          <div style={{ display: 'flex', justifyContent: 'center'}}>
+                                             <img className="each-blog-image" style={{height: '300px', width: '100%'}} src={`${process.env.REACT_APP_BACKEND_API}/${editedBlog.blogImage}`} />
+                                        </div>}
+                                       
                                     </InputLabel>
                                 </FormGroup>
+
                                 <FormGroup style={{ marginTop: 20, paddingLeft: 20 }}>
                                     <TextField
                                         value={editedBlog.blogTitle}
                                         onChange={(e) => setEditedBlog({ ...editedBlog, blogTitle: e.target.value })}
                                         type="text"
-                                        style={{ width: 300 }}
+                                        className="edit-input"
+                                        multiline
                                     />
                                 </FormGroup>
                                 <FormGroup style={{ marginTop: 20, paddingLeft: 20 }}>
@@ -100,17 +104,19 @@ export default function EachBlog({ setshowEditModal }) {
                                         value={editedBlog.blogDescription}
                                         onChange={(e) => setEditedBlog({ ...editedBlog, blogDescription: e.target.value })}
                                         type="text"
-                                        style={{ width: 300 }}
+                                        className="edit-input"
                                         multiline
                                     />
                                 </FormGroup>
                             </div>
-                            <Button type="submit" variant="outline-dark" style={{ width: 300, margin: '20px 0px 20px 40px' }}>Edit</Button>
+                            <Button type="submit" variant="outline-dark" className="edit-button" style={{ width: 300 }}>Edit</Button>
                         </Form>
                     </div> :
-                    <div className="each-blog" style={{ borderBottom: '1px solid #12372a' }}>
-                        <div style={{ height: '70vh', overflowY: 'auto', scrollbarWidth: 'none' }}>
-                            <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}><img className="each-blog-image" src={`http://localhost:5000/${editedBlog.blogImage}`} /></div>
+                    <div className="each-blog">
+                        <div style={{ maxHeight: '70vh', overflowY: 'auto', scrollbarWidth: 'none' }}>
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                <img className="each-blog-image" src={`${process.env.REACT_APP_BACKEND_API}/${editedBlog.blogImage}`} />
+                          </div>
                             <div className="each-blog-description">
                                 <div className="each-blog-title">{editedBlog.blogTitle}</div>
                                 <div className="title-underline"></div>

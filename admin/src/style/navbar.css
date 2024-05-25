@@ -17,7 +17,8 @@ nav {
   position: fixed;
   background: var(--clr-dark);
   z-index: 3;
-  /* padding: 0.5rem 0rem; */
+  padding: 0.5rem 0rem;
+  top: 0;
 }
 ul {
   list-style: none;
@@ -104,13 +105,13 @@ nav li a:hover {
     display: none;
   }
   .nav__link {
-    margin-top: 3.5rem;
+    /* margin-top: 2.8rem; */
+    margin-top: -5%;
     width: 100%;
     text-align: center;
     float: right;
     list-style: none;
     padding-top: 2rem;
-    gap: rem;
     background: var(--clr-dark);
     position: relative;
     z-index: 999;
@@ -131,5 +132,14 @@ nav li a:hover {
     color: #6b76ff;
     text-decoration: none;
     font-family: "Work Sans", sans-serif;
+  }
+  .nav__link__two{
+    display: none;
+  }
+}
+
+@media(max-width: 600px){
+  .nav__link{
+    margin-top: -2%;
   }
 }

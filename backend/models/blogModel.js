@@ -13,11 +13,10 @@ const blogSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    createdAt: {
-        type: Date,
-        default: Date.now()
-    }
-}, {timestamp: true})
+    
+}, {
+    timestamps: true
+})
 
 const blogModel = mongoose.model('blogs', blogSchema)
 module.exports = blogModel

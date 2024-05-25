@@ -6,9 +6,9 @@
     align-items: center;
     flex-direction: column;
     gap: 10px;
-    height: 50vh;
+    min-height: 50vh;
     margin: 0px auto;
-    padding: 10px;
+    /* padding: 50px; */
 }
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap');
 .login-button{
@@ -25,7 +25,7 @@
     padding: 30px;
     border-radius: 50%; 
     position: absolute;
-    top: 15%
+    top: 18%
 }
 @media(max-width: 1300px){
     .login-container{

@@ -6,7 +6,7 @@ import { FormGroup, InputLabel, TextField } from "@mui/material";
 import { FaFileImage } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-export default function AddBlog({ setshowAddModal }) {
+export default function AddBlog({ setshowAddModal,token,setEquilizer,equilizer }) {
     const [blog, setBlog] = useState({
         blogTitle: '',
         blogDescription: '',
@@ -26,15 +26,20 @@ export default function AddBlog({ setshowAddModal }) {
         fromData.append('blogDescription', blog.blogDescription.trim())
         fromData.append('file', blog.blogImage)
         try {
-            const response = await axios.post('http://localhost:5000/api/blogs', fromData)
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_API}/api/blogs`, fromData,{
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${token}`,
+               },
+              }
+            )
             console.log(response);
             setshowAddModal(false)
-            setBlog({ blogTitle: response.data.blogTitle, blogDescription: response.data.blogDescription, blogImage: response.data.blogImage });
-            navigate('/blogs')
+            setEquilizer(equilizer+2)
         } catch (error) {
-            if (!blog.blogTitle || !blog.blogTitle.trim()) setError((prev) => ({ ...prev, blogTitle: true }));
-            if (!blog.blogDescription || !blog.blogDescription.trim()) setError((prev) => ({ ...prev, blogDescription: true }));
-            if (!blog.blogImage) setError((prev) => ({ ...prev, blogImage: true }));
+            // if (!blog.blogTitle || !blog.blogTitle.trim()) setError((prev) => ({ ...prev, blogTitle: true }));
+            // if (!blog.blogDescription || !blog.blogDescription.trim()) setError((prev) => ({ ...prev, blogDescription: true }));
+            // if (!blog.blogImage) setError((prev) => ({ ...prev, blogImage: true }));
             console.log(error);
         }
     }
@@ -70,7 +75,7 @@ export default function AddBlog({ setshowAddModal }) {
                         placeholder="Enter Blog Description"
                         onChange={(e) => setBlog({ ...blog, blogDescription: e.target.value })}
                         type="text"
-                        style={{ width: 300 }}
+                        style={{ width: 300, maxHeight: 200, overflowY: "auto", scrollbarWidth: 'none' }}
                         multiline
                     />
                     {error.blogDescription && <p style={{ fontSize: 10, color: 'red', paddingLeft: '5px', fontFamily: 'nyala' }}>You have to add the description !</p>}

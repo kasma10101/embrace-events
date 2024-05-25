@@ -16,7 +16,7 @@ export default function EachBlog() {
 
     const fetchBlogDetail = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/blogs/${id}`)
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/api/blogs/${id}`)
             seteachBlog({ ...eachBlog, blogTitle: response.data.blogTitle, blogDescription: response.data.blogDescription, blogImage: response.data.blogImage })
         } catch (error) {
             console.log(error);
@@ -30,7 +30,7 @@ export default function EachBlog() {
 
     return (
         <div className="each-blog">
-            <div style={{display: 'flex', justifyContent: 'center', padding: '20px'}}><img className="each-blog-image" src={`http://localhost:5000/${eachBlog.blogImage}`} /></div>
+            <div><img className="each-blog-image" src={`${process.env.REACT_APP_BACKEND_API}/${eachBlog.blogImage}`} /></div>
             <div className="each-blog-description">
                 <div className="each-blog-title">{eachBlog.blogTitle}</div>
                 <div className="title-underline"></div>

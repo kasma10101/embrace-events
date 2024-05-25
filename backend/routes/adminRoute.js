@@ -1,15 +1,13 @@
 const express = require('express');
 const router = express.Router();
-
+let {protect}=require("../services/authMiddleWare")
 const {
     adminSignUp,
     adminLogIn, 
-    validateToken, 
     getAdminProfile,
     editAdminProfile,
-    adminSignedUp,
+    signUpPermission,
     logout,
-    loggedIn
 } = require('../controllers/admin')
 
 //admin signup
@@ -18,19 +16,13 @@ router.post('/signup', adminSignUp)
 //admin login
 router.post('/login', adminLogIn)
 
-router.post('/validate-token', validateToken)
+router.get('/signUpPermission', signUpPermission)
 
 //get the profile of the admin
-router.get('/adminProfile', getAdminProfile)
+router.get('/adminProfile', protect ,getAdminProfile)
 
 //edit the profile of the admin
-router.put('/update/:id', editAdminProfile)
-
-//get the admin signedup once
-router.get('/admin-signed-up', adminSignedUp)
-
-//get the loggedin admin
-router.get('/logged-in', loggedIn)
+router.put('/update', protect, editAdminProfile)
 
 //logout 
 router.post('/logout', logout)

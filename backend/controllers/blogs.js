@@ -7,49 +7,56 @@ const getBlogs = async (req, res)=>{
         const blogs = await Blogs.find();
         res.status(200).json(blogs)
     } catch (error) {
-        res.status(500).json('error')
+        console.log(error);
+        res.status(500).json({error:'Please check your internate connection.'})
     }
 }
 
 const createBlog = async (req, res) => {
-    const { blogTitle, blogDescription, createdAt } = req.body;
+    const { blogTitle, blogDescription } = req.body;
+    if(!req.user)  return res.status(404).json({error:"Not Authorized"})
     try {
         const blog = await Blogs.create({
             blogTitle: blogTitle,
             blogDescription: blogDescription,
             blogImage: req.file.filename,
-            createdAt
         })
         console.log(req.file.filename );
-        res.status(201).json({status: 'SUCCESS', blog })
+        res.status(201).json({msg: 'Successfuly created' })
     } catch (error) {
-        res.status(500).json(error)
+        console.log(error);
+        res.status(500).json({error:'Please check your internate connection.'})
     }
 }
 
 const editBlog = async(req, res)=>{
     const id = req.params.id;
     const {blogTitle, blogDescription} = req.body;
+    console.log('====================================');
+    console.log(blogTitle,id);
+    console.log('====================================');
+    if(!req.user)  return res.status(404).json({error:"Not Authorized"})
     try {
         const updateData = {
             blogTitle: blogTitle,
             blogDescription: blogDescription,
-            blogImage: req?.file?.filename
         };
         const editedBlog = await Blogs.findByIdAndUpdate(id, updateData)
-        res.status(200).json({status: 'SUCCESS', editedBlog})
+        res.status(200).json({msg: 'Successfuly updated',})
     } catch (error) {
-        if (error) throw error
-        res.status(500).json('error')
+        console.log(error);
+        res.status(500).json({error:'Please check your internate connection.'})
     }
 }
 
 const deleteBlog = async(req, res)=>{
     try {
+        if(!req.user)  return res.status(404).json({error:"Not Authorized"})
         const deletedBlog = await Blogs.findByIdAndDelete(req.params.id, req.body)
         res.status(200).json(deletedBlog)
     } catch (error) {
-        res.status(500).json('error')
+        console.log(error);
+        res.status(500).json({error:'Please check your internate connection.'})
     }
 }
 
@@ -58,7 +65,8 @@ const getBlogDetail = async(req, res)=>{
         const eachBlog = await Blogs.findById(req.params.id);
         res.status(200).json(eachBlog)
     } catch (error) {
-        res.status(500).json('error')
+        console.log(error);
+        res.status(500).json({error:'Please check your internate connection.'})
     }
 }
 
