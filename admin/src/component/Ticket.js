@@ -5,7 +5,7 @@ import { getTicketsThunk, deleteTicketThunk } from './redux/ticketSlice';
 // import TicketForm from './TicketForm';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import TicketForm from './TicketForm';
-
+import moment from 'moment'
 
 const Ticket = () => {
     const dispatch = useDispatch();
@@ -21,8 +21,8 @@ const Ticket = () => {
         { Header: 'No', accessor: 'no', Cell: ({ row }) => row.index + 1},
         { Header: 'Title', accessor: 'title' },
         { Header: 'Description', accessor: 'description' },
-        { Header: 'Start Date', accessor: 'startDate' },
-        { Header: 'End Date', accessor: 'endDate' },
+        { Header: 'Start Date', accessor: 'startDate', Cell: ({ row }) => moment(row.original.startDate).format('LL') },
+        { Header: 'End Date', accessor: 'endDate',Cell: ({ row }) => moment(row.original.endDate).format('LL') },
         { Header: 'Standard Amount', accessor: 'standardAmount' },
         { Header: 'VIP Amount', accessor: 'vipAmount' },
         {Header: 'Location', accessor: 'location' },

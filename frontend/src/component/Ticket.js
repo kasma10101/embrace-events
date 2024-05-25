@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTable, usePagination } from 'react-table';
 import { getTicketsThunk, deleteTicketThunk } from '../redux/ticketSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import moment from 'moment'
 
 const Ticket = () => {
     const dispatch = useDispatch();
@@ -20,12 +20,12 @@ const Ticket = () => {
         { Header: 'No', accessor: 'no', Cell: ({ row }) => row.index + 1 },
         { Header: 'Title', accessor: 'title' },
         { Header: 'Description', accessor: 'description' },
-        { Header: 'Start Date', accessor: 'startDate' },
-        { Header: 'End Date', accessor: 'endDate' },
+        { Header: 'Start Date', accessor: 'startDate', Cell: ({ row }) => moment(row.original.startDate).format('LL') },
+        { Header: 'End Date', accessor: 'endDate',Cell: ({ row }) => moment(row.original.endDate).format('LL') },
         { Header: 'Standard Amount', accessor: 'standardAmount' },
         { Header: 'VIP Amount', accessor: 'vipAmount' },
         { Header: 'Location', accessor: 'location' },
-        { Header: 'Image', accessor: 'image', Cell: ({ row }) => <img src={row.original} alt={row.original.title} style={{ width: '200px', height: '100px' }} /> },
+        { Header: 'Image', accessor: 'image', Cell: ({ row }) => <img src={row.original.image.filePath} alt={row.original.title} style={{ width: '200px', height: '100px' }} /> },
     ], []);
 
     const {
