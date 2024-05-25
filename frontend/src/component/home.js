@@ -5,6 +5,9 @@ import "../style/home.css";
 import Popup from "./Popup";
 import { FaCircle } from "react-icons/fa";
 import eventTicket from "../assets/images/ticket.png";
+import {useDispatch, useSelector} from 'react-redux'
+import { useNavigate, Link } from "react-router-dom";
+import { getTicketsThunk } from "../redux/ticketSlice";
 
 const faqs = [
   {
@@ -97,6 +100,18 @@ const event = [
 
 function Home() {
   let targetDate = new Date("Sep 11, 2024 00:00:00").getTime();
+  
+  const dispatch = useDispatch();
+  const { tickets, loading, error } = useSelector((state) => state.tickets);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getTicketsThunk());
+  }, [dispatch]);
+
+  const handleClick = (ticket) => {
+    navigate('/payment', {state: {ticket}})
+  }
 
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -159,10 +174,10 @@ function Home() {
         </p>
         <div className="btn">
           <button className="learnmore">
-            <a href="">
+            <Link to="/about">
               Learn More{" "}
               <FaAngleRight style={{ position: "relative", top: "0.2rem" }} />
-            </a>
+            </Link>
           </button>
           <Popup />
         </div>
@@ -193,27 +208,27 @@ function Home() {
         <Card />
         <Card />
         <Card /> */}
-          {event.map((event) => (
-            <div className="box">
+          {tickets.map((ticket) => (
+            <div className="box" onClick={()=>handleClick(ticket)}>
               <div className="poster">
                 <img src={eventTicket} alt="event ticket" />
               </div>
               <div className="content">
                 <div>
-                  <div style={{fontSize: 25, fontWeight: 500, color: '#789461'}}>{event.name}</div>
+                  <div style={{fontSize: 25, fontWeight: 500, color: '#789461'}}>{ticket.name}</div>
                   <div style={{border: '2px solid #789461', width: 90}}></div>
                 </div>
                 <div style={{ display: 'flex', gap: 5, }}>
                   <span><FaCircle style={{color: '#789461'}}/></span>
-                  <span>{event.description.split(' ').slice(0, 4) + '...'}</span>
+                  <span>{ticket.description.split(' ').slice(0, 4) + '...'}</span>
                 </div>
                 <div style={{ display: 'flex', gap: 5, }}>
                   <span><FaCircle style={{color: '#789461'}}/></span>
-                  <span>{event.location.split(' ').slice(0, 4) + '...'}</span>
+                  <span>{ticket.location.split(' ').slice(0, 4) + '...'}</span>
                 </div>
                 <div style={{ display: 'flex', gap: 5, }}>
                   <span><FaCircle style={{color: '#789461'}} /></span>
-                  <span>{event.date}</span>
+                  <span>{ticket.date}</span>
                 </div>
                 {/* <u1>
                   <li>{event.description.split(' ').length > 5 ? event.description.split(' ').slice(0, 5).join(' ') + '...' : event.description}</li>
@@ -269,6 +284,16 @@ function Home() {
         <button className="contact__btn">
           <a href="">Contact</a>
         </button>
+      </div>
+      <div>
+        {tickets.map((ticket, index)=>{
+          return(
+            <div onClick={()=>handleClick(ticket)}>
+            <div>{ticket.title}</div>
+            <div>{ticket.location}</div>
+            </div>
+          )
+        })}
       </div>
     </>
   );

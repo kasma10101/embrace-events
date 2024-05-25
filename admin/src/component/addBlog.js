@@ -75,7 +75,7 @@ export default function AddBlog({ setshowAddModal,token,setEquilizer,equilizer }
                         placeholder="Enter Blog Description"
                         onChange={(e) => setBlog({ ...blog, blogDescription: e.target.value })}
                         type="text"
-                        style={{ width: 300 }}
+                        style={{ width: 300, maxHeight: 200, overflowY: "auto", scrollbarWidth: 'none' }}
                         multiline
                     />
                     {error.blogDescription && <p style={{ fontSize: 10, color: 'red', paddingLeft: '5px', fontFamily: 'nyala' }}>You have to add the description !</p>}

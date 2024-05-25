@@ -18,7 +18,8 @@ export default function Profile({adminData,token}) {
     useEffect(()=>{
         setUsername(adminData.username||"")
         setEmail(adminData.email||"")
-
+        setPassword(adminData.password || "")
+        console.log(adminData);
     },[adminData])
 
     const handleSubmit = async (e) => {
@@ -70,7 +71,7 @@ export default function Profile({adminData,token}) {
 
     return (
         <>
-            <div style={{ paddingTop: '15%' }}>
+            <div style={{ paddingTop: '5%' }}>
                 <div className="login-container">
                     <Typography variant="h4" sx={{paddingTop:"25px"}}>Admin Profile</Typography>
                     <div style={{ marginTop: '10%' }}>

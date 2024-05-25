@@ -154,6 +154,7 @@
   gap: 10px;
   align-items: center;
   width: 390px;
+  cursor: pointer;
 }
 .content {
   padding-left: 10px;

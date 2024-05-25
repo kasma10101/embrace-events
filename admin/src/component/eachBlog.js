@@ -76,15 +76,15 @@ export default function EachBlog({ setshowEditModal,token, setEquilizer, equiliz
                 edit ?
                     <div className="each-blog">
                         <Form onSubmit={handleSubmit} >
-                            <div style={{ height: '70vh', overflowY: 'auto', scrollbarWidth: 'none' }}>
-                                <FormGroup style={{ marginTop: 20 }}>
+                            <div style={{ maxHeight: '70vh', overflowY: 'auto', scrollbarWidth: 'none' }}>
+                                <FormGroup >
                                     <InputLabel>
                                         {previewImage ? 
-                                           <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
-                                             <img src={previewImage} className="each-blog-image" />
+                                           <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                             <img src={previewImage}  style={{height: '300px', width: '100%'}} className="each-blog-image" />
                                           </div> : 
-                                          <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
-                                             <img className="each-blog-image" src={`${process.env.REACT_APP_BACKEND_API}/${editedBlog.blogImage}`} />
+                                          <div style={{ display: 'flex', justifyContent: 'center'}}>
+                                             <img className="each-blog-image" style={{height: '300px', width: '100%'}} src={`${process.env.REACT_APP_BACKEND_API}/${editedBlog.blogImage}`} />
                                         </div>}
                                        
                                     </InputLabel>
@@ -95,7 +95,8 @@ export default function EachBlog({ setshowEditModal,token, setEquilizer, equiliz
                                         value={editedBlog.blogTitle}
                                         onChange={(e) => setEditedBlog({ ...editedBlog, blogTitle: e.target.value })}
                                         type="text"
-                                        style={{ width: 300 }}
+                                        className="edit-input"
+                                        multiline
                                     />
                                 </FormGroup>
                                 <FormGroup style={{ marginTop: 20, paddingLeft: 20 }}>
@@ -103,17 +104,17 @@ export default function EachBlog({ setshowEditModal,token, setEquilizer, equiliz
                                         value={editedBlog.blogDescription}
                                         onChange={(e) => setEditedBlog({ ...editedBlog, blogDescription: e.target.value })}
                                         type="text"
-                                        style={{ width: 300 }}
+                                        className="edit-input"
                                         multiline
                                     />
                                 </FormGroup>
                             </div>
-                            <Button type="submit" variant="outline-dark" style={{ width: 300, margin: '20px 0px 20px 40px' }}>Edit</Button>
+                            <Button type="submit" variant="outline-dark" className="edit-button" style={{ width: 300 }}>Edit</Button>
                         </Form>
                     </div> :
-                    <div className="each-blog" style={{ borderBottom: '1px solid #12372a' }}>
-                        <div style={{ height: '70vh', overflowY: 'auto', scrollbarWidth: 'none' }}>
-                            <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
+                    <div className="each-blog">
+                        <div style={{ maxHeight: '70vh', overflowY: 'auto', scrollbarWidth: 'none' }}>
+                            <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <img className="each-blog-image" src={`${process.env.REACT_APP_BACKEND_API}/${editedBlog.blogImage}`} />
                           </div>
                             <div className="each-blog-description">

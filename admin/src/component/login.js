@@ -88,7 +88,7 @@ export default function Login({isSignUpAllowed}) {
                             />
                         </FormGroup>
 
-                        {error&&<div style={{margin:"8px 0 8px"}}><Alert severity="error">{error}</Alert></div>}
+                        {error&&<div style={{margin:"8px 0 8px", width: 300}}><Alert severity="error">{error}</Alert></div>}
 
                         <div>
                         {loading

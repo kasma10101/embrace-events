@@ -7,10 +7,9 @@ const Chapa = require('chapa-nodejs').Chapa;
 const chapa = new Chapa({
     secretKey: process.env.API_KEY,
 });
-
 const createPayment = async (req, res) => {
+    console.log("amount", API_KEY);
     const { ticketID, ticketType, email, phone, fname, lname, currency } = req.body;
-
     const chapa_tx_ref = await chapa.generateTransactionReference();
     const date = new Date().toISOString().slice(0, 10); // Get YYYY-MM-DD format
     const time = new Date().toISOString().slice(11, 16).replace(":", ""); // Get HH:MM format (without seconds)
@@ -27,11 +26,10 @@ const createPayment = async (req, res) => {
             return ticket.vipAmount;
         }
     });
-
-    console.log("amount", amount);
-    console.log(req.body)
-
+    
+    
     try {
+        console.log(req.body)
         const response = await chapa.initialize({
             first_name: fname,
             last_name: lname,
@@ -77,10 +75,11 @@ const createPayment = async (req, res) => {
 const verifyPayment = async (req, res) => {
     const { trx_ref} = req.body;
     console.log(req.body, trx_ref)
+    console.log(API_KEY);
 
     try {
         const response = await chapa.verify({ tx_ref: trx_ref });
-
+console.log(response);
         // Update TicketTransaction status if payment is successful
         if (response.status === 'success') {
             await TicketTransaction.findOneAndUpdate({ tx_ref: trx_ref }, { status: 'paid' });

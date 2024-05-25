@@ -11,6 +11,8 @@ import Profile from "./component/Profile";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import PageNotFound from "./component/pageNotFound";
+import Transaction from "./component/Transaction";
+import Ticket from "./component/Ticket";
 
 function App() {
 
@@ -21,12 +23,10 @@ function App() {
   const [isSignUpAllowed, setIsSignUpAllowed] = useState(false)
   const [equilizer, setEquilizer] = useState(1)
   const token = document.cookie
-
   .split("; ")
   .find((row) => row.startsWith("token="))
   ?.split("=")[1];
 
-  console.log(token);
 
   const fetchAdminSignedUpStatus = async () => {
     try {
@@ -66,7 +66,6 @@ function App() {
         }
       );
       const user = await response.json();
-      console.log(user);
       if(user.isAllowed){
         setIsSignUpAllowed(true)
       }
@@ -97,6 +96,8 @@ function App() {
             <Route path='/blogs/:id' element={<EachBlog equilizer={equilizer} setEquilizer={setEquilizer}  token={token} setshowEditModal={setshowEditModal} />} />
             <Route path="/blogs/addBlogs" element={<AddBlog equilizer={equilizer} setEquilizer={setEquilizer}  token={token} setshowAddModal={setshowAddModal} />} />
           </Route>
+          <Route path="/transaction" element={<Transaction />} />
+          <Route path="/tickets" element={<Ticket />} />
           <Route path="/profile" element={<Profile token={token} adminData={adminData} />} />
         
         </> 

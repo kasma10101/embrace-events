@@ -18,22 +18,6 @@ export default function Footer() {
             Join our newsletter to receive updates on upcoming events and
             releases.
           </p>
-          <div className="subscribe">
-            <input
-              type="text"
-              name=""
-              id=""
-              style={{ textAlign: "left" }}
-              placeholder="Enter email here"
-            />
-            <button className="subscribe__btn">
-              <a href="">Subscribe</a>
-            </button>
-          </div>
-          <p>
-            By subscribing, you agree to our Privacy Policy and consent to
-            receive updates from our company
-          </p>
         </div>
         <div className="second">
           <div className="one">

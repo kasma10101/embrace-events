@@ -4,7 +4,7 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import "../style/navbar.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-export default function Navbar({loggedIn}) {
+export default function Navbar({ loggedIn }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [icon, setIcon] = useState(true);
   const [text, setText] = useState(true);
@@ -18,24 +18,26 @@ export default function Navbar({loggedIn}) {
 
   const location = useLocation()
 
-  useEffect(()=>{
-     const paths=location.pathname.split("/")
-     if(!loggedIn){
-        if(paths.length>1 && (paths[1] !=='signup' && paths[1] !=='login')){
-            navigate("/login")
-        }
+  useEffect(() => {
+    const paths = location.pathname.split("/")
+    if (!loggedIn) {
+      if (paths.length > 1 && (paths[1] !== 'signup' && paths[1] !== 'login')) {
+        navigate("/login")
+      }
 
-     }
-     else{
-      if(paths.length>1 && (paths[1] ==='login' || paths[1] ==='signup')){
+    }
+    else {
+      if (paths.length > 1 && (paths[1] === 'login' || paths[1] === 'signup')) {
+        console.log(paths);
         navigate("/profile")
-       }
-       else{
+      }
+      else {
+        console.log(paths);
         navigate(paths[1])
-       }
-       
-     }
-    
+      }
+
+    }
+
   }, [loggedIn])
 
   return (
@@ -49,27 +51,30 @@ export default function Navbar({loggedIn}) {
             </li>
           </div>
 
-          <div className={isMenuOpen ? "none" : "nav__link__two close"}>
-              {loggedIn ?
-                  <>
-                      <li>
-                        <Link to={loggedIn ? "/blogs" : "/"}>Blog</Link>
-                      </li>
-                      <li>
-                        <Link to="/tickets">Tickets</Link>
-                      </li>
-                      <li>
-                        <Link to={loggedIn ? "/profile" : "/"}>Profile</Link>
-                      </li>
-                  
-                  </>
-              
-              :
-                  <li>
-                    <Link to="/login">Login</Link>
-                  </li>
+          <div className={isMenuOpen ? "nav__link__two" : "nav__link__two close"}>
+            {loggedIn ?
+              <>
+                <li>
+                  <Link to={loggedIn ? "/blogs" : "/"}>Blog</Link>
+                </li>
+                <li>
+                  <Link to="/tickets">Tickets</Link>
+                </li>
+                <li>
+                  <Link to="/transaction">Transactions</Link>
+                </li>
+                <li>
+                  <Link to={loggedIn ? "/profile" : "/"}>Profile</Link>
+                </li>
 
-              }
+              </>
+
+              :
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+
+            }
           </div>
           <div
             className="toggle"
@@ -89,26 +94,29 @@ export default function Navbar({loggedIn}) {
       </nav>
 
       <div className={isMenuOpen ? "nav__link open" : "none"}>
-             {loggedIn ?
-                  <>
-                      <li>
-                        <Link to={loggedIn ? "/blogs" : "/"}>Blog</Link>
-                      </li>
-                      <li>
-                        <Link to="/tickets">Tickets</Link>
-                      </li>
-                      <li>
-                        <Link to={loggedIn ? "/profile" : "/"}>Profile</Link>
-                      </li>
-                  
-                  </>
-              
-              :
-                  <li>
-                    <Link to="/login">Login</Link>
-                  </li>
+        {loggedIn ?
+          <>
+            <li>
+              <Link onClick={() => setIsMenuOpen(false)} to={loggedIn ? "/blogs" : "/"}>Blog</Link>
+            </li>
+            <li>
+              <Link onClick={() => setIsMenuOpen(false)} to="/tickets">Tickets</Link>
+            </li>
+            <li>
+              <Link to="/transaction">Transaction</Link>
+            </li>
+            <li>
+              <Link onClick={() => setIsMenuOpen(false)} to={loggedIn ? "/profile" : "/"}>Profile</Link>
+            </li>
 
-              }
+          </>
+
+          :
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+
+        }
       </div>
     </>
   );

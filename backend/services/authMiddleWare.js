@@ -10,9 +10,8 @@ let protect = async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(" ")[1];
-
+      
       let decoded = jwt.verify(token, process.env.JWT_TOKEN);
-
       req.user = await User.findById(decoded.id).select("-password");
       req.token = token;
       const tokenExpirationDate = new Date(decoded.exp * 1000);

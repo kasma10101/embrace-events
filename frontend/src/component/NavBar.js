@@ -2,6 +2,7 @@ import { useState } from "react";
 import embraceLogo from "../assets/logo/embraceLogo.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../style/navbar.css";
+import {Link} from 'react-router-dom'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,18 +25,24 @@ export default function Navbar() {
             </li>
           </div>
 
-          <div className={isMenuOpen ? "none" : "nav__link__two close"}>
+          <div className={isMenuOpen ? "nav__link__two " : "nav__link__two close"}>
             <li>
-              <a href="/">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="">About</a>
+              <Link to="/blogs">Blog</Link>
             </li>
             <li>
-              <a href="/blogs">Blog</a>
+              <Link to="/tickets">Tickets</Link>
             </li>
             <li>
-              <a href="">Contact</a>
+              <Link to="/payment">Payment</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
             </li>
           </div>
           <div
@@ -44,33 +51,30 @@ export default function Navbar() {
             style={icon ? { width: "100%" } : {}}
           >
             <div className="icon">
-              {icon ? (
+              {!isMenuOpen ? (
                 <FaBars cursor={"pointer"} />
               ) : (
                 <FaTimes cursor={"pointer"} />
               )}
             </div>
-            <div className="text">{text ? "MENU" : "CLOSE"}</div>
+            <div className="text">{!isMenuOpen ? "MENU" : "CLOSE"}</div>
           </div>
         </ul>
       </nav>
 
       <div className={isMenuOpen ? "nav__link open" : "none"}>
-        <li>
-          <a href="">Home</a>
-        </li>
-        <li>
-          <a href="">About</a>
-        </li>
-        <li>
-          <a href="">Events</a>
-        </li>
-        <li>
-          <a href="/blogs">Blog</a>
-        </li>
-        <li>
-          <a href="">Contact</a>
-        </li>
+      <li>
+              <Link onClick={()=>setIsMenuOpen(false)} to="/">Home</Link>
+            </li>
+            <li>
+              <Link onClick={()=>setIsMenuOpen(false)} to="/blogs">Blog</Link>
+            </li>
+            <li>
+              <Link onClick={()=>setIsMenuOpen(false)} to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/about">Contact</Link>
+            </li>
       </div>
     </>
   );
