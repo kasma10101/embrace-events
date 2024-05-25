@@ -133,11 +133,12 @@ const deleteTicket = async (req, res) => {
 const upcomingTickets = async (req, res) => {
     try {
         const currentDate = new Date();
-        const upcomingTickets = await Ticket.find({
+        const tickets = await Ticket.find({
             startDate: { $gt: currentDate },
         });
-        res.status(200).json(upcomingTickets);
+        res.status(200).json(tickets);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };
@@ -145,12 +146,13 @@ const upcomingTickets = async (req, res) => {
 const availableTickets = async (req, res) => {
     try {
         const currentDate = new Date();
-        const availableTickets = await Ticket.find({
+        const tickets = await Ticket.find({
             startDate: { $lte: currentDate },
             endDate: { $gte: currentDate },
         });
-        res.status(200).json(availableTickets);
+        res.status(200).json(tickets);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };
