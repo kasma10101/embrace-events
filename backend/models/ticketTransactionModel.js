@@ -47,7 +47,9 @@ const ticketTransactionSchema = new mongoose.Schema({
         enum: ['pending', 'paid', 'failed'],
         default: 'pending'
     }
-});
+},{
+    timestamps: true 
+  });
 
 const TicketTransaction = mongoose.model('TicketTransaction', ticketTransactionSchema);
 

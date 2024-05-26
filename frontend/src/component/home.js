@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, Link } from "react-router-dom";
 import { getAvailableTicketsThunk, getTicketsThunk, getUpcomingTicketsThunk } from "../redux/ticketSlice";
 import moment from "moment";
+import LockIcon from '@mui/icons-material/Lock';
+import { Box } from "@mui/material";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const faqs = [
   {
@@ -52,9 +55,6 @@ function Home() {
     dispatch(getAvailableTicketsThunk())
   }, [dispatch]);
 
-  const handleClick = (ticket) => {
-    navigate('/payment', { state: { ticket } })
-  }
 
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -147,7 +147,7 @@ function Home() {
             <div className="upcoming" >
               {availableTickets.map((ticket) => {
                 return (
-                  <Link to={`/payment/${ticket._id}`} style={{ color: '#789461', textDecoration: 'none' }} className="box" onClick={() => handleClick(ticket)}>
+                  <Link to={`/payment/${ticket._id}`} style={{ color: '#789461', textDecoration: 'none' }} className="box" >
                     <div className="poster">
                       <img style={{ objectFit: 'contain', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
                     </div>
@@ -161,7 +161,7 @@ function Home() {
                         <span>{ticket.description.length > 15 ? ticket.description.slice(0, 10) + '...' : ticket.description}</span>
                       </div>
                       <div style={{ display: 'flex', gap: 5, }}>
-                        <span><FaCircle style={{ color: '#789461' }} /></span>
+                        <span><LocationOnIcon style={{ color: '#789461' }} /></span>
                         <span>{ticket.location.length > 10 ? ticket.location.slice(0, 4) + '...' : ticket.location}</span>
                       </div>
                       <div style={{ display: 'flex', gap: 5, }}>
@@ -183,29 +183,34 @@ function Home() {
           <div className="upcoming">
             {upComingTickets.map((ticket) => {
               return (
-                <div className="box" onClick={() => handleClick(ticket)}>
-                  <div className="poster">
-                    <img style={{ objectFit: 'contain', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
-                  </div>
-                  <div className="content">
-                    <div>
-                      <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 10 ? ticket.title.slice(0, 10) + '...' : ticket.title}</div>
-                      <div style={{ border: '2px solid #789461', width: 90 }}></div>
+                <Box>
+                    <LockIcon/>
+                    <div className="box"  style={{cursor:"default"}}>
+                      <div className="poster">
+                        <img style={{ objectFit: 'contain', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
+                      </div>
+                      <div className="content">
+                        <div>
+                          <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 10 ? ticket.title.slice(0, 10) + '...' : ticket.title}</div>
+                          <div style={{ border: '2px solid #789461', width: 90 }}></div>
+                        </div>
+                        <div style={{ display: 'flex', gap: 5, }}>
+                          <span><FaCircle style={{ color: '#789461' }} /></span>
+                          <span>{ticket.description.length > 15 ? ticket.description.slice(0, 10) + '...' : ticket.description}</span>
+                        </div>
+                        <div style={{ display: 'flex', gap: 5, }}>
+                          <span><LocationOnIcon style={{ color: '#789461' }} /></span>
+                          <span>{ticket.location.length > 10 ? ticket.location.slice(0, 4) + '...' : ticket.location}</span>
+                        </div>
+                        <div style={{ display: 'flex', gap: 5, }}>
+                          <span><FaCircle style={{ color: '#789461' }} /></span>
+                          <span style={{ fontSize: '13px' }}>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
+                        </div>
+                      </div>
+                    
                     </div>
-                    <div style={{ display: 'flex', gap: 5, }}>
-                      <span><FaCircle style={{ color: '#789461' }} /></span>
-                      <span>{ticket.description.length > 15 ? ticket.description.slice(0, 10) + '...' : ticket.description}</span>
-                    </div>
-                    <div style={{ display: 'flex', gap: 5, }}>
-                      <span><FaCircle style={{ color: '#789461' }} /></span>
-                      <span>{ticket.location.length > 10 ? ticket.location.slice(0, 4) + '...' : ticket.location}</span>
-                    </div>
-                    <div style={{ display: 'flex', gap: 5, }}>
-                      <span><FaCircle style={{ color: '#789461' }} /></span>
-                      <span style={{ fontSize: '13px' }}>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
-                    </div>
-                  </div>
-                </div>)
+                </Box>
+                )
             })}
           </div>
         </> : <div style={{ textAlign: 'center', fontSize: '20px', margin: 20 }}>No upcoming tickets here</div>}

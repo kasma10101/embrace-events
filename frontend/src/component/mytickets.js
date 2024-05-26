@@ -1,7 +1,8 @@
-import { Alert, Box, Button, CircularProgress, TextField, Typography } from '@mui/material'
+import { Alert, Box, Button, CircularProgress, IconButton, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const sxStyles = {
   container: {
@@ -21,12 +22,20 @@ const sxStyles = {
     marginTop: "14px",
     gap: "20px"
   },
+  allTransactions:{
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+    flexDirection:"coolumn",
+    gap:"10px",
+    margin:"30px 40px 10px 40px",
+    flexWrap:'wrap'
+  },
   eachTransactionBox: {
     display: 'grid',
     gridTemplateColumns: 'auto auto auto auto',
     gap: '10%',
     alignItems: 'center',
-    margin: '3%  auto 0px',
     fontSize: '18px',
     border: '2px solid #12372a',
     padding: '20px',
@@ -134,9 +143,14 @@ export default function Mytickets() {
     setOtpOpen(false)
   }
 
+  const logOut=()=>{
+    localStorage.removeItem('userInfo')
+    window.location.href='/mytickets'
+  }
+
   return (
     <Box sx={sxStyles.container} >
-      <Typography sx={sxStyles.typography} variant='h4'>My Tickets</Typography>
+      <Typography sx={sxStyles.typography} variant='h4'>My Tickets <IconButton onClick={logOut}><LogoutIcon/></IconButton></Typography>
       {!seeTransactions && <Box sx={sxStyles.box}>
         {openOtp ?
           <>
@@ -185,7 +199,7 @@ export default function Mytickets() {
       </Box>}
 
       {seeTransactions &&
-        <Box>
+        <Box sx={sxStyles.allTransactions}>
           {transactions.map((e) => {
             return <EachTransactions index={e._id} data={e} />
           })}
@@ -200,7 +214,7 @@ const EachTransactions = ({ data }) => {
   console.log(data);
   return (
     <Box sx={sxStyles.eachTransactionBox}>
-      <div style={{ margin: '8px', gridRow: '1 / 3' }}><img src={data.ticketID.image.filePath} style={{ width: 100, height: 100 }} /></div>
+      <div style={{ margin: '8px', gridRow: '1 / 3' }}><img src={data?.ticketID?.image?.filePath} style={{ width: 100, height: 100 }} /></div>
       <div>
         <div style={{ fontSize: 10 }}>Ticket number</div>
         <div style={{ margin: '8px 0px' }}>{data?.ticketNumber}</div>
@@ -224,6 +238,9 @@ const EachTransactions = ({ data }) => {
       <div>
         <div style={{ fontSize: 10 }}>Ticket price</div>
         <div style={{ margin: '8px 0px' }}>{data.amount}ETB</div>
+      </div>
+      <div style={{ fontSize: 10 }}>
+        <div>Bought at {moment(data.createdAt).format('lll')}</div>
       </div>
     </Box>
   )

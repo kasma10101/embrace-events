@@ -35,7 +35,9 @@ const ticketSchema = new mongoose.Schema({
         default:false
     },
     image: { type: Object, default: {} },
-});
+},{
+    timestamps: true 
+  });
 
 const Ticket = mongoose.model('Ticket', ticketSchema);
 

@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/esm/Button';
 import '../style/payment.css'
 import { FaCircle } from 'react-icons/fa';
 import moment from 'moment';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const PaymentComponent = () => {
     const dispatch = useDispatch();
@@ -158,7 +159,7 @@ const PaymentComponent = () => {
                     <span>{ticket?.description}</span>
                 </div>
                 <div style={{ display: 'flex', gap: 5, }}>
-                    <span><FaCircle style={{ color: '#789461', fontSize: 13 }} /></span>
+                    <span><LocationOnIcon style={{ color: '#789461', fontSize: 25,padding:0 }} /></span>
                     <span>{ticket?.location}</span>
                 </div>
                 <div style={{ display: 'flex', gap: 5, }}>
