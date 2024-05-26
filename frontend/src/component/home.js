@@ -38,8 +38,6 @@ function Home() {
   const { tickets, loading, error, availableTickets, upComingTickets } = useSelector((state) => state.tickets);
   const navigate = useNavigate();
 
-  const [activeSection, setActiveSection] = useState('home');
-
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
@@ -47,6 +45,7 @@ function Home() {
     }
   };
 
+console.log(availableTickets, upComingTickets, tickets);
   useEffect(() => {
     dispatch(getTicketsThunk());
     dispatch(getUpcomingTicketsThunk());
