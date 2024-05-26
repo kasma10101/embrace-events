@@ -96,12 +96,15 @@ const requestOtp = async (req, res) => {
   };
 
   function encodeEmail(email) {
-    return encodeURIComponent(email);
+    const encodedBytes = Buffer.from(email, 'utf-8');
+    return encodedBytes.toString('base64');
   }
   
   function decodeEmail(encodedEmail) {
-    return decodeURIComponent(encodedEmail);
+    const decodedBytes = Buffer.from(encodedEmail, 'base64');
+    return decodedBytes.toString('utf-8');
   }
+
 
 const verifyOtpAndGetTransactions = async (req, res) => {
     try {

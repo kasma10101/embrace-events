@@ -69,6 +69,8 @@ export default function Mytickets() {
              .catch(error=>{
                 console.log(error);
              })
+        }else{
+            localStorage.removeItem('userInfo');
         }
     }
 
@@ -88,7 +90,7 @@ export default function Mytickets() {
             console.log(res);
             setLoading(false)
             setError('')
-            localStorage.setItem('userInfo', JSON.stringify({email,savedAt:new Date().getTime()}));
+            localStorage.setItem('userInfo', JSON.stringify({email:res.data.email,savedAt:new Date().getTime()}));
             setTransactions(res.data.tickets)
             setSeeTransactions(true)
          })
