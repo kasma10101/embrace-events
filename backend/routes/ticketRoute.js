@@ -25,7 +25,7 @@ router.get('/upcomingTickets', upcomingTickets);
 router.get('/:id', getTicketById);
 
 // Route to update a ticket by ID
-router.put('/:id', upload.single('image'), updateTicket);
+router.put('/:id', updateTicket);
 
 // Route to delete a ticket by ID
 router.delete('/:id', deleteTicket);

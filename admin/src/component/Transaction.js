@@ -28,6 +28,8 @@ const Transaction = () => {
         { Header: 'Status', accessor: 'status' },
     ], []);
 
+    console.log(data);
+    
     const {
         getTableProps,
         getTableBodyProps,

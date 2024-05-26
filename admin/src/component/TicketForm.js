@@ -83,6 +83,8 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                             required
                             style={{width: 300}}
                             placeholder='Ticket Description'
+                            multiline
+                            maxRows={5}
                         />
                         <TextField
                             type="text"
