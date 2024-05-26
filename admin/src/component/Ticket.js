@@ -129,7 +129,7 @@ const Ticket = () => {
       }
 
     return (
-        <div className="text-dark mh-100" style={{marginTop: '10%', width: '100%',}}>
+        <div className="text-dark mh-100" style={{marginTop: '3%', width: '100%',}}>
             <div className='container m-0'>
                 <div className="d-flex p-3" style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
                     <button  className={showForm ? 'btn btn-primary mx-2' : 'btn btn-secondary  disabled' } onClick={() => setShowForm(false)}>Show Tickets</button>
@@ -162,7 +162,7 @@ const Ticket = () => {
                                     return (
                                         <tr {...row.getRowProps()}>
                                             {row.cells.map(cell => (
-                                                <td {...cell.getCellProps()} style={{padding: 15}}>{cell.render('Cell')}</td>
+                                                <td {...cell.getCellProps()} style={{padding: 15, overflowWrap: 'break-word', maxWidth: '250px'}}>{cell.render('Cell')}</td>
                                             ))}
                                         </tr>
                                     );

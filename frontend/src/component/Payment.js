@@ -163,7 +163,7 @@ const PaymentComponent = () => {
                 </div>
                 <div style={{ display: 'flex', gap: 5, }}>
                     <span><FaCircle style={{ color: '#789461', fontSize: 13 }} /></span>
-                      <span>{moment(ticket?.startDate).format('YYYY/MM/DD') + '-' + moment(ticket?.endDate).format('YYYY/MM/DD')}</span>
+                      <span>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
                 </div>
                 <div style={{ display: 'flex', gap: 5, }}>
                     <span><FaCircle style={{ color: '#789461', fontSize: 13 }} /></span>

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const TicketTransaction = require('../models/ticketTransactionModel'); // Import TicketTransaction model
 const Ticket = require('../models/ticketModel');
+const { SendEmail } = require("../services/sendEmail")
 
 const Chapa = require('chapa-nodejs').Chapa;
 require("dotenv").config()
@@ -88,15 +89,24 @@ const verifyPayment = async (req, res) => {
         const response = await chapa.verify({ tx_ref: trx_ref });
         // Update TicketTransaction status if payment is successful
         if (response.status === 'success') {
-            await TicketTransaction.findOneAndUpdate({ tx_ref: trx_ref }, { status: 'paid' });
+            let ticket= await TicketTransaction.findOne({tx_ref: trx_ref}).populate('ticketID')
+            if(ticket){
+                await TicketTransaction.findOneAndUpdate({ tx_ref: trx_ref }, { status: 'paid' });
+                const subject = "Payment Succeed ✅"
+                const title = "Ticket Detail"
+                await SendEmail(ticket.email, ticket.data ,subject,title )
+
+            }
         }
 
-
+       
         res.status(200).json(response);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
+
+
 
 // Function to generate random 5-digit ticket number
 function generateTicketNumber() {

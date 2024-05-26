@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import '../style/blogs.css'
 import { Grid, Modal } from '@mui/material'
 
@@ -15,6 +15,8 @@ export default function Blogs() {
             console.log(error);
         }
     }
+
+    const navigate = useNavigate()
 
     const [showModal, setShowModal] = useState(false)
 
@@ -40,7 +42,10 @@ export default function Blogs() {
                     }) : <></>}
                 </div>
             {/* </div> */}
-            <Modal open={showModal} onClose={()=>setShowModal(false)} className="blog-modal">
+            <Modal open={showModal} onClose={()=>{
+                setShowModal(false)
+                navigate('/blogs')
+            }} className="blog-modal">
                 <Grid>
                     <Outlet />
                 </Grid>

@@ -3,7 +3,7 @@
     grid-template-columns: auto auto;
     align-items: flex-start;
     gap: 20px;
-    padding-top: 10%;
+    padding-top: 3%;
 }
 .ticket-detail{
     border: 2px solid #12372a;
@@ -17,11 +17,15 @@
     flex-direction: column;
     gap: 10px;
     font-size: 18px;
+    height: 70vh;
+    overflow-y: auto;
+    scrollbar-width: none;
 }
 .ticket-title{
     font-family: "Krona One", sans-serif;
     font-size: 21px;
     padding: 10px 0px 5px;
+    line-height: 30px;
 }
 @media(max-width: 830px){
     .whole-payment-container{

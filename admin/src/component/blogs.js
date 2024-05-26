@@ -40,7 +40,7 @@ export default function Blogs({ equilizer, token, showAddModal, showEditModal, s
     }, [token, equilizer])
     return (
         <>
-            <Typography variant="h3" sx={{ textAlign: "center", margin: '15px 0 15px 0', paddingTop: '7%' }}>Blogs</Typography>
+            <Typography variant="h3" sx={{ textAlign: "center", margin: '15px 0 15px 0', paddingTop: '3%' }}>Blogs</Typography>
             <div className="blogs-container">
                 {
                     loading ?

@@ -55,7 +55,7 @@ const Transaction = () => {
     );
 
     return (
-        <div style={{ paddingTop: '10%', width: '90%', margin: '0px auto', overflow: 'auto', scrollbarWidth: 'none' }}>
+        <div style={{ paddingTop: '3%', width: '90%', margin: '0px auto', overflow: 'auto', scrollbarWidth: 'none' }}>
             <h2>Transactions</h2>
             {loading && <p>Loading...</p>}
             {error && <p className="text-danger">{error}</p>}

@@ -45,7 +45,7 @@ function Home() {
     }
   };
 
-console.log(availableTickets, upComingTickets, tickets);
+  console.log(availableTickets, upComingTickets, tickets);
   useEffect(() => {
     dispatch(getTicketsThunk());
     dispatch(getUpcomingTicketsThunk());
@@ -139,14 +139,51 @@ console.log(availableTickets, upComingTickets, tickets);
       </div>
       <div className="events">
         <section id="availableTickets">
-          <h1 style={{ textAlign: 'center', marginTop: '3%' }}>Available Tickets</h1>
+        <h1 style={{ textAlign: 'center', marginTop: '3%' }}>Available Tickets</h1>
+          {availableTickets.length !== 0 ? <>
+            <p className="event__para">
+              Browse through our list of exciting available events.
+            </p>
+            <div className="upcoming" >
+              {availableTickets.map((ticket) => {
+                return (
+                  <Link to={`/payment/${ticket._id}`} style={{ color: '#789461', textDecoration: 'none' }} className="box" onClick={() => handleClick(ticket)}>
+                    <div className="poster">
+                      <img style={{ objectFit: 'contain', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
+                    </div>
+                    <div className="content">
+                      <div>
+                        <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 10 ? ticket.title.slice(0, 10) + '...' : ticket.title}</div>
+                        <div style={{ border: '2px solid #789461', width: 90 }}></div>
+                      </div>
+                      <div style={{ display: 'flex', gap: 5, }}>
+                        <span><FaCircle style={{ color: '#789461' }} /></span>
+                        <span>{ticket.description.length > 15 ? ticket.description.slice(0, 10) + '...' : ticket.description}</span>
+                      </div>
+                      <div style={{ display: 'flex', gap: 5, }}>
+                        <span><FaCircle style={{ color: '#789461' }} /></span>
+                        <span>{ticket.location.length > 10 ? ticket.location.slice(0, 4) + '...' : ticket.location}</span>
+                      </div>
+                      <div style={{ display: 'flex', gap: 5, }}>
+                        <span><FaCircle style={{ color: '#789461' }} /></span>
+                        <span>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
+                      </div>
+                    </div>
+                  </Link>)
+              })}
+            </div>
+          </> : <div style={{ fontSize: '20px', textAlign: 'center', margin: '10px' }}>No ticket available</div>}
+        </section>
+        <hr className="create__line" />
+        <h1 style={{ textAlign: 'center', margin: 15 }}>Upcoming Tickets</h1>
+        {upComingTickets.length !== 0 ? <>
           <p className="event__para">
-            Browse through our list of exciting available events.
+            Browse through our list of exciting upcoming events.
           </p>
-          <div className="upcoming" style={{ borderBottom: '1px solid rgba(0, 0, 0, .3)', paddingBottom: '5%' }}>
-            {availableTickets ? availableTickets.map((ticket) => {
+          <div className="upcoming">
+            {upComingTickets.map((ticket) => {
               return (
-                <Link to={`/payment/${ticket._id}`} style={{color: '#789461', textDecoration: 'none'}} className="box" onClick={() => handleClick(ticket)}>
+                <div className="box" onClick={() => handleClick(ticket)}>
                   <div className="poster">
                     <img style={{ objectFit: 'contain', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
                   </div>
@@ -165,51 +202,14 @@ console.log(availableTickets, upComingTickets, tickets);
                     </div>
                     <div style={{ display: 'flex', gap: 5, }}>
                       <span><FaCircle style={{ color: '#789461' }} /></span>
-                      <span>{moment(ticket?.startDate).format('YYYY/MM/DD') + '-' + moment(ticket?.endDate).format('YYYY/MM/DD')}</span>
+                      <span style={{ fontSize: '13px' }}>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
                     </div>
                   </div>
-                </Link>)
-            }) : <div>No ticket available</div>}
+                </div>)
+            })}
           </div>
-        </section>
-        <h1 style={{ textAlign: 'center' }}>Upcoming Tickets</h1>
-        <p className="event__para">
-          Browse through our list of exciting upcoming events.
-        </p>
-        <div className="upcoming">
-          {upComingTickets ? upComingTickets.map((ticket) => {
-            return (
-              <div className="box" onClick={() => handleClick(ticket)}>
-                <div className="poster">
-                  <img style={{ objectFit: 'contain', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
-                </div>
-                <div className="content">
-                  <div>
-                    <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 10 ? ticket.title.slice(0, 10) + '...' : ticket.title}</div>
-                    <div style={{ border: '2px solid #789461', width: 90 }}></div>
-                  </div>
-                  <div style={{ display: 'flex', gap: 5, }}>
-                    <span><FaCircle style={{ color: '#789461' }} /></span>
-                    <span>{ticket.description.length > 15 ? ticket.description.slice(0, 10) + '...' : ticket.description}</span>
-                  </div>
-                  <div style={{ display: 'flex', gap: 5, }}>
-                    <span><FaCircle style={{ color: '#789461' }} /></span>
-                    <span>{ticket.location.length > 10 ? ticket.location.slice(0, 4) + '...' : ticket.location}</span>
-                  </div>
-                  <div style={{ display: 'flex', gap: 5, }}>
-                    <span><FaCircle style={{ color: '#789461' }} /></span>
-                    <span style={{fontSize: '13px'}}>{moment(ticket?.startDate).format('YYYY/MM/DD') + '-' + moment(ticket?.endDate).format('YYYY/MM/DD')}</span>
-                  </div>
-                </div>
-              </div>)
-          }) : <div>No ticket available</div>}
-        </div>
-        <button className="showall__btn">
-          <a href="">
-            Show All{" "}
-            <FaAngleRight style={{ position: "relative", top: "0.2rem" }} />
-          </a>
-        </button>
+        </> : <div style={{ textAlign: 'center', fontSize: '20px', margin: 20 }}>No upcoming tickets here</div>}
+        <hr className="create__line" />
       </div>
       <div className="faq">
         <h2 className="faq__title">FAQs</h2>
