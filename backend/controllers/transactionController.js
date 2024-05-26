@@ -114,7 +114,7 @@ const verifyOtpAndGetTransactions = async (req, res) => {
       let requestExists = await EmailOtpRequest.findOne({ email: email });
       if (!requestExists ){ 
         
-        let userTickets = await TicketTransaction.find({ email: decodeEmail(email) }); 
+        let userTickets = await TicketTransaction.find({ email: decodeEmail(email) }).populate('ticketID'); 
         if(userTickets.length === 0){
             return res.status(400).send({error:"Request not found"});
         }
@@ -135,7 +135,7 @@ const verifyOtpAndGetTransactions = async (req, res) => {
 
       await EmailOtpRequest.deleteOne({ email: email })
 
-      let userTickets = await TicketTransaction.find({ email: email }); 
+      let userTickets = await TicketTransaction.find({ email: email }).populate('ticketID'); 
     
       return res.status(200).send({tickets:userTickets,email:encodeEmail(email)} );
 
