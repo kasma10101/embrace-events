@@ -17,15 +17,12 @@ router.post('/', upload.single('image') ,createTicket);
 // Route to get all tickets
 router.get('/', getTickets);
 
-// Route to get a single ticket by ID
-router.get('/:id', getTicketById);
-
-// Route to get a single ticket by ID
-router.get('/:id', getTicketById);
-
 router.get('/availableTickets', availableTickets);
 
 router.get('/upcomingTickets', upcomingTickets);
+
+// Route to get a single ticket by ID
+router.get('/:id', getTicketById);
 
 // Route to update a ticket by ID
 router.put('/:id', upload.single('image'), updateTicket);

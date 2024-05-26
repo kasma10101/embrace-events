@@ -26,7 +26,9 @@ function App() {
         </Route>
         <Route path="/tickets" element={<Ticket />} />
         <Route path="/payment/success" element={<PaymentSuccess />} />
-        <Route path="/payment" element={<PaymentComponent />} />
+        <Route path="/payment" >
+          <Route path="/payment/:id" element={<PaymentComponent />} />
+        </Route>
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>

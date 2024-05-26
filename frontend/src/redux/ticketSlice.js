@@ -70,7 +70,7 @@ const ticketSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
-            .addCase(getAvailableTicketsThunk.pending, (state, action) => {
+            .addCase(getAvailableTicketsThunk.pending, (state) => {
                 state.loading = true;
             })
             .addCase(getAvailableTicketsThunk.fulfilled, (state, action) => {

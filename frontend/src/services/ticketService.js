@@ -35,7 +35,6 @@ export const getAvailableTickets = async () => {
 export const getUpcomingTickets = async () => {
     try {
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/api/tickets/upcomingTickets`);
-        console.log(response);
         return response.data;
     } catch (error) {
         throw error.response.data;
