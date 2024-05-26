@@ -32,12 +32,11 @@ export default function Navbar() {
             <li>
               <Link to="/blogs">Blog</Link>
             </li>
+         
             <li>
-              <Link to="/tickets">Tickets</Link>
+              <Link to="/mytickets">My Tickets</Link>
             </li>
-            <li>
-              <Link to="/payment">Payment</Link>
-            </li>
+          
             <li>
               <Link to="/about">About</Link>
             </li>

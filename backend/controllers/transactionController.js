@@ -1,4 +1,8 @@
 const TicketTransaction = require('../models/ticketTransactionModel');
+const otpGeenerator=require("otp-generator")
+const EmailOtpRequest=require("../models/emailOtpRequest")
+const { SendOTP } = require("../services/sendEmail")
+
 
 // Get all transactions
 const getAllTransactions = async (req, res) => {
@@ -56,8 +60,93 @@ const filterTransactions = async (req, res) => {
     }
 };
 
+const requestOtp = async (req, res) => {
+    try {
+      const { email } = req.body;
+  
+      let emailExist = await TicketTransaction.findOne({ email: email });
+      if (!emailExist)
+        return res
+          .status(400)
+          .send({ error: "No Transaction found with this email" });
+  
+      let otp = await otpGeenerator.generate(6, {
+        lowerCaseAlphabets: false,
+        upperCaseAlphabets: false,
+        specialChars: false,
+      });
+  
+      let requestExists = await EmailOtpRequest.findOne({ email: email });
+
+      if (requestExists) await EmailOtpRequest.updateOne({ email: email }, { $set: { otp: otp } });
+      else await EmailOtpRequest.create({ email, otp });
+  
+       
+      const meessage=`your OTP verification code is ${otp}. this code is will expire after 5 minutes`
+      const subject='Verification'
+      const title="Verification code"
+      
+      await SendOTP(email, meessage,subject,title )
+  
+      return res.status(200).send({ otp: otp});
+    } catch (error) {
+      console.error("Error occurred:", error);
+      return res.status(500).send({ error: "An error occurred" });
+    }
+  };
+
+  function encodeEmail(email) {
+    return encodeURIComponent(email);
+  }
+  
+  function decodeEmail(encodedEmail) {
+    return decodeURIComponent(encodedEmail);
+  }
+
+const verifyOtpAndGetTransactions = async (req, res) => {
+    try {
+      let { email, otp } = req.body;
+      
+
+      let requestExists = await EmailOtpRequest.findOne({ email: email });
+      if (!requestExists ){ 
+        
+        let userTickets = await TicketTransaction.find({ email: decodeEmail(email) }); 
+        if(userTickets.length === 0){
+            return res.status(400).send({error:"Request not found"});
+        }
+        return res.status(200).send({tickets:userTickets});
+      }
+
+      let date1 = new Date();
+      let date2 = new Date(requestExists.createdAt);
+      let diffTime = date1 - date2;
+      let diffMins = diffTime / (1000 * 60);
+
+      if(diffMins>5){
+         await EmailOtpRequest.deleteOne({ email: email })
+         return  res.status(400).send({ error: "Request Expired. Please try again !" }); 
+      }
+
+      if(otp!==requestExists.otp) return  res.status(400).send({ error: "Invalid OTP" }); 
+
+      await EmailOtpRequest.deleteOne({ email: email })
+
+      let userTickets = await TicketTransaction.find({ email: email }); 
+    
+      return res.status(200).send({tickets:userTickets,email:encodeEmail(email)} );
+
+    } catch (error) {
+      console.error("Error occurred:", error);
+      return res.status(500).send({ error: "An error occurred" });
+    }
+  };
+
 module.exports = {
     getAllTransactions,
     getTransactionByTicketID,
-    filterTransactions
+    filterTransactions,
+
+    requestOtp,
+    verifyOtpAndGetTransactions
 };
