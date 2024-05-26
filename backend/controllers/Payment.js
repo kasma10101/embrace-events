@@ -8,14 +8,27 @@ const chapa = new Chapa({
     secretKey: process.env.API_KEY,
 });
 const createPayment = async (req, res) => {
-    console.log("amount", API_KEY);
     const { ticketID, ticketType, email, phone, fname, lname, currency } = req.body;
+
+    console.log('====================================');
+    console.log(ticketID,email);
+    console.log('====================================');
+    
+    if(!ticketID || !email || !phone){
+        return res.status.send({error:"Ticket or email or phone not found"})
+    }
+    
+
+    const ticket = await Ticket.findById(ticketID);
+    if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
+    if (ticket.isDeleted) return res.status(404).json({ message: 'Ticket is Deleted By Admin' });
+
     const chapa_tx_ref = await chapa.generateTransactionReference();
     const date = new Date().toISOString().slice(0, 10); // Get YYYY-MM-DD format
     const time = new Date().toISOString().slice(11, 16).replace(":", ""); // Get HH:MM format (without seconds)
     const tx_ref = `${chapa_tx_ref}-${date}-${time}`;
 
-    const publicUrl = 'https://embrace-events.onrender.com'; // Replace with your actual Localtunnel URL
+    const publicUrl = process.env.BACKEND_API// Replace with your actual Localtunnel URL
     const callback_url = `${publicUrl}/api/payment/verifypayment`;
     const return_url = `${publicUrl}`;
 
@@ -75,7 +88,6 @@ const createPayment = async (req, res) => {
 const verifyPayment = async (req, res) => {
     const { trx_ref} = req.body;
     console.log(req.body, trx_ref)
-    console.log(API_KEY);
 
     try {
         const response = await chapa.verify({ tx_ref: trx_ref });

@@ -36,9 +36,10 @@ export const updateTicket = async (id, ticketData) => {
     try {
         const response = await axios.put(`${process.env.REACT_APP_BACKEND_API}/api/tickets/${id}`, ticketData, {
             headers: {
-                'Content-Type': 'multipart/form-data',
+                "Content-Type": "application/json",
             },
         });
+        console.log(response);
         return response.data;
     } catch (error) {
         throw error.response.data;

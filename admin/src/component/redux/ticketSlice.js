@@ -19,6 +19,9 @@ export const getTicketByIdThunk = createAsyncThunk('tickets/getById', async (id)
 export const updateTicketThunk = createAsyncThunk('tickets/update', async ({ id, ticketData }) => {
     console.log(id, ticketData);
     const response = await updateTicket(id, ticketData);
+    console.log('====================================');
+    console.log(response);
+    console.log('====================================');
     return response;
 });
 

@@ -10,14 +10,25 @@ const chapa = new Chapa({
 });
 const createPayment = async (req, res) => {
     const { ticketID, ticketType, email, phone, fname, lname, currency } = req.body;
-console.log(req.body);
+    console.log(req.body);
+
+    if(!ticketID || !email || !phone){
+        return res.status(400).send({error:"Ticket or email or phone not found"})
+    }
+    
+
+    const ticket = await Ticket.findById(ticketID);
+    if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
+    if (ticket.isDeleted) return res.status(404).json({ message: 'Ticket is Deleted By Admin' });
+
+
     const chapa_tx_ref = await chapa.generateTransactionReference();
     const date = new Date().toISOString().slice(0, 10); // Get YYYY-MM-DD format
     const time = new Date().toISOString().slice(11, 16).replace(":", ""); // Get HH:MM format (without seconds)
     const tx_ref = `${chapa_tx_ref}-${date}-${time}`;
 
-    const publicUrl = 'https://embrace-events.onrender.com'; // Replace with your actual Localtunnel URL
-    const frontEndUrl = 'https://embrace-events.vercel.app'
+    const publicUrl =  process.env.BACKEND_API// Replace with your actual Localtunnel URL
+    const frontEndUrl =  process.env.FRONTEND_API
     const callback_url = `${publicUrl}/api/payment/verifypayment`;
     const return_url = `${frontEndUrl}/payment/success?tx_ref=${tx_ref}`;
 
