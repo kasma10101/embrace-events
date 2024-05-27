@@ -21,7 +21,6 @@ const createBlog = async (req, res) => {
             blogDescription: blogDescription,
             blogImage: req.file.filename,
         })
-        console.log(req.file.filename );
         res.status(201).json({msg: 'Successfuly created' })
     } catch (error) {
         console.log(error);

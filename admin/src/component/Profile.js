@@ -1,7 +1,7 @@
 import { Alert, CircularProgress, TextField, Typography } from "@mui/material"
-import axios from "axios"
 import { useEffect, useState } from "react"
 import { Button, Form, FormGroup } from "react-bootstrap"
+import { FaPowerOff, FaSignOutAlt } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 
 
@@ -71,10 +71,10 @@ export default function Profile({adminData,token}) {
 
     return (
         <>
-            <div style={{ paddingTop: '5%' }}>
+            <div style={{ paddingTop: '3%', display: 'flex', justifyContent: 'center', alignItems:  'center', height: '85vh' }}>
                 <div className="login-container">
                     <Typography variant="h4" sx={{paddingTop:"25px"}}>Admin Profile</Typography>
-                    <div style={{ marginTop: '10%' }}>
+                    <div style={{ marginTop: '2%' }}>
                         <Form onSubmit={handleSubmit}>
                             <FormGroup style={{ marginTop: 30 }}>
                                 <TextField
@@ -86,7 +86,7 @@ export default function Profile({adminData,token}) {
                                     required
                                 />
                             </FormGroup>
-                            <FormGroup style={{ marginTop: 30 }}>
+                            <FormGroup style={{ marginTop: 20 }}>
                                 <TextField
                                     onChange={(e) => setEmail(e.target.value)}
                                     type="text"
@@ -96,7 +96,7 @@ export default function Profile({adminData,token}) {
                                     required
                                 />
                             </FormGroup>
-                            <FormGroup style={{ marginTop: 15 }}>
+                            <FormGroup style={{ marginTop: 20 }}>
                                 <TextField
                                     onChange={(e) => setPassword(e.target.value)}
                                     type="password"
@@ -129,7 +129,7 @@ export default function Profile({adminData,token}) {
                                 )}
                                 </div>
                         </Form>
-                      <Button className="login-button" variant="outline-dark" style={{marginTop: '10px',background:"red"}}  onClick={logout}>Logout</Button>
+                      <Button variant="outline-dark" style={{margin: '10px 0px 20px', width: 300, padding: 10, display: 'flex', gap: '5px', alignItems: 'center', justifyContent: 'center'}}  onClick={logout}><FaPowerOff style={{color: '#12372a'}} /><span>Logout</span></Button>
                     </div>
                 </div>
             </div>

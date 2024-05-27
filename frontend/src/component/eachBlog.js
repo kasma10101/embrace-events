@@ -30,11 +30,13 @@ export default function EachBlog() {
 
     return (
         <div className="each-blog">
-            <div><img className="each-blog-image" src={`${process.env.REACT_APP_BACKEND_API}/${eachBlog.blogImage}`} /></div>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <img className="each-blog-image" src={`${process.env.REACT_APP_BACKEND_API}/${eachBlog.blogImage}`} />
+            </div>
             <div className="each-blog-description">
                 <div className="each-blog-title">{eachBlog.blogTitle}</div>
                 <div className="title-underline"></div>
-                <div style={{marginTop: 20}}>{eachBlog.blogDescription}</div>
+                <div style={{ marginTop: 20 }}>{eachBlog.blogDescription}</div>
             </div>
         </div>
     )

@@ -10,7 +10,6 @@ export default function Blogs({ equilizer, token, showAddModal, showEditModal, s
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     const navigate = useNavigate()
-
     const fetchBlogs = async () => {
         setLoading(true)
         setError('')
@@ -48,7 +47,6 @@ export default function Blogs({ equilizer, token, showAddModal, showEditModal, s
                     :
                     <>
                             {blogs.length > 0 ? blogs.map((eachBlog, index) => {
-                    console.log(eachBlog.blogImage);
                                 return (
                                     <Link onClick={() => setshowEditModal(true)} className="each-blog-container" to={`${eachBlog._id}`} key={index}>
                                         <div><img className="blog-image" src={`${process.env.REACT_APP_BACKEND_API}/${eachBlog.blogImage}`} /></div>

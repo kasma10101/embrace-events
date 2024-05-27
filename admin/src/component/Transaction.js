@@ -9,7 +9,7 @@ const Transaction = () => {
     const dispatch = useDispatch();
     const { transactions, loading, error } = useSelector((state) => state.transactions);
     const data = useMemo(() => transactions, [transactions]);
-
+console.log(transactions, data);
     useEffect(() => {
         dispatch(getAllTransactionsThunk());
     }, [dispatch]);
@@ -30,6 +30,7 @@ const Transaction = () => {
                     ticketNumber:transaction.ticketNumber,
                     ticketType:transaction.ticketType,
                     tx_ref:transaction.tx_ref,
+                    createdAt: transaction?.createdAt
                 }
                 availableData.push(eachData)
             }
@@ -37,7 +38,7 @@ const Transaction = () => {
         }
     },[data])
    
-
+    
     console.log('====================================');
     console.log(tableData);
     console.log('====================================');

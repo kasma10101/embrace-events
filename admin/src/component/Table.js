@@ -24,6 +24,7 @@ import autoTable from 'jspdf-autotable';
 //Icons Imports
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import moment from 'moment';
 
 const sxStyle = {
   modal:{
@@ -192,6 +193,17 @@ const DataTable = ({data}) => {
         Cell: ({ renderedCellValue, row }) => (
           <Box sx={{}}>
              {renderedCellValue}
+          </Box>
+        ),
+      },
+      {
+        accessorFn: (row) => `${row?.createdAt}`, 
+        filterVariant: 'autocomplete',
+        header: 'Created Date',
+        size: 300,
+        Cell: ({ renderedCellValue, row }) => (
+          <Box sx={{}}>
+             {moment(renderedCellValue).format('LL')}
           </Box>
         ),
       },

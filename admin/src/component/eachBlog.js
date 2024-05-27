@@ -80,13 +80,8 @@ export default function EachBlog({ setshowEditModal,token, setEquilizer, equiliz
                                 <FormGroup >
                                     <InputLabel>
                                         {previewImage ? 
-                                           <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                             <img src={previewImage}  style={{height: '300px', width: '100%'}} className="each-blog-image" />
-                                          </div> : 
-                                          <div style={{ display: 'flex', justifyContent: 'center'}}>
-                                             <img className="each-blog-image" style={{height: '300px', width: '100%'}} src={`${process.env.REACT_APP_BACKEND_API}/${editedBlog.blogImage}`} />
-                                        </div>}
-                                       
+                                             <img src={previewImage}  style={{height: '300px', width: '100%', objectFit: 'contain'}} className="each-blog-image" />: 
+                                             <img className="each-blog-image" style={{height: '300px', width: '100%', objectFit: 'contain'}} src={`${process.env.REACT_APP_BACKEND_API}/${editedBlog.blogImage}`} />}
                                     </InputLabel>
                                 </FormGroup>
 
@@ -109,7 +104,7 @@ export default function EachBlog({ setshowEditModal,token, setEquilizer, equiliz
                                     />
                                 </FormGroup>
                             </div>
-                            <Button type="submit" variant="outline-dark" className="edit-button" style={{ width: 300 }}>Edit</Button>
+                            <Button type="submit" variant="outline-dark" className="edit-button" >Edit</Button>
                         </Form>
                     </div> :
                     <div className="each-blog">
@@ -123,7 +118,7 @@ export default function EachBlog({ setshowEditModal,token, setEquilizer, equiliz
                                 <div style={{ marginTop: 20 }}>{editedBlog.blogDescription}</div>
                             </div>
                         </div>
-                        <div style={{ display: 'flex', gap: '20px', margin: '20px auto', width: 220 }}>
+                        <div style={{ display: 'flex', gap: '20px', margin: '20px auto', width: '100%', justifyContent: 'center' }}>
                             <Button variant="outline-dark" onClick={() => setEdit(true)} style={{ width: 100 }}>Edit</Button>
                             <Button variant="outline-dark" onClick={handleDelete} style={{ width: 100 }}>Delete</Button>
                         </div>

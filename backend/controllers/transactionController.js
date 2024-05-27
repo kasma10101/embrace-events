@@ -135,7 +135,7 @@ const verifyOtpAndGetTransactions = async (req, res) => {
       await EmailOtpRequest.deleteOne({ email: email })
 
       let userTickets = await TicketTransaction.find({ email: email }).populate('ticketID'); 
-    
+    console.log(userTickets.createdAt);
       return res.status(200).send({tickets:userTickets,email:encodeEmail(email)} );
 
     } catch (error) {

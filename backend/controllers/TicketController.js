@@ -47,7 +47,6 @@ const createTicket = async (req, res) => {
             location,
             image: imageInfo,
         });
-
         res.status(201).json(ticket);
     } catch (error) {
         res.status(500).json({ message: error.message });
