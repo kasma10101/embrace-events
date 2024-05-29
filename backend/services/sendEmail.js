@@ -61,13 +61,13 @@ const SendEmail=async(email, data, subject,title)=>{
                     <h1>${title}</h1>
                 </div>
                 <div class="content">
-                    <p>Dear ${data.fname} ${data.lname} your ticket detail is,</p>
+                    <p>Dear ${data.fname} ${data.lname} your ticket transaction detail is,</p>
 
-                    <p>Ticket: ${data.ticketID.title}</p>
-                    <p>Ticket Started: ${moment(data.ticketID.startDate).format('LL')}</p>
-                    <p>Ticket Type: ${data.ticketType}</p>
-                    <p>Amount: ${data.amount}</p>
-                    <p>Ticket Number: ${data.ticketNumber}</p>
+                    <p><b>Ticket:</b> ${data.ticketID.title}</p>
+                    <p><b>Ticket Started:</b> ${moment(data.ticketID.startDate).format('LL')}</p>
+                    <p><b>Ticket Type:</b> ${data.ticketType}</p>
+                    <p><b>Amount:</b> ${data.amount}</p>
+                    <p><b>Ticket Number:</b> ${data.ticketNumber}</p>
                 </div>
                 <div class="footer">
                     <p><em>This email was sent automatically. Please do not reply.</em></p>

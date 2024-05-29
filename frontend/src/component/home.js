@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { FaAngleRight, FaBullseye, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import home from "../assets/logo/home.png";
 import "../style/home.css";
-import { FaCircle } from "react-icons/fa";
 import eventTicket from "../assets/images/ticket.png";
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, Link } from "react-router-dom";
@@ -10,6 +9,7 @@ import { getAvailableTicketsThunk, getTicketsThunk, getUpcomingTicketsThunk } fr
 import moment from "moment";
 import LockIcon from '@mui/icons-material/Lock';
 import { Box } from "@mui/material";
+import CircleIcon from '@mui/icons-material/Circle';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const faqs = [
@@ -48,7 +48,6 @@ function Home() {
     }
   };
 
-  console.log(availableTickets, upComingTickets, tickets);
   useEffect(() => {
     dispatch(getTicketsThunk());
     dispatch(getUpcomingTicketsThunk());
@@ -94,7 +93,7 @@ function Home() {
         <div className="home__logo">
           <img src={home} alt="the ethiopia holi" className="home__img" />
         </div>
-        <div className="countdown">
+        {/* <div className="countdown">
           <div className="time">
             <span> {days}</span>
             <p> days</p>
@@ -109,7 +108,7 @@ function Home() {
           <div className="time">
             <span>{seconds}</span> <p>seconds</p>
           </div>
-        </div>
+        </div> */}
         <p className="home__para">
           Join us for an unforgettable experience filled with excitement and
           entertainment.
@@ -149,26 +148,23 @@ function Home() {
                 return (
                   <Link to={`/payment/${ticket._id}`} style={{ color: '#789461', textDecoration: 'none' }} className="box" >
                     <div className="poster">
-                      <img style={{ objectFit: 'contain', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
+                      <img style={{ objectFit: 'cover', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
                     </div>
                     <div className="content">
-                      <div>
-                        <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 10 ? ticket.title.slice(0, 10) + '...' : ticket.title}</div>
-                        <div style={{ border: '2px solid #789461', width: 90 }}></div>
-                      </div>
-                      <div style={{ display: 'flex', gap: 5, }}>
-                        <span><FaCircle style={{ color: '#789461' }} /></span>
-                        <span>{ticket.description.length > 15 ? ticket.description.slice(0, 10) + '...' : ticket.description}</span>
-                      </div>
-                      <div style={{ display: 'flex', gap: 5, }}>
-                        <span><LocationOnIcon style={{ color: '#789461' }} /></span>
-                        <span>{ticket.location.length > 10 ? ticket.location.slice(0, 4) + '...' : ticket.location}</span>
-                      </div>
-                      <div style={{ display: 'flex', gap: 5, }}>
-                        <span><FaCircle style={{ color: '#789461' }} /></span>
-                        <span>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
-                      </div>
+                        <div>
+                          <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 20 ? ticket.title.slice(0, 20) + '...' : ticket.title}</div>
+                          <div style={{ border: '2px solid #789461', width: 90 }}></div>
+                        </div>
+                       
+                        <div style={{ display: 'flex', gap: 5, }}>
+                          <span><LocationOnIcon style={{ color: 'red' }} /></span>
+                          <span>{ticket.location.length > 13 ? ticket.location.slice(0, 13) + '...' : ticket.location}</span>
+                        </div>
+                        <div style={{ display: 'flex', gap: 5, }}>
+                          <span style={{ fontSize: '13px' }}>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
+                        </div>
                     </div>
+
                   </Link>)
               })}
             </div>
@@ -187,23 +183,19 @@ function Home() {
                     <LockIcon/>
                     <div className="box"  style={{cursor:"default"}}>
                       <div className="poster">
-                        <img style={{ objectFit: 'contain', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
+                        <img style={{ objectFit: 'cover', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
                       </div>
                       <div className="content">
                         <div>
-                          <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 10 ? ticket.title.slice(0, 10) + '...' : ticket.title}</div>
+                          <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 20 ? ticket.title.slice(0, 20) + '...' : ticket.title}</div>
                           <div style={{ border: '2px solid #789461', width: 90 }}></div>
                         </div>
+                       
                         <div style={{ display: 'flex', gap: 5, }}>
-                          <span><FaCircle style={{ color: '#789461' }} /></span>
-                          <span>{ticket.description.length > 15 ? ticket.description.slice(0, 10) + '...' : ticket.description}</span>
+                          <span><LocationOnIcon style={{ color: 'red' }} /></span>
+                          <span>{ticket.location.length > 13 ? ticket.location.slice(0, 13) + '...' : ticket.location}</span>
                         </div>
                         <div style={{ display: 'flex', gap: 5, }}>
-                          <span><LocationOnIcon style={{ color: '#789461' }} /></span>
-                          <span>{ticket.location.length > 10 ? ticket.location.slice(0, 4) + '...' : ticket.location}</span>
-                        </div>
-                        <div style={{ display: 'flex', gap: 5, }}>
-                          <span><FaCircle style={{ color: '#789461' }} /></span>
                           <span style={{ fontSize: '13px' }}>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
                         </div>
                       </div>

@@ -32,10 +32,14 @@ const PaymentComponent = () => {
 
     useEffect(() => {
         const ticket = availableTickets.find(ticket => ticket._id === id)
-        setTicket(ticket)
-        setPaymentData({ ...paymentData, ticketID: ticket?._id })
-        console.log(id, availableTickets);
-        console.log(ticket);
+        if(ticket){
+            setTicket(ticket)
+            setPaymentData({ ...paymentData, ticketID: ticket?._id })
+        }
+        else{
+            window.location.href="/"
+        }
+
     }, [availableTickets])
 
     useEffect(() => {
@@ -48,6 +52,15 @@ const PaymentComponent = () => {
     };
 
     const handleCreatePayment = async () => {
+         if(new Date(ticket.startDate).getTime()-new Date().getTime() > 1 * 60 * 60 * 1000 ){
+            window.location.href="/"
+            return
+         }
+        if(!paymentData.ticketType || !paymentData.email || !paymentData.phone || !paymentData.fname || !paymentData.lname
+            || !paymentData.currency
+        ){
+            return
+        }
         const result = await dispatch(createPaymentThunk(paymentData));
         if (createPaymentThunk.fulfilled.match(result)) {
             const checkoutUrl = result.payload.response.data.checkout_url;
@@ -151,26 +164,32 @@ const PaymentComponent = () => {
             </div>
             <div className='ticket-detail'>
                 <div>
-                    <div className='ticket-title'>{ticket?.title}</div>
-                    <div className='title-underline'></div>
-                </div>
-                <div style={{ display: 'flex', gap: 5, }}>
-                    <span><FaCircle style={{ color: '#789461', fontSize: 13 }} /></span>
-                    <span>{ticket?.description}</span>
-                </div>
-                <div style={{ display: 'flex', gap: 5, }}>
-                    <span><LocationOnIcon style={{ color: '#789461', fontSize: 25,padding:0 }} /></span>
-                    <span>{ticket?.location}</span>
-                </div>
-                <div style={{ display: 'flex', gap: 5, }}>
-                    <span><FaCircle style={{ color: '#789461', fontSize: 13 }} /></span>
-                      <span>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
-                </div>
-                <div style={{ display: 'flex', gap: 5, }}>
-                    <span><FaCircle style={{ color: '#789461', fontSize: 13 }} /></span>
-                    <span>{ticket?.vipAmount || ticket?.standardAmount}ETB</span>
-                </div>
-                <div><img style={{ objectFit: 'contain', width: '100%', height: '200px' }} src={ticket?.image?.filePath} /></div>
+                    <img style={{ objectFit: 'cover', width: '100%', height: '300px' }} src={ticket?.image?.filePath} />
+              </div>
+
+              <div style={{padding:"20px",lineBreak:"anywhere",whiteSpace:"break-spaces"}}>
+                    <div>
+                        <div className='ticket-title'>{ticket?.title}</div>
+                        <div className='title-underline'></div>
+                    </div>
+                    <div style={{ marginBottom:"10px", }}>
+                        <span>{ticket?.description}</span>
+                    </div>
+                    <div style={{marginBottom:"10px",color:"red",fontSize:"14px" }}>
+                        <span><LocationOnIcon style={{ color: 'red', fontSize: 25,padding:0 }} /></span>
+                        <span>{ticket?.location}</span>
+                    </div>
+                   
+                    <div style={{ }}>
+                         <div><span style={{fontWeight:"800"}}>VIP</span> {ticket?.vipAmount}ETB</div>
+                         <div><span style={{fontWeight:"800"}}>Standard</span> {ticket?.standardAmount}ETB</div>
+
+                    </div>
+                    <div style={{ fontSize: '13px',textAlign:"center",marginTop:"5px" }}>
+                        <span>{moment(ticket?.startDate).format('LL') + ' - ' + moment(ticket?.endDate).format('LL')}</span>
+                    </div>
+              </div>
+
             </div>
         </div>
     );

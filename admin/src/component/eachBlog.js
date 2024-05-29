@@ -115,7 +115,7 @@ export default function EachBlog({ setshowEditModal,token, setEquilizer, equiliz
                             <div className="each-blog-description">
                                 <div className="each-blog-title">{editedBlog.blogTitle}</div>
                                 <div className="title-underline"></div>
-                                <div style={{ marginTop: 20 }}>{editedBlog.blogDescription}</div>
+                                <div style={{ marginTop: 20,whiteSpace:"break-spaces" }}>{editedBlog.blogDescription}</div>
                             </div>
                         </div>
                         <div style={{ display: 'flex', gap: '20px', margin: '20px auto', width: '100%', justifyContent: 'center' }}>

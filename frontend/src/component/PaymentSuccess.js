@@ -1,30 +1,32 @@
-import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { verifyPaymentThunk } from '../redux/paymentSlice';
-import { getTransactionByTicketIDThunk } from '../redux/transactionSlice';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ButtonLoading from './Loader/ButtonLoader';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style/PaymentSuccess.css';
+import axios from 'axios';
 
 const PaymentSuccess = () => {
-    const location = useLocation();
-    const dispatch = useDispatch();
-    const { search } = location;
-    const query = new URLSearchParams(search);
-    const tx_ref = query.get('tx_ref');
-    const ticketID = query.get('ticketID');
-
-    const { transaction, loading, error } = useSelector((state) => state.transactions);
+    const [searchParams] = useSearchParams();
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [transactionDetails, setTransactionDetails] = useState(null);
 
     useEffect(() => {
+        const tx_ref = searchParams.get('tx_ref');
         if (tx_ref) {
-            dispatch(getTransactionByTicketIDThunk(tx_ref));
+            setLoading(true);
+            axios.get(`${process.env.REACT_APP_BACKEND_API}/api/transactions/${tx_ref}`)
+                .then((res) => {
+                    setTransactionDetails(res.data);
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    setError(err?.response?.data?.error || 'Please check your internate connection');
+                    setLoading(false);
+                });
         }
-    }, [dispatch, tx_ref, ticketID]);
-
-    console.log("tx_ref succ", tx_ref);
-    console.log("ticketID succ", ticketID);
+    }, [searchParams]);
 
     const handlePrint = () => {
         window.print();
@@ -35,7 +37,6 @@ const PaymentSuccess = () => {
     }
 
     if (error) {
-        console.log('Error object:', error);
         return (
             <div className="alert alert-danger">
                 {typeof error === 'string' ? error : JSON.stringify(error)}
@@ -43,11 +44,9 @@ const PaymentSuccess = () => {
         );
     }
 
-    const transactionDetails = transaction ? transaction[0] : null;
-
     return (
         <div className="container">
-            <h3 className="my-4">Payment Successful</h3>
+            <h2 className="my-4">{transactionDetails?'Payment Successful':'Transaction Not found'}</h2>
             {transactionDetails && (
                 <div className="ticket" id="ticket">
                     <div className="ticket-header">

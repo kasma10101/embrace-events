@@ -17,8 +17,13 @@ const createPayment = async (req, res) => {
         return res.status(400).send({error:"Ticket or email or phone not found"})
     }
     
+    const currentDate = new Date();
+    const ticket = await Ticket.findOne({
+                            _id:ticketID, 
+                            startDate: { $lte: currentDate },
+                            endDate: { $gte: currentDate },
+                            isDeleted:false});
 
-    const ticket = await Ticket.findById(ticketID);
     if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
     if (ticket.isDeleted) return res.status(404).json({ message: 'Ticket is Deleted By Admin' });
 
@@ -89,12 +94,12 @@ const verifyPayment = async (req, res) => {
         const response = await chapa.verify({ tx_ref: trx_ref });
         // Update TicketTransaction status if payment is successful
         if (response.status === 'success') {
-            let ticket= await TicketTransaction.findOne({tx_ref: trx_ref}).populate('ticketID')
-            if(ticket){
+            let transaction= await TicketTransaction.findOne({tx_ref: trx_ref}).populate('ticketID')
+            if(transaction){
                 await TicketTransaction.findOneAndUpdate({ tx_ref: trx_ref }, { status: 'paid' });
                 const subject = "Payment Succeed ✅"
-                const title = "Ticket Detail"
-                await SendEmail(ticket.email, ticket.data ,subject,title )
+                const title = "Ticket Transaction Detail"
+                await SendEmail(transaction?.email, transaction ,subject,title )
 
             }
         }

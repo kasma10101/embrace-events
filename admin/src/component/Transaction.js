@@ -9,7 +9,7 @@ const Transaction = () => {
     const dispatch = useDispatch();
     const { transactions, loading, error } = useSelector((state) => state.transactions);
     const data = useMemo(() => transactions, [transactions]);
-console.log(transactions, data);
+
     useEffect(() => {
         dispatch(getAllTransactionsThunk());
     }, [dispatch]);
@@ -39,10 +39,6 @@ console.log(transactions, data);
     },[data])
    
     
-    console.log('====================================');
-    console.log(tableData);
-    console.log('====================================');
-
     return (
         <div style={{ paddingTop: '3%', width: '90%', margin: '0px auto', overflow: 'auto', scrollbarWidth: 'none' }}>
             <h2>Transactions</h2>

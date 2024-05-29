@@ -14,6 +14,7 @@
   width: 100%;
   /* gap: 15%; */
   background-color: #12372a;
+  padding: 5px 10px 5px 20px;
 }
 .logo{
   display: flex;
@@ -28,9 +29,10 @@
 .nav_bar{
   display: flex;
   align-items: center;
+  justify-content: space-around;
   gap: 20px;
   background-color: #12372a;
-  margin-right: 20px;
+  width: 50%;
 }
 .each-nav-bar:hover{
   border-bottom: #f1f8ff;

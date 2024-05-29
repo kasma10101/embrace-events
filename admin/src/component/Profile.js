@@ -19,7 +19,6 @@ export default function Profile({adminData,token}) {
         setUsername(adminData.username||"")
         setEmail(adminData.email||"")
         setPassword(adminData.password || "")
-        console.log(adminData);
     },[adminData])
 
     const handleSubmit = async (e) => {
@@ -51,7 +50,7 @@ export default function Profile({adminData,token}) {
             }
           );
           const user = await response.json();
-          console.log(user);
+
           if(user.msg){
               setLoading(false);
               setError("");

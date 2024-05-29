@@ -22,25 +22,7 @@ import { Button, } from '@mui/material';
 import { jsPDF } from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-const sxStyle = {
-    modal: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'rgba(33, 35, 38, 0.7)',
-        border: '2px solid #000',
-        borderRadius: "20px",
-        boxShadow: 24,
-        p: 4,
-        color: 'white'
-    },
-    button: {
-        textTransform: "inherit",
-        fontWeight: "700"
-    }
-}
+
 
 const csvConfig = mkConfig({
     fieldSeparator: ',',
@@ -57,12 +39,11 @@ const sxStyles = {
         width: "60%",
         bgcolor: '#fff',
         boxShadow: 24,
-        p: 4,
-        color: 'white',
+        paddingTop: '120px',
+        color: 'black',
         zIndex: 10,
         maxHeight: "80vh",
         overflow: "auto",
-        color: "white",
         "::-webkit-scrollbar": {
             width: "1px",
         },
@@ -104,7 +85,7 @@ const Ticket = () => {
     const [openEditModal, setOpenEdit] = useState(false)
 
     const handleEdit = (ticket) => {
-        setEditingTicket(ticket);
+        setEditingTicket({...ticket,startDate:formatDate(ticket.startDate),endDate:formatDate(ticket.endDate)});
         setOpenEdit(true)
     };
 
@@ -182,7 +163,7 @@ const Ticket = () => {
                 header: 'Ticket description',
                 size: 200,
                 Cell: ({ renderedCellValue, row }) => (
-                    <Box sx={{ width: 200, overflowWrap: 'break-word' }}>
+                    <Box sx={{ width: 200, overflowWrap: 'break-word',whiteSpace:"break-spaces" }}>
                         {renderedCellValue}
                     </Box>
                 ),
@@ -255,15 +236,24 @@ const Ticket = () => {
                 ),
             },
             {
-                id: 'actions',
-                header: 'Actions',
-                size: 100,
-                Cell: ({ row }) => (
-                    <Box sx={{ width: 100, overflowWrap: 'break-word' }}>
-                        <Button onClick={() => {
-                            handleEdit(row.original)
-                            console.log(row.original);
-                        }}>Edit</Button>
+                accessorFn: (row) => `${row?.createdAt}`,
+                enableClickToCopy: true,
+                header: 'Created At',
+                size: 300,
+                Cell: ({ renderedCellValue, row }) => (
+                    <Box sx={{ width: 200, overflowWrap: 'break-word' }}>
+                        {moment(renderedCellValue).format('LLL')}
+                    </Box>
+                ),
+            },
+            {
+                accessorFn: (row) => `${row?.updatedAt}`,
+                enableClickToCopy: true,
+                header: 'Updated At',
+                size: 300,
+                Cell: ({ renderedCellValue, row }) => (
+                    <Box sx={{ width: 200, overflowWrap: 'break-word' }}>
+                        {moment(renderedCellValue).format('LLL')}
                     </Box>
                 ),
             },
@@ -273,14 +263,17 @@ const Ticket = () => {
                 size: 100,
                 Cell: ({ row }) => (
                     <Box sx={{ width: 100, overflowWrap: 'break-word' }}>
-                        <Button onClick={() => handleDelete(row.original.id)}>Delete</Button>
+                        <Button onClick={() => {
+                            handleEdit(row.original)
+                        }}>Edit</Button>
+                         <Button onClick={() => handleDelete(row.original._id)}>Delete</Button>
                     </Box>
                 ),
             },
+           
         ],
         [],
     );
-
 
 
     const table = useMaterialReactTable({
@@ -364,6 +357,11 @@ const Ticket = () => {
     });
 
 
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+      }
+   
     return (
         <div className="text-dark mh-100" style={{ marginTop: '3%', }}>
             <div className="d-flex p-3" style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
@@ -397,7 +395,9 @@ const Ticket = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={{ ...sxStyles.modal, display: "flex", justifyContent: "center", alignItems: "center", gap: "10px", flexDirection: "column", margin: 0, }}>
-                    <Typography variant='h5'>Update Ticket </Typography>
+                    <Typography variant='h5' sx={{marginBottom:"5px",}} >Update Ticket </Typography>
+                    
+                    <Typography>Title</Typography>
                     <TextField
                         type="text"
                         className="form-control"
@@ -409,6 +409,8 @@ const Ticket = () => {
                         style={{ width: 300 }}
                         placeholder='Ticket Title'
                     />
+
+                    <Typography>Description</Typography>
                     <TextField
                         className="form-control"
                         name="description"
@@ -420,6 +422,32 @@ const Ticket = () => {
                         multiline
                         rows={5}
                     />
+
+                    <Typography>Start Date</Typography>
+                    <TextField
+                            type="date"
+                            className="form-control"
+                            name="startDate"
+                            value={editingTicket?.startDate}
+                            onChange={handleChange}
+                            required
+                            style={{width: 300}}
+                            placeholder='Start Date'
+                        />
+ 
+                    <Typography>End Date</Typography>
+                    <TextField
+                            type="date"
+                            className="form-control"
+                            name="endDate"
+                            value={editingTicket?.endDate}
+                            onChange={handleChange}
+                            required
+                            style={{width: 300}}
+                            placeholder='End Date'
+                        />
+
+                    <Typography>Standard Amount</Typography>
                     <TextField
                         type="number"
                         className="form-control"
@@ -430,6 +458,8 @@ const Ticket = () => {
                         style={{ width: 300 }}
                         placeholder='Standard Amount'
                     />
+
+                    <Typography>VIP Amount</Typography>
                     <TextField
                         type="number"
                         className="form-control"

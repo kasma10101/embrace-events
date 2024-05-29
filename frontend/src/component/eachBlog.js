@@ -9,7 +9,7 @@ export default function EachBlog() {
     const [eachBlog, seteachBlog] = useState({
         blogTitle: '',
         blogDescription: '',
-        blogImage: null
+        blogImage: null,
     })
 
     const navigate = useNavigate()
@@ -17,9 +17,8 @@ export default function EachBlog() {
     const fetchBlogDetail = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/api/blogs/${id}`)
-            seteachBlog({ ...eachBlog, blogTitle: response.data.blogTitle, blogDescription: response.data.blogDescription, blogImage: response.data.blogImage })
+            seteachBlog({ ...eachBlog,createdAt:response.data?.createdAt, blogTitle: response.data.blogTitle, blogDescription: response.data.blogDescription, blogImage: response.data.blogImage })
         } catch (error) {
-            console.log(error);
         }
     }
 
@@ -36,7 +35,8 @@ export default function EachBlog() {
             <div className="each-blog-description">
                 <div className="each-blog-title">{eachBlog.blogTitle}</div>
                 <div className="title-underline"></div>
-                <div style={{ marginTop: 20 }}>{eachBlog.blogDescription}</div>
+                <div style={{ marginTop: 20,lineBreak:"anywhere",whiteSpace:"break-spaces" }}>{eachBlog.blogDescription}</div>
+                <div style={{ float: "right", fontSize: 13, padding: 10 }}>{new Date(eachBlog?.createdAt).toLocaleString()}</div>
             </div>
         </div>
     )

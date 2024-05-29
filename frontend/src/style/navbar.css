@@ -14,6 +14,7 @@
   width: 100%;
   /* gap: 15%; */
   background-color: #12372a;
+  padding: 5px 10px 5px 20px;
 }
 .logo{
   display: flex;
@@ -28,16 +29,22 @@
 .nav_bar{
   display: flex;
   align-items: center;
+  justify-content: space-around;
   gap: 20px;
   background-color: #12372a;
-  margin-right: 10px;
-
+  width: 40%;
 }
 .each-nav:hover{
   border-bottom: 1px solid #f1f8ff;
 }
 .icon {
   display: none;
+}
+
+@media(max-width: 900px){
+  .nav_bar{
+    width: 60%;
+  }
 }
 @media(max-width: 630px){
    .icon{ 

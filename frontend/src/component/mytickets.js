@@ -1,8 +1,9 @@
-import { Alert, Box, Button, CircularProgress, IconButton, TextField, Typography } from '@mui/material'
+import { Alert, Box, Button, CircularProgress, IconButton, Link, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import LogoutIcon from '@mui/icons-material/Logout';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const sxStyles = {
   container: {
@@ -31,29 +32,39 @@ const sxStyles = {
     margin:"30px 40px 10px 40px",
     flexWrap:'wrap'
   },
-  eachTransactionBox: {
-    display: 'grid',
-    gridTemplateColumns: 'auto auto auto auto',
-    gap: '10%',
-    alignItems: 'center',
-    fontSize: '18px',
+  eachTransactionBox:{
     border: '2px solid #12372a',
-    padding: '20px',
     borderRadius: '10px',
-    width: '40%',
-    overflowX: 'auto',
-    scrollbarWidth: 'none',
     color: '#789461',
+    width:"400px",
+    height:"70vh",
+    overflowY:"auto",
     "@media(max-width: 1000px)": {
       width: '60%'
     },
-    "@media(max-width: 760px)": {
-      width: '80%'
+    "@media(max-width: 700px)": {
+      width: '300px',
+      height: '60vh'
     },
-    "@media(max-width: 500px)": {
-      width: '100%'
+    "@media(max-width: 400px)": {
+      width: '200px',
+      height: '40vh'
     },
+    '::-webkit-scrollbar': {
+      width: '3px'
+    }
+
   },
+  detail:{
+    display: 'grid',
+    gridTemplateColumns: 'auto auto auto',
+    gap: '10%',
+    alignItems: 'center',
+    fontSize: '18px',
+    padding: '20px',
+    scrollbarWidth: 'none',
+    lineBreak:'anywhere',
+  }
 
 }
 export default function Mytickets() {
@@ -72,13 +83,12 @@ export default function Mytickets() {
       setError('')
       axios.post(`${process.env.REACT_APP_BACKEND_API}/api/transactions/requestOtp`, { email: email })
         .then((res) => {
-          console.log(res);
+
           setLoading(false)
           setError('')
           setOtpOpen(true)
         })
         .catch(error => {
-          console.log(error);
           setLoading(false)
           setError(error?.response?.data?.error || "Please check your internate conectiion")
         })
@@ -87,7 +97,6 @@ export default function Mytickets() {
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-    console.log(userInfo);
     if (userInfo && userInfo.email) {
       const ONE_DAY = 24 * 60 * 60 * 1000;
 
@@ -98,12 +107,10 @@ export default function Mytickets() {
           }
         })
           .then((res) => {
-            console.log(res);
             setTransactions(res.data.tickets)
             setSeeTransactions(true)
           })
           .catch(error => {
-            console.log(error);
           })
       } else {
         localStorage.removeItem('userInfo');
@@ -123,7 +130,6 @@ export default function Mytickets() {
         }
       })
         .then((res) => {
-          console.log(res);
           setLoading(false)
           setError('')
           localStorage.setItem('userInfo', JSON.stringify({ email: res.data.email, savedAt: new Date().getTime() }));
@@ -131,7 +137,6 @@ export default function Mytickets() {
           setSeeTransactions(true)
         })
         .catch(error => {
-          console.log(error);
           setLoading(false)
           setError(error?.response?.data?.error || "Please check your internate conectiion")
         })
@@ -211,37 +216,59 @@ export default function Mytickets() {
 }
 
 const EachTransactions = ({ data }) => {
-  console.log(data);
+
   return (
     <Box sx={sxStyles.eachTransactionBox}>
-      <div style={{ margin: '8px', gridRow: '1 / 3' }}><img src={data?.ticketID?.image?.filePath} style={{ width: 100, height: 100 }} /></div>
-      <div>
-        <div style={{ fontSize: 10 }}>Ticket number</div>
-        <div style={{ margin: '8px 0px' }}>{data?.ticketNumber}</div>
-      </div>
-      <div>
-        <div style={{ fontSize: 10 }}>Ticket title</div>
-        <div style={{ margin: '8px 0px' }}>{data.ticketID?.title}</div>
-      </div>
-      <div>
-        <div style={{ fontSize: 10 }}>Location</div>
-        <div style={{ margin: '8px 0px' }}>{data.ticketID?.location}</div>
-      </div>
-      <div>
-        <div style={{ fontSize: 10 }}>Ticket type</div>
-        <div style={{ margin: '8px 0px' }}>{data.ticketType.toUpperCase()}</div>
-      </div>
-      <div>
-        <div style={{ fontSize: 10 }}>Ticket start date</div>
-        <div style={{ margin: '8px 0px' }}>{moment(data.ticketID?.startDate).format('LL')}</div>
-      </div>
-      <div>
-        <div style={{ fontSize: 10 }}>Ticket price</div>
-        <div style={{ margin: '8px 0px' }}>{data.amount}ETB</div>
-      </div>
-      <div style={{ fontSize: 10 }}>
-        <div>Bought at {moment(data.createdAt).format('lll')}</div>
-      </div>
+      
+      <Box sx={{display:"flex", justifyContent:"center",alignItems:"center",flexDirection:"column"}}>
+          <div style={{width:"100%"}}><img src={data?.ticketID?.image?.filePath} style={{ width: '100%', height: 300,objectFit:'cover',borderRadius:"10px 10px 0 0" }} /></div>
+          <Box sx={{padding:"10px"}}>
+              <div>
+                <div style={{ fontSize: 10 }}>Ticket title</div>
+                <div style={{ margin: '8px 0px' }}>{data.ticketID?.title}</div>
+              </div>
+
+              <div style={{ color: 'red' }} > 
+                 <LocationOnIcon /> {data.ticketID?.location}
+              </div>
+
+          </Box>
+      </Box>
+
+      <Box sx={sxStyles.detail}>
+          <div>
+            <div style={{ fontSize: 10 }}>Ticket number</div>
+            <div style={{ margin: '8px 0px' }}>{data?.ticketNumber}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 10 }}>Ticket type</div>
+            <div style={{ margin: '8px 0px' }}>{data.ticketType.toUpperCase()}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 10 }}>Ticket start date</div>
+            <div style={{ margin: '8px 0px' }}>{moment(data.ticketID?.endDate).format('LL')}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 10 }}>Ticket End date</div>
+            <div style={{ margin: '8px 0px' }}>{moment(data.ticketID?.startDate).format('LL')}</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 10 }}>Ticket price</div>
+            <div style={{ margin: '8px 0px' }}>{data.amount}ETB</div>
+          </div>
+          <div>
+            <div style={{ fontSize: 10 }}>Status</div>
+            <div style={{ margin: '8px 0px' }}>{data.status}</div>
+          </div>
+
+      </Box>
+      <Link sx={{paddingLeft:"10px"}} href={`/payment/success?tx_ref=${data.tx_ref}`}>Download</Link>
+      <div style={{ fontSize: 10,padding:10 }}>
+           Bought at {moment(data.createdAt).format('lll')}
+       </div>
+     
+      
+
     </Box>
   )
 }

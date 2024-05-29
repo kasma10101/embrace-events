@@ -24,7 +24,6 @@ export default function Blogs({ equilizer, token, showAddModal, showEditModal, s
             }
         );
         const blogs = await response.json();
-        console.log(blogs);
         setLoading(false)
         if (!blogs.error) {
             setBlogs(blogs)
@@ -69,8 +68,9 @@ export default function Blogs({ equilizer, token, showAddModal, showEditModal, s
                 }
             </div>
             <div style={{ width: '87%', marginTop: 15 }}>
-                <Link className="add-blog-button" style={{ border: '1.5px solid #12372a', borderRadius: '15px', padding: '10px 15px', position: 'absolute', right: '5px', width: 120, textDecoration: 'none', textAlign: 'center', }}
-                    onClick={() => setshowAddModal(true)} to='/blogs/addBlogs'>Add blog</Link>
+                <Link className="add-blog-button" style={{ border: '1.5px solid #12372a', borderRadius: '15px', padding: '10px 15px', position: 'fixed', bottom: '20px',left:"50%", width: 120, textDecoration: 'none', textAlign: 'center', }}
+                    onClick={() => setshowAddModal(true)} to='/blogs/addBlogs'>Add blog
+                </Link>
             </div>
 
             <Modal open={showAddModal} onClose={

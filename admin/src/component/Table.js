@@ -78,10 +78,11 @@ const DataTable = ({data}) => {
     doc.save('mrt-pdf-example.pdf');
   };
 
+
     const columns = useMemo(
     () => [
       {
-        accessorFn: (row) => `${row?.title||"Unknown"}`, 
+        accessorFn: (row) => `${row?.ticket||"Unknown"}`, 
         id: 'title', 
         header: 'Ticket Title',
         size: 250,
@@ -103,17 +104,6 @@ const DataTable = ({data}) => {
         filterVariant: 'autocomplete',
         header: 'Type',
         size: 200,
-        Cell: ({ renderedCellValue, row }) => (
-          <Box sx={{}}>
-             {renderedCellValue}
-          </Box>
-        ),
-      },
-      {
-        accessorFn: (row) => `${row.loction}`, 
-        enableClickToCopy: true,
-        header: 'Location',
-        size: 300,
         Cell: ({ renderedCellValue, row }) => (
           <Box sx={{}}>
              {renderedCellValue}
@@ -154,27 +144,6 @@ const DataTable = ({data}) => {
         ),
       },
       {
-        accessorFn: (row) => `${row.tx_ref}`, 
-        enableClickToCopy: true,
-        header: 'Transaction Reference',
-        size: 300,
-        Cell: ({ renderedCellValue, row }) => (
-          <Box sx={{}}>
-             {renderedCellValue}
-          </Box>
-        ),
-      },
-      {
-        accessorFn: (row) => `${row.amount}`, 
-        header: 'Amount',
-        size: 300,
-        Cell: ({ renderedCellValue, row }) => (
-          <Box sx={{}}>
-             {renderedCellValue}
-          </Box>
-        ),
-      },
-      {
         accessorFn: (row) => `${row.ticketNumber}`, 
         header: 'Ticket Number',
         enableClickToCopy: true,
@@ -197,13 +166,35 @@ const DataTable = ({data}) => {
         ),
       },
       {
+        accessorFn: (row) => `${row.tx_ref}`, 
+        enableClickToCopy: true,
+        header: 'Transaction Reference',
+        size: 300,
+        Cell: ({ renderedCellValue, row }) => (
+          <Box sx={{}}>
+             {renderedCellValue}
+          </Box>
+        ),
+      },
+      {
+        accessorFn: (row) => `${row.amount}`, 
+        header: 'Amount',
+        size: 300,
+        Cell: ({ renderedCellValue, row }) => (
+          <Box sx={{}}>
+             {renderedCellValue}
+          </Box>
+        ),
+      },
+      
+      {
         accessorFn: (row) => `${row?.createdAt}`, 
         filterVariant: 'autocomplete',
         header: 'Created Date',
         size: 300,
         Cell: ({ renderedCellValue, row }) => (
           <Box sx={{}}>
-             {moment(renderedCellValue).format('LL')}
+             {moment(renderedCellValue).format('LLL')}
           </Box>
         ),
       },

@@ -19,12 +19,12 @@ const getAllTransactions = async (req, res) => {
 // Get transaction by ticketID
 const getTransactionByTicketID = async (req, res) => {
     const { tx_ref } = req.params;
-    console.log("ouuuuuuuuuuu",req.params);
-    console.log("okkk", req.params.tx_ref);
     console.log(tx_ref);
     try {
-        const transaction = await TicketTransaction.find({ tx_ref });
-        console.log("ouuuuuuuuuuu",transaction);
+        const transaction = await TicketTransaction.findOne({ tx_ref:tx_ref,status:'paid' }).populate('ticketID');
+        if(!transaction){
+          return  res.status(400).json({error:"Paid Transaction Not Found"});
+        }
         res.status(200).json(transaction);
     } catch (error) {
         res.status(500).json({ message: error.message });

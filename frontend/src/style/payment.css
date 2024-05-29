@@ -7,9 +7,8 @@
 }
 .ticket-detail{
     border: 2px solid #12372a;
-    padding: 20px;
     border-radius: 20px;
-    width: 350px;
+    width: 400px;
     word-break: break-all;
     overflow-wrap: break-word;
     color: #789461;
@@ -17,7 +16,7 @@
     flex-direction: column;
     gap: 10px;
     font-size: 18px;
-    height: 70vh;
+    maxHeight: 90vh;
     overflow-y: auto;
     scrollbar-width: none;
 }
@@ -41,5 +40,6 @@
 @media(max-width: 460px){
     .ticket-detail{
         margin: 1%;
+        width: 250px;
     }
 }
