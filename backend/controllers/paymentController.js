@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const TicketTransaction = require('../models/ticketTransactionModel'); // Import TicketTransaction model
 const Ticket = require('../models/ticketModel');
+const { SendEmail } = require("../services/sendEmail")
 
 const Chapa = require('chapa-nodejs').Chapa;
 require("dotenv").config()
@@ -16,8 +17,13 @@ const createPayment = async (req, res) => {
         return res.status(400).send({error:"Ticket or email or phone not found"})
     }
     
+    const currentDate = new Date();
+    const ticket = await Ticket.findOne({
+                            _id:ticketID, 
+                            startDate: { $lte: currentDate },
+                            endDate: { $gte: currentDate },
+                            isDeleted:false});
 
-    const ticket = await Ticket.findById(ticketID);
     if (!ticket) return res.status(404).json({ message: 'Ticket not found' });
     if (ticket.isDeleted) return res.status(404).json({ message: 'Ticket is Deleted By Admin' });
 
@@ -88,15 +94,24 @@ const verifyPayment = async (req, res) => {
         const response = await chapa.verify({ tx_ref: trx_ref });
         // Update TicketTransaction status if payment is successful
         if (response.status === 'success') {
-            await TicketTransaction.findOneAndUpdate({ tx_ref: trx_ref }, { status: 'paid' });
+            let transaction= await TicketTransaction.findOne({tx_ref: trx_ref}).populate('ticketID')
+            if(transaction){
+                await TicketTransaction.findOneAndUpdate({ tx_ref: trx_ref }, { status: 'paid' });
+                const subject = "Payment Succeed ✅"
+                const title = "Ticket Transaction Detail"
+                await SendEmail(transaction?.email, transaction ,subject,title )
+
+            }
         }
 
-
+       
         res.status(200).json(response);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
+
+
 
 // Function to generate random 5-digit ticket number
 function generateTicketNumber() {

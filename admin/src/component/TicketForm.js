@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createTicketThunk, getTicketByIdThunk, getTicketsThunk, updateTicketThunk } from './redux/ticketSlice';
-import {TextField} from '@mui/material'
+import {Box, TextField, Typography} from '@mui/material'
 import { Button } from 'bootstrap';
 import '../style/ticketForm.css'
 
@@ -20,6 +20,9 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
+        if(name==='endDate' && new Date(value).getTime()-new Date().getTime()<2 * 24 * 60 * 60 * 1000){
+            return
+        }
         setTicketData((prevData) => ({
             ...prevData,
             [name]: value
@@ -60,12 +63,15 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
         onFormSubmit();
     };
 
+
     return (
         <div >
             <div>
                 <h2 style={{textAlign: 'center'}}>Create Ticket</h2>
                 <form onSubmit={handleSubmit} className='form-container' >
-                        <TextField
+                       <Box>
+                           <Typography>Title</Typography>
+                           <TextField
                             type="text"
                             className="form-control"
                             name="title"
@@ -73,9 +79,13 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                             onChange={handleChange}
                             required
                             style={{width: 300}}
-                            placeholder='Ticket Titlec'
+                            placeholder='Ticket Title'
                         />
-                        <TextField
+                       </Box>
+
+                       <Box>
+                           <Typography>Description</Typography>
+                           <TextField
                             className="form-control"
                             name="description"
                             value={ticketData.description}
@@ -85,8 +95,12 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                             placeholder='Ticket Description'
                             multiline
                             maxRows={5}
-                        />
-                        <TextField
+                          />
+                       </Box>
+
+                       <Box>
+                           <Typography>Location</Typography>
+                           <TextField
                             type="text"
                             className="form-control"
                             name="location"
@@ -96,7 +110,11 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                             style={{width: 300}}
                             placeholder='Location'
                         />
-                        <TextField
+                       </Box>
+                      
+                       <Box>
+                           <Typography>Start Date</Typography>
+                           <TextField
                             type="date"
                             className="form-control"
                             name="startDate"
@@ -106,7 +124,11 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                             style={{width: 300}}
                             placeholder='Start Date'
                         />
-                        <TextField
+                       </Box>
+
+                       <Box>
+                           <Typography>End Date</Typography>
+                           <TextField
                             type="date"
                             className="form-control"
                             name="endDate"
@@ -116,7 +138,11 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                             style={{width: 300}}
                             placeholder='End Date'
                         />
-                        <TextField
+                       </Box>
+
+                       <Box>
+                           <Typography>Standard Amount</Typography>
+                           <TextField
                             type="number"
                             // className="form-control"
                             name="standardAmount"
@@ -126,7 +152,11 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                             style={{width: 300}}
                             placeholder='Standard Amount'
                         />
-                        <TextField
+                       </Box>
+
+                       <Box>
+                           <Typography>VIP Amount</Typography>
+                           <TextField
                             type="number"
                             className="form-control"
                             name="vipAmount"
@@ -136,7 +166,11 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                             style={{width: 300}}
                             placeholder='VIP Amount'
                         />
-                        <TextField
+                       </Box>
+                        
+                       <Box>
+                           <Typography>Cover Image</Typography>
+                           <TextField
                             type="file"
                             className="form-control"
                             name="image"
@@ -144,6 +178,11 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                             style={{width: 300}}
                             placeholder='Image'
                         />
+                       </Box>
+                        
+                        
+                        
+                        
                     <button type="submit" className="btn btn-primary" style={{gridColumn: '1 / 3'}}>
                        Create Ticket
                     </button>

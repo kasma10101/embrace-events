@@ -23,6 +23,24 @@ export const getTickets = async () => {
     }
 };
 
+export const getAvailableTickets = async () => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/api/tickets/availableTickets`);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
+export const getUpcomingTickets = async () => {
+    try {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/api/tickets/upcomingTickets`);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
 export const getTicketById = async (id) => {
     try {
         const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/api/tickets/${id}`);

@@ -10,7 +10,6 @@ export default function Blogs({ equilizer, token, showAddModal, showEditModal, s
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
     const navigate = useNavigate()
-
     const fetchBlogs = async () => {
         setLoading(true)
         setError('')
@@ -25,7 +24,6 @@ export default function Blogs({ equilizer, token, showAddModal, showEditModal, s
             }
         );
         const blogs = await response.json();
-        console.log(blogs);
         setLoading(false)
         if (!blogs.error) {
             setBlogs(blogs)
@@ -40,7 +38,7 @@ export default function Blogs({ equilizer, token, showAddModal, showEditModal, s
     }, [token, equilizer])
     return (
         <>
-            <Typography variant="h3" sx={{ textAlign: "center", margin: '15px 0 15px 0', paddingTop: '7%' }}>Blogs</Typography>
+            <Typography variant="h3" sx={{ textAlign: "center", margin: '15px 0 15px 0', paddingTop: '3%' }}>Blogs</Typography>
             <div className="blogs-container">
                 {
                     loading ?
@@ -48,7 +46,6 @@ export default function Blogs({ equilizer, token, showAddModal, showEditModal, s
                     :
                     <>
                             {blogs.length > 0 ? blogs.map((eachBlog, index) => {
-                    console.log(eachBlog.blogImage);
                                 return (
                                     <Link onClick={() => setshowEditModal(true)} className="each-blog-container" to={`${eachBlog._id}`} key={index}>
                                         <div><img className="blog-image" src={`${process.env.REACT_APP_BACKEND_API}/${eachBlog.blogImage}`} /></div>
@@ -71,8 +68,9 @@ export default function Blogs({ equilizer, token, showAddModal, showEditModal, s
                 }
             </div>
             <div style={{ width: '87%', marginTop: 15 }}>
-                <Link className="add-blog-button" style={{ border: '1.5px solid #12372a', borderRadius: '15px', padding: '10px 15px', position: 'absolute', right: '5px', width: 120, textDecoration: 'none', textAlign: 'center', }}
-                    onClick={() => setshowAddModal(true)} to='/blogs/addBlogs'>Add blog</Link>
+                <Link className="add-blog-button" style={{ border: '1.5px solid #12372a', borderRadius: '15px', padding: '10px 15px', position: 'fixed', bottom: '20px',left:"50%", width: 120, textDecoration: 'none', textAlign: 'center', }}
+                    onClick={() => setshowAddModal(true)} to='/blogs/addBlogs'>Add blog
+                </Link>
             </div>
 
             <Modal open={showAddModal} onClose={

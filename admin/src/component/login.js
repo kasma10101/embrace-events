@@ -64,7 +64,7 @@ export default function Login({isSignUpAllowed}) {
 
 
     return (
-        <div style={{paddingTop: '15%'}}>
+        <div style={{paddingTop: '9%'}}>
             <div className="login-container">
                 <div className="user-icon" >
                     <FaUser style={{ fontSize: 80, color: '#fff' }} />

@@ -28,11 +28,9 @@ export default function Navbar({ loggedIn }) {
     }
     else {
       if (paths.length > 1 && (paths[1] === 'login' || paths[1] === 'signup')) {
-        console.log(paths);
         navigate("/profile")
       }
       else {
-        console.log(paths);
         navigate(paths[1])
       }
 
@@ -41,83 +39,69 @@ export default function Navbar({ loggedIn }) {
   }, [loggedIn])
 
   return (
-    <>
-      <nav>
-        <ul>
+    <div className="whole-nav-bar">
           <div className="logo">
             <img src={embraceLogo} alt="embraceLogo" />
-            <li>
               <span>Events.</span>
-            </li>
           </div>
-
-          <div className={isMenuOpen ? "nav__link__two" : "nav__link__two close"}>
-            {loggedIn ?
-              <>
-                <li>
-                  <Link to={loggedIn ? "/blogs" : "/"}>Blog</Link>
-                </li>
-                <li>
-                  <Link to="/tickets">Tickets</Link>
-                </li>
-                <li>
-                  <Link to="/transaction">Transactions</Link>
-                </li>
-                <li>
-                  <Link to={loggedIn ? "/profile" : "/"}>Profile</Link>
-                </li>
-
-              </>
-
-              :
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
-
-            }
-          </div>
-          <div
-            className="toggle"
-            onClick={handleClick}
-            style={icon ? { width: "100%" } : {}}
-          >
-            <div className="icon">
+          <div className={isMenuOpen ? "nav_bar " : "hidden nav_bar"}>
+            {loggedIn ? <>
+              <Link className="each-nav-bar" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/blogs' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/blogs">Blog</Link>
+              <Link className="each-nav-bar" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/tickets' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/tickets">Tickets</Link>
+              <Link className="each-nav-bar" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/transaction' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/transaction">Transactions</Link>
+              <Link className="each-nav-bar" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/profile' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/profile">Profile</Link>
+              </>: 
+              <Link className="each-nav-bar" to="/login">Login</Link>}
+              </div>
+            <div className="icon" onClick={handleClick}>
               {!isMenuOpen ? (
-                <FaBars cursor={"pointer"} />
+                <FaBars cursor={"pointer"} style={{color: '#f1f8ff'}}/>
               ) : (
                 <FaTimes cursor={"pointer"} />
               )}
-            </div>
-            {/* <div className="text">{text ? "MENU" : "CLOSE"}</div> */}
           </div>
-        </ul>
-      </nav>
+        </div>
+    // <>
 
-      <div className={isMenuOpen ? "nav__link open" : "none"}>
-        {loggedIn ?
-          <>
-            <li>
-              <Link onClick={() => setIsMenuOpen(false)} to={loggedIn ? "/blogs" : "/"}>Blog</Link>
-            </li>
-            <li>
-              <Link onClick={() => setIsMenuOpen(false)} to="/tickets">Tickets</Link>
-            </li>
-            <li>
-              <Link to="/transaction">Transaction</Link>
-            </li>
-            <li>
-              <Link onClick={() => setIsMenuOpen(false)} to={loggedIn ? "/profile" : "/"}>Profile</Link>
-            </li>
+    //   <div className={isMenuOpen ? "nav__link__two" : "nav__link__two close"}>
+    //     {loggedIn ?
+    //       <>
+    //         <li>
+    //           <Link to={loggedIn ? "/blogs" : "/"}>Blog</Link>
+    //         </li>
+    //         <li>
+    //           <Link to="/tickets">Tickets</Link>
+    //         </li>
+    //         <li>
+    //           <Link to="/transaction">Transactions</Link>
+    //         </li>
+    //         <li>
+    //           <Link to={loggedIn ? "/profile" : "/"}>Profile</Link>
+    //         </li>
 
-          </>
+    //       </>
 
-          :
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
+    //       :
+    //       <li>
+    //         <Link to="/login">Login</Link>
+    //       </li>
 
-        }
-      </div>
-    </>
+    //     }
+    //   </div>
+    //   <div
+    //     className="toggle"
+    //     onClick={handleClick}
+    //     style={icon ? { width: "100%" } : {}}
+    //   >
+    //     <div className="icon">
+    //       {!isMenuOpen ? (
+    //         <FaBars cursor={"pointer"} />
+    //       ) : (
+    //         <FaTimes cursor={"pointer"} />
+    //       )}
+    //     </div>
+    //     {/* <div className="text">{text ? "MENU" : "CLOSE"}</div> */}
+    //   </div>
+    // </>
   );
 }

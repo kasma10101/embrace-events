@@ -33,14 +33,12 @@ export default function AddBlog({ setshowAddModal,token,setEquilizer,equilizer }
                },
               }
             )
-            console.log(response);
             setshowAddModal(false)
             setEquilizer(equilizer+2)
         } catch (error) {
             // if (!blog.blogTitle || !blog.blogTitle.trim()) setError((prev) => ({ ...prev, blogTitle: true }));
             // if (!blog.blogDescription || !blog.blogDescription.trim()) setError((prev) => ({ ...prev, blogDescription: true }));
             // if (!blog.blogImage) setError((prev) => ({ ...prev, blogImage: true }));
-            console.log(error);
         }
     }
 
@@ -77,6 +75,8 @@ export default function AddBlog({ setshowAddModal,token,setEquilizer,equilizer }
                         type="text"
                         style={{ width: 300, maxHeight: 200, overflowY: "auto", scrollbarWidth: 'none' }}
                         multiline
+                        maxRows={5}
+                        minRows={3}
                     />
                     {error.blogDescription && <p style={{ fontSize: 10, color: 'red', paddingLeft: '5px', fontFamily: 'nyala' }}>You have to add the description !</p>}
                 </FormGroup>

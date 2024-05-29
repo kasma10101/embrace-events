@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import { FaAngleRight, FaBullseye, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 import home from "../assets/logo/home.png";
 import "../style/home.css";
-import Popup from "./Popup";
-import { FaCircle } from "react-icons/fa";
 import eventTicket from "../assets/images/ticket.png";
-import {useDispatch, useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, Link } from "react-router-dom";
-import { getTicketsThunk } from "../redux/ticketSlice";
+import { getAvailableTicketsThunk, getTicketsThunk, getUpcomingTicketsThunk } from "../redux/ticketSlice";
+import moment from "moment";
+import LockIcon from '@mui/icons-material/Lock';
+import { Box } from "@mui/material";
+import CircleIcon from '@mui/icons-material/Circle';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const faqs = [
   {
@@ -31,87 +34,26 @@ const faqs = [
     text: "Ticket transfer policies vary depending on the event organizer. Please refer to the event details or contact our customer support for more information.",
   },
 ];
-const event = [
-  {
-    id: 1,
-    name: "Test",
-    description: "description",
-    date: "May 20 - 28, 12:00AM",
-    price: 650,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 2,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "May 22 - 29, 5:00PM",
-    price: 800,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 3,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "June 02 - 10, 7:00PM",
-    price: 500,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 4,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "June 09 - 17, 3:30AM",
-    price: 1200,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 5,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "June 14 - 22, 6:00AM",
-    price: 1500,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 6,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "June 15 - 23, 8:00PM",
-    price: 250,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 7,
-    name: "Focaccia",
-    description: "Bread with italian olive oil and rosemary",
-    date: "August 22 - 28, 4:00AM",
-    price: 600,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-  {
-    id: 8,
-    name: "Focaccia",
-    date: "August 22 - 28, 4:00AM",
-    description: "Bread with italian olive oil and rosemary",
-    price: 400,
-    location: "Meskel Square, A.A Bazar & Exhibition Center,",
-  },
-];
 
 function Home() {
   let targetDate = new Date("Sep 11, 2024 00:00:00").getTime();
-  
   const dispatch = useDispatch();
-  const { tickets, loading, error } = useSelector((state) => state.tickets);
+  const { tickets, loading, error, availableTickets, upComingTickets } = useSelector((state) => state.tickets);
   const navigate = useNavigate();
+
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     dispatch(getTicketsThunk());
+    dispatch(getUpcomingTicketsThunk());
+    dispatch(getAvailableTicketsThunk())
   }, [dispatch]);
 
-  const handleClick = (ticket) => {
-    navigate('/payment', {state: {ticket}})
-  }
 
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -144,7 +86,6 @@ function Home() {
 
     updateCountdown();
   }, [targetDate]);
-
   //   //   let month = months[date.getMonth()];
   return (
     <>
@@ -152,7 +93,7 @@ function Home() {
         <div className="home__logo">
           <img src={home} alt="the ethiopia holi" className="home__img" />
         </div>
-        <div className="countdown">
+        {/* <div className="countdown">
           <div className="time">
             <span> {days}</span>
             <p> days</p>
@@ -167,7 +108,7 @@ function Home() {
           <div className="time">
             <span>{seconds}</span> <p>seconds</p>
           </div>
-        </div>
+        </div> */}
         <p className="home__para">
           Join us for an unforgettable experience filled with excitement and
           entertainment.
@@ -179,7 +120,9 @@ function Home() {
               <FaAngleRight style={{ position: "relative", top: "0.2rem" }} />
             </Link>
           </button>
-          <Popup />
+          <button onClick={() => scrollToSection('availableTickets')} className="register">
+            Available Tickets
+          </button>
         </div>
       </div>
       <div className="create">
@@ -194,58 +137,76 @@ function Home() {
         <hr className="create__line" />
       </div>
       <div className="events">
-        <h2>Upcoming Events</h2>
-        <p className="event__para">
-          Browse through our list of exciting upcoming events.
-        </p>
-        {/* <hr /> */}
-        <div className="upcoming">
-          {/* <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card /> */}
-          {tickets.map((ticket) => (
-            <div className="box" onClick={()=>handleClick(ticket)}>
-              <div className="poster">
-                <img src={eventTicket} alt="event ticket" />
-              </div>
-              <div className="content">
-                <div>
-                  <div style={{fontSize: 25, fontWeight: 500, color: '#789461'}}>{ticket.name}</div>
-                  <div style={{border: '2px solid #789461', width: 90}}></div>
-                </div>
-                <div style={{ display: 'flex', gap: 5, }}>
-                  <span><FaCircle style={{color: '#789461'}}/></span>
-                  <span>{ticket.description.split(' ').slice(0, 4) + '...'}</span>
-                </div>
-                <div style={{ display: 'flex', gap: 5, }}>
-                  <span><FaCircle style={{color: '#789461'}}/></span>
-                  <span>{ticket.location.split(' ').slice(0, 4) + '...'}</span>
-                </div>
-                <div style={{ display: 'flex', gap: 5, }}>
-                  <span><FaCircle style={{color: '#789461'}} /></span>
-                  <span>{ticket.date}</span>
-                </div>
-                {/* <u1>
-                  <li>{event.description.split(' ').length > 5 ? event.description.split(' ').slice(0, 5).join(' ') + '...' : event.description}</li>
-                  <li>{event.location.split(' ').length > 5 ? event.location.split(' ').slice(0, 5).join(' ') + '...' : event.location}</li>
-                  <li>{event.price}</li>
-                  <li>{event.date}</li>
-                </u1> */}
-              </div>
+        <section id="availableTickets">
+        <h1 style={{ textAlign: 'center', marginTop: '3%' }}>Available Tickets</h1>
+          {availableTickets.length !== 0 ? <>
+            <p className="event__para">
+              Browse through our list of exciting available events.
+            </p>
+            <div className="upcoming" >
+              {availableTickets.map((ticket) => {
+                return (
+                  <Link to={`/payment/${ticket._id}`} style={{ color: '#789461', textDecoration: 'none' }} className="box" >
+                    <div className="poster">
+                      <img style={{ objectFit: 'cover', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
+                    </div>
+                    <div className="content">
+                        <div>
+                          <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 20 ? ticket.title.slice(0, 20) + '...' : ticket.title}</div>
+                          <div style={{ border: '2px solid #789461', width: 90 }}></div>
+                        </div>
+                       
+                        <div style={{ display: 'flex', gap: 5, }}>
+                          <span><LocationOnIcon style={{ color: 'red' }} /></span>
+                          <span>{ticket.location.length > 13 ? ticket.location.slice(0, 13) + '...' : ticket.location}</span>
+                        </div>
+                        <div style={{ display: 'flex', gap: 5, }}>
+                          <span style={{ fontSize: '13px' }}>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
+                        </div>
+                    </div>
+
+                  </Link>)
+              })}
             </div>
-          ))}
-        </div>
-        <button className="showall__btn">
-          <a href="">
-            Show All{" "}
-            <FaAngleRight style={{ position: "relative", top: "0.2rem" }} />
-          </a>
-        </button>
+          </> : <div style={{ fontSize: '20px', textAlign: 'center', margin: '10px' }}>No ticket available</div>}
+        </section>
+        <hr className="create__line" />
+        <h1 style={{ textAlign: 'center', margin: 15 }}>Upcoming Tickets</h1>
+        {upComingTickets.length !== 0 ? <>
+          <p className="event__para">
+            Browse through our list of exciting upcoming events.
+          </p>
+          <div className="upcoming">
+            {upComingTickets.map((ticket) => {
+              return (
+                <Box>
+                    <LockIcon/>
+                    <div className="box"  style={{cursor:"default"}}>
+                      <div className="poster">
+                        <img style={{ objectFit: 'cover', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
+                      </div>
+                      <div className="content">
+                        <div>
+                          <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 20 ? ticket.title.slice(0, 20) + '...' : ticket.title}</div>
+                          <div style={{ border: '2px solid #789461', width: 90 }}></div>
+                        </div>
+                       
+                        <div style={{ display: 'flex', gap: 5, }}>
+                          <span><LocationOnIcon style={{ color: 'red' }} /></span>
+                          <span>{ticket.location.length > 13 ? ticket.location.slice(0, 13) + '...' : ticket.location}</span>
+                        </div>
+                        <div style={{ display: 'flex', gap: 5, }}>
+                          <span style={{ fontSize: '13px' }}>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
+                        </div>
+                      </div>
+                    
+                    </div>
+                </Box>
+                )
+            })}
+          </div>
+        </> : <div style={{ textAlign: 'center', fontSize: '20px', margin: 20 }}>No upcoming tickets here</div>}
+        <hr className="create__line" />
       </div>
       <div className="faq">
         <h2 className="faq__title">FAQs</h2>
@@ -285,16 +246,14 @@ function Home() {
           <a href="">Contact</a>
         </button>
       </div>
-      <div>
-        {tickets.map((ticket, index)=>{
+      {/* {tickets.map((ticket, index)=>{
           return(
             <div onClick={()=>handleClick(ticket)}>
             <div>{ticket.title}</div>
             <div>{ticket.location}</div>
             </div>
           )
-        })}
-      </div>
+        })} */}
     </>
   );
 }

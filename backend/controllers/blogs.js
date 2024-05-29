@@ -14,14 +14,14 @@ const getBlogs = async (req, res)=>{
 
 const createBlog = async (req, res) => {
     const { blogTitle, blogDescription } = req.body;
+
     if(!req.user)  return res.status(404).json({error:"Not Authorized"})
     try {
         const blog = await Blogs.create({
             blogTitle: blogTitle,
             blogDescription: blogDescription,
-            blogImage: req.file.filename,
+            blogImage: `uploads/${req.file.filename}`,
         })
-        console.log(req.file.filename );
         res.status(201).json({msg: 'Successfuly created' })
     } catch (error) {
         console.log(error);

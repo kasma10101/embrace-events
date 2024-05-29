@@ -42,7 +42,7 @@ const createPayment = async (req, res) => {
     
     
     try {
-        console.log(req.body)
+
         const response = await chapa.initialize({
             first_name: fname,
             last_name: lname,

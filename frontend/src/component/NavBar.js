@@ -3,79 +3,41 @@ import embraceLogo from "../assets/logo/embraceLogo.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../style/navbar.css";
 import {Link} from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [icon, setIcon] = useState(true);
   const [text, setText] = useState(true);
+  const location = useLocation()
+  const [path, setPath] = useState('')
 
   function handleClick() {
     setIcon((icon) => !icon);
     setText((text) => !text);
     setIsMenuOpen(!isMenuOpen);
   }
+  
   return (
-    <>
-      <nav>
-        <ul>
+        <div className="whole-nav-bar">
           <div className="logo">
             <img src={embraceLogo} alt="embraceLogo" />
-            <li>
               <span>Events.</span>
-            </li>
           </div>
-
-          <div className={isMenuOpen ? "nav__link__two " : "nav__link__two close"}>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/blogs">Blog</Link>
-            </li>
-            <li>
-              <Link to="/tickets">Tickets</Link>
-            </li>
-            <li>
-              <Link to="/payment">Payment</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact</Link>
-            </li>
+          <div className={isMenuOpen ? "nav_bar " : "hidden nav_bar"}>
+              <Link className="each-nav" style={{color: '#f1f8ff', textDecoration: 'none', borderBottom : location.pathname === '/' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/">Home</Link>
+              <Link className="each-nav" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/blogs' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/blogs">Blog</Link>
+              <Link className="each-nav" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/mytickets' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/mytickets">My Tickets</Link>
+              <Link className="each-nav" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/about' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/about">About</Link>
+              <Link className="each-nav" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/contact' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/contact">Contact</Link>
           </div>
-          <div
-            className="toggle"
-            onClick={handleClick}
-            style={icon ? { width: "100%" } : {}}
-          >
-            <div className="icon">
+            <div className="icon" onClick={handleClick}>
               {!isMenuOpen ? (
-                <FaBars cursor={"pointer"} />
+                <FaBars cursor={"pointer"} style={{color: '#f1f8ff'}}/>
               ) : (
                 <FaTimes cursor={"pointer"} />
               )}
-            </div>
-            <div className="text">{!isMenuOpen ? "MENU" : "CLOSE"}</div>
           </div>
-        </ul>
-      </nav>
-
-      <div className={isMenuOpen ? "nav__link open" : "none"}>
-      <li>
-              <Link onClick={()=>setIsMenuOpen(false)} to="/">Home</Link>
-            </li>
-            <li>
-              <Link onClick={()=>setIsMenuOpen(false)} to="/blogs">Blog</Link>
-            </li>
-            <li>
-              <Link onClick={()=>setIsMenuOpen(false)} to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/about">Contact</Link>
-            </li>
-      </div>
-    </>
+        </div>
   );
 }

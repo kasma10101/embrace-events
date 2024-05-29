@@ -10,6 +10,8 @@ import Contact from "./component/Contact";
 import Ticket from "./component/Ticket";
 import PaymentSuccess from "./component/PaymentSuccess";
 import PaymentComponent from "./component/Payment";
+import MyTickets from "./component/mytickets";
+import PageNotFound from "./component/PageNotFoound";
 
 function App() {
   return (
@@ -24,11 +26,12 @@ function App() {
         <Route path="/blogs" element={<Blogs />} >
           <Route path="/blogs/:id" element={<EachBlog />} />
         </Route>
-        <Route path="/tickets" element={<Ticket />} />
+        <Route path="/mytickets" element={<MyTickets />} />
         <Route path="/payment/success" element={<PaymentSuccess />} />
-        <Route path="/payment" element={<PaymentComponent />} />
+        <Route path="/payment/:id" element={<PaymentComponent />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </BrowserRouter>

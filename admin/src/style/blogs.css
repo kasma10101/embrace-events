@@ -47,7 +47,7 @@
 }
 
 .blog-modal{
-    width: 400px;
+    width: 800px;
     display: flex;
     align-items: center;
     margin: 0px auto;
@@ -60,7 +60,7 @@
 }
 
 .each-blog{
-    width: 400px;
+    width: 800px;
     background-color: white;
     max-height: 82vh;
     min-height: 40vh;
@@ -69,7 +69,7 @@
 }
 .each-blog-image{
     width: 100%;
-    max-height: 300px;
+    height: 400px;
     object-fit: cover;
 }
 .each-blog-description{
@@ -91,10 +91,13 @@
     margin: 0px 0px 10px;
 }
 .edit-input{
-    width: 350px;
+    width: 750px;
 }
 .edit-button{
-    margin: 20px 0px 20px 40px;
+    margin: 20px auto;
+    display: flex;
+    width: 300px;
+    justify-content: center;
 }
 
 
@@ -108,14 +111,22 @@
         width: 300px;
     }
 }
+@media(max-width: 830px){
+    .blog-modal, .each-blog{
+        width: 650px;
+    }
+    .edit-input{
+        width: 600px;
+    }
+}
 @media(max-width: 680px){
     .blogs-container{
         grid-template-columns: auto;
     }
-    .each-blog-container{
-        width: 350px;
+    .blog-modal, .each-blog{
+        width: 450px;
     }
-    .blog-modal, .edit-blog-container{
+    .edit-input{
         width: 400px;
     }
 }
@@ -135,18 +146,13 @@
     }
 }
 @media(max-width: 500px){
-    .each-blog{
-        width: 350px;
+    .each-blog, .blog-modal{
+        width: 380px;
     }
     .edit-input{
         width: 300px;
     }
     .edit-button{
         margin-left: 20px;
-    }
-}
-@media(max-width: 459px){
-    .blog-modal, .edit-blog-container{
-        width: 350px;
     }
 }

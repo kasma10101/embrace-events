@@ -19,7 +19,9 @@ const adminSchema = mongoose.Schema({
         type: Boolean,
         default: false
     }
-})
+},{
+    timestamps: true 
+  })
 
 const adminModel = mongoose.model('admin', adminSchema)
 module.exports = adminModel
