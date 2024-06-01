@@ -17,7 +17,9 @@ nav {
   position: fixed;
   background: var(--clr-dark);
   z-index: 3;
-  padding: 0.5rem 0rem;
+  /* padding: 0.5rem 0rem; */
+  padding: 1.5rem 0rem;
+  height: 5rem;
 }
 ul {
   list-style: none;
@@ -79,7 +81,8 @@ nav li a:hover {
 }
 @media (max-width: 900px) {
   nav {
-    padding: 0.5rem 0rem;
+    /* padding: 0.5rem 0rem; */
+    padding: 1.5rem 0rem;
   }
   .toggle {
     display: flex;
@@ -132,13 +135,14 @@ nav li a:hover {
     text-decoration: none;
     font-family: "Work Sans", sans-serif;
   }
-  .nav__link__two{
+  .nav__link__two {
     display: none;
   }
 }
 @media (max-width: 570px) {
   nav {
-    padding: 0.2rem 0rem;
+    /* padding: 0.5rem 0rem; */
+    padding: 1.5rem 0rem;
   }
   ul {
     margin: 2rem 1rem;
