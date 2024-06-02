@@ -1,5 +1,6 @@
 .footer {
     display: grid;
+    align-items: center;
     grid-template-columns: repeat(2, 1fr);
     overflow: hidden;
     background-color: var(--clr-font);
@@ -60,12 +61,14 @@
     display: block;
     text-decoration: none;
     color: black;
+    transition: .3s ease;
   }
   .one a:hover,
   .two a:hover {
-    text-decoration: underline;
-    text-decoration-color: var(--clr-dark);
-    text-decoration-thickness: 2px;
+    /* text-decoration: underline; */
+    /* text-decoration-color: var(--clr-dark); */
+    /* text-decoration-thickness: 2px; */
+    color: #13A014;
   }
   
   .footer__line {
@@ -80,11 +83,15 @@
   }
   .right p {
     padding: 0 6rem;
+    text-align: center;
   }
   .right {
     display: flex;
+    justify-content: center;
+    align-items: center;
     margin-left: auto;
     padding-right: 6rem;
+    width: 100%;
   }
   @media (max-width: 1020px) {
     .footer {

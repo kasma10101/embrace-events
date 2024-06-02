@@ -7,6 +7,7 @@ import {
 } from "react-icons/fa";
 import embraceLogo from "../assets/logo/embraceLogo.png";
 import "../style/footer.css";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -21,9 +22,11 @@ export default function Footer() {
         </div>
         <div className="second">
           <div className="one">
-            <h6>Column One</h6>
-            <a href="">About Us</a>
-            <a href="">Contact Us</a>
+            <h6>Quick Links</h6>
+            <Link to="/about">About Us</Link>
+            <Link to="/contact">Contact Us</Link>
+            <Link to="/blogs">Blogs</Link>
+            <Link to="mytickets">My Tickets</Link>
           </div>
           <div className="three">
             <h6>Follow us</h6>

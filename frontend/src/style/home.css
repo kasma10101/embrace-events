@@ -79,6 +79,9 @@ body {
   font-size: 60px;
   font-weight: bold;
   color: #13A014;
+  position: absolute;
+  top: 0;
+  left: 10px;
 }
 
 .home__logo p::after {
@@ -88,6 +91,7 @@ body {
   color: #13A014;
   position: absolute;
   bottom: 0;
+  right: 10px;
 }
 
 .home__logo img {
@@ -139,13 +143,21 @@ body {
 .home__para {
   display: flex;
   justify-content: center;
+  align-items: center;
+  justify-self: center;
+  width: 70%;
+  margin: 0 auto;
 }
 
 .home__para p {
   text-align: center;
   font-size: 20px;
   color: #f1f8ff;
+  font-family: 'Montserrat';
   z-index: 1;
+  text-wrap: wrap;
+  font-weight: 500;
+
 }
 
 /* create */
@@ -176,6 +188,11 @@ body {
 }
 
 /* upcoming events */
+.event__container {
+  display: flex;
+  flex-direction: column;
+}
+
 .events {
   font-family: "Work Sans", sans-serif;
   background-color: var(--clr-font);

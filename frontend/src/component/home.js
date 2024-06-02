@@ -27,7 +27,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
+import Blogs from "./blogs";
 const faqs = [
   {
     title: "How to buy tickets?",
@@ -160,15 +160,11 @@ function Home() {
       <div className="home">
         <div className="top_home">
           <div className="home__logo">
-            <p>
-              Welcome to Embrace Events, where we bring the vibrant spirit of
-              the Holi Festival to Ethiopia. We create unforgettable experiences
-              that blend education with entertainment, fostering unity and joy.
-              Join us in Addis Ababa for a celebration of color, music, dance,
-              and community. Let Embrace Events transform your vision into
-              memorable moments of happiness and togetherness.
-            </p>
             {/* <img src={home} alt="the ethiopia holi" className="home__img" /> */}
+            <p>
+              Join us for an unforgettable experience filled with excitement and
+              entertainment.
+            </p>
           </div>
           <div className="countdown">
             <div className="time">
@@ -189,8 +185,12 @@ function Home() {
         </div>
         <div className="home__para">
           <p>
-            Join us for an unforgettable experience filled with excitement and
-            entertainment.
+            Welcome to Embrace Events, where we bring the vibrant spirit of the
+            Holi Festival to Ethiopia. We create unforgettable experiences that
+            blend education with entertainment, fostering unity and joy. Join us
+            in Addis Ababa for a celebration of color, music, dance, and
+            community. Let Embrace Events transform your vision into memorable
+            moments of happiness and togetherness.
           </p>
         </div>
         <div className="btn">
@@ -232,7 +232,7 @@ function Home() {
               <div className="upcoming">
                 {availableTickets.map((ticket) => {
                   return (
-                    <>
+                    <div className="event__container">
                       <Link
                         to={`/payment/${ticket._id}`}
                         style={{ color: "#789461", textDecoration: "none" }}
@@ -299,7 +299,7 @@ function Home() {
                           </div>
                         </motion.div>
                       </Link>
-                    </>
+                    </div>
                   );
                 })}
               </div>
@@ -322,6 +322,7 @@ function Home() {
             <div className="upcoming">
               {upComingTickets.map((ticket) => {
                 return (
+                  <div className="event__container">
                   <Box>
                     <div className="box" style={{ cursor: "default" }}>
                       <motion.div
@@ -382,6 +383,7 @@ function Home() {
                       </motion.div>
                     </div>
                   </Box>
+                  </div>
                 );
               })}
             </div>
@@ -391,6 +393,11 @@ function Home() {
             No upcoming tickets here
           </div>
         )}
+        <hr className="create__line" />
+        <div className="blogs">
+          <h2>Blogs</h2>
+          <Blogs />
+        </div>
         <hr className="create__line" />
       </div>
       <div className="faq">
