@@ -97,6 +97,15 @@
       text-align: center;
       padding-top: 2rem;
     }
+    .footer .three {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    #twitter_icon {
+      margin-right: 2rem!important;
+    }
   }
   @media (max-width: 690px) {
     .right p {

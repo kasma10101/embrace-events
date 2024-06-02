@@ -54,6 +54,7 @@ export default function Footer() {
                   fontSize: "15px",
                   marginRight: "1rem",
                 }}
+                id="twitter_icon"
               />
               Twitter
             </a>

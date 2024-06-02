@@ -1,16 +1,32 @@
-import { useState, useEffect } from "react";
-import { FaAngleRight, FaBullseye, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
+import { useState, useEffect, useRef } from "react";
+import {
+  FaAngleRight,
+  FaBullseye,
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
+import { IoMdStopwatch } from "react-icons/io";
 import home from "../assets/logo/home.png";
 import "../style/home.css";
 import eventTicket from "../assets/images/ticket.png";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import { getAvailableTicketsThunk, getTicketsThunk, getUpcomingTicketsThunk } from "../redux/ticketSlice";
+import {
+  getAvailableTicketsThunk,
+  getTicketsThunk,
+  getUpcomingTicketsThunk,
+} from "../redux/ticketSlice";
 import moment from "moment";
-import LockIcon from '@mui/icons-material/Lock';
+import LockIcon from "@mui/icons-material/Lock";
+import { motion } from "framer-motion";
 import { Box } from "@mui/material";
-import CircleIcon from '@mui/icons-material/Circle';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CircleIcon from "@mui/icons-material/Circle";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const faqs = [
   {
@@ -36,24 +52,38 @@ const faqs = [
 ];
 
 function Home() {
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [posterAnimationVariants, setPosterAnimationVariants] = useState({
+    offScreen: { opacity: 0, x: "-50%" },
+    onScreen: { opacity: 1, x: 0 },
+  });
+  const [contentAnimationVariants, setContentAnimationVariants] = useState({
+    offScreen: { opacity: 0, x: "50%" },
+    onScreen: { opacity: 1, x: 0 },
+  });
+  const [transitionValue, setTransitionValue] = useState({
+    type: "twin",
+    duration: 1.5,
+  });
+
   let targetDate = new Date("Sep 11, 2024 00:00:00").getTime();
   const dispatch = useDispatch();
-  const { tickets, loading, error, availableTickets, upComingTickets } = useSelector((state) => state.tickets);
+  const { tickets, loading, error, availableTickets, upComingTickets } =
+    useSelector((state) => state.tickets);
   const navigate = useNavigate();
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
+      section.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   useEffect(() => {
     dispatch(getTicketsThunk());
     dispatch(getUpcomingTicketsThunk());
-    dispatch(getAvailableTicketsThunk())
+    dispatch(getAvailableTicketsThunk());
   }, [dispatch]);
-
 
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -86,41 +116,94 @@ function Home() {
 
     updateCountdown();
   }, [targetDate]);
-  //   //   let month = months[date.getMonth()];
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+      if (window.innerWidth < 730) {
+        setPosterAnimationVariants({
+          offScreen: { opacity: 0, y: "-10%" },
+          onScreen: { opacity: 1, y: 0 },
+        });
+        setContentAnimationVariants({
+          offScreen: { opacity: 0, y: "10%" },
+          onScreen: { opacity: 1, y: 0 },
+        });
+      } else if (window.innerWidth < 830) {
+        setPosterAnimationVariants({
+          offScreen: { opacity: 0, x: "-20%" },
+          onScreen: { opacity: 1, x: 0 },
+        });
+        setContentAnimationVariants({
+          offScreen: { opacity: 0, x: "20%" },
+          onScreen: { opacity: 1, x: 0 },
+        });
+      } else {
+        setPosterAnimationVariants({
+          offScreen: { opacity: 0, x: "-50%" },
+          onScreen: { opacity: 1, x: 0 },
+        });
+        setContentAnimationVariants({
+          offScreen: { opacity: 0, x: "50%" },
+          onScreen: { opacity: 1, x: 0 },
+        });
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <div className="home">
-        <div className="home__logo">
-          <img src={home} alt="the ethiopia holi" className="home__img" />
+        <div className="top_home">
+          <div className="home__logo">
+            <p>
+              Welcome to Embrace Events, where we bring the vibrant spirit of
+              the Holi Festival to Ethiopia. We create unforgettable experiences
+              that blend education with entertainment, fostering unity and joy.
+              Join us in Addis Ababa for a celebration of color, music, dance,
+              and community. Let Embrace Events transform your vision into
+              memorable moments of happiness and togetherness.
+            </p>
+            {/* <img src={home} alt="the ethiopia holi" className="home__img" /> */}
+          </div>
+          <div className="countdown">
+            <div className="time">
+              <span> {days}</span>
+              <p> days</p>
+            </div>
+            <div className="time">
+              <span>{hours}</span>
+              <p>hours</p>{" "}
+            </div>
+            <div className="time">
+              <span> {minutes}</span> <p>minutes</p>{" "}
+            </div>
+            <div className="time">
+              <span>{seconds}</span> <p>seconds</p>
+            </div>
+          </div>
         </div>
-        {/* <div className="countdown">
-          <div className="time">
-            <span> {days}</span>
-            <p> days</p>
-          </div>
-          <div className="time">
-            <span>{hours}</span>
-            <p>hours</p>{" "}
-          </div>
-          <div className="time">
-            <span> {minutes}</span> <p>minutes</p>{" "}
-          </div>
-          <div className="time">
-            <span>{seconds}</span> <p>seconds</p>
-          </div>
-        </div> */}
-        <p className="home__para">
-          Join us for an unforgettable experience filled with excitement and
-          entertainment.
-        </p>
+        <div className="home__para">
+          <p>
+            Join us for an unforgettable experience filled with excitement and
+            entertainment.
+          </p>
+        </div>
         <div className="btn">
-          <button className="learnmore">
+          {/* <button className="learnmore">
             <Link to="/about">
-              Learn More{" "}
-              <FaAngleRight style={{ position: "relative", top: "0.2rem" }} />
+            Learn More{" "}
+            <FaAngleRight style={{ position: "relative", top: "0.2rem" }} />
             </Link>
-          </button>
-          <button onClick={() => scrollToSection('availableTickets')} className="register">
+          </button> */}
+          <button
+            onClick={() => scrollToSection("availableTickets")}
+            className="register"
+          >
             Available Tickets
           </button>
         </div>
@@ -138,74 +221,176 @@ function Home() {
       </div>
       <div className="events">
         <section id="availableTickets">
-        <h1 style={{ textAlign: 'center', marginTop: '3%' }}>Available Tickets</h1>
-          {availableTickets.length !== 0 ? <>
-            <p className="event__para">
-              Browse through our list of exciting available events.
-            </p>
-            <div className="upcoming" >
-              {availableTickets.map((ticket) => {
-                return (
-                  <Link to={`/payment/${ticket._id}`} style={{ color: '#789461', textDecoration: 'none' }} className="box" >
-                    <div className="poster">
-                      <img style={{ objectFit: 'cover', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
-                    </div>
-                    <div className="content">
-                        <div>
-                          <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 20 ? ticket.title.slice(0, 20) + '...' : ticket.title}</div>
-                          <div style={{ border: '2px solid #789461', width: 90 }}></div>
-                        </div>
-                       
-                        <div style={{ display: 'flex', gap: 5, }}>
-                          <span><LocationOnIcon style={{ color: 'red' }} /></span>
-                          <span>{ticket.location.length > 13 ? ticket.location.slice(0, 13) + '...' : ticket.location}</span>
-                        </div>
-                        <div style={{ display: 'flex', gap: 5, }}>
-                          <span style={{ fontSize: '13px' }}>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
-                        </div>
-                    </div>
+          <h1 style={{ textAlign: "center", marginTop: "3%" }}>
+            Available Tickets
+          </h1>
+          {availableTickets.length !== 0 ? (
+            <>
+              <p className="event__para">
+                Browse through our list of exciting available events.
+              </p>
+              <div className="upcoming">
+                {availableTickets.map((ticket) => {
+                  return (
+                    <>
+                      <Link
+                        to={`/payment/${ticket._id}`}
+                        style={{ color: "#789461", textDecoration: "none" }}
+                        className="box"
+                      >
+                        <motion.div
+                          className="poster"
+                          variants={posterAnimationVariants}
+                          initial="offScreen"
+                          whileInView="onScreen"
+                          viewport={{ once: true, amount: 0.8 }}
+                          transition={{
+                            type: "twin",
+                            duration: 1.5,
+                          }}
+                        >
+                          <img src={ticket?.image?.filePath} />
+                        </motion.div>
+                        <motion.div
+                          className="content"
+                          variants={contentAnimationVariants}
+                          initial="offScreen"
+                          whileInView="onScreen"
+                          viewport={{ once: true, amount: 0.8 }}
+                          transition={{
+                            type: "twin",
+                            duration: 1.5,
+                          }}
+                        >
+                          <div>
+                            <div
+                              style={{
+                                fontSize: 25,
+                                fontWeight: 500,
+                                color: "#13A014",
+                              }}
+                            >
+                              {ticket?.title}
+                            </div>
+                            <div
+                              style={{ border: "2px solid #789461", width: 90 }}
+                            ></div>
+                          </div>
 
-                  </Link>)
-              })}
+                          <div
+                            style={{ display: "flex", gap: 5 }}
+                            className="ticket_location"
+                          >
+                            <span>
+                              <LocationOnIcon style={{ color: "red" }} />
+                            </span>
+                            <span>{ticket.location}</span>
+                          </div>
+                          <div
+                            style={{ display: "flex", gap: 5 }}
+                            className="ticket_time"
+                          >
+                            <IoMdStopwatch style={{ color: "13A014" }} />
+                            <span style={{ fontSize: "13px" }}>
+                              {moment(ticket?.startDate).format("LL") +
+                                " - " +
+                                moment(ticket?.endDate).format("LL")}
+                            </span>
+                          </div>
+                        </motion.div>
+                      </Link>
+                    </>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            <div
+              style={{ fontSize: "20px", textAlign: "center", margin: "10px" }}
+            >
+              No ticket available
             </div>
-          </> : <div style={{ fontSize: '20px', textAlign: 'center', margin: '10px' }}>No ticket available</div>}
+          )}
         </section>
         <hr className="create__line" />
-        <h1 style={{ textAlign: 'center', margin: 15 }}>Upcoming Tickets</h1>
-        {upComingTickets.length !== 0 ? <>
-          <p className="event__para">
-            Browse through our list of exciting upcoming events.
-          </p>
-          <div className="upcoming">
-            {upComingTickets.map((ticket) => {
-              return (
-                <Box>
-                    <LockIcon/>
-                    <div className="box"  style={{cursor:"default"}}>
-                      <div className="poster">
-                        <img style={{ objectFit: 'cover', width: '100%', height: '200px' }} src={ticket?.image?.filePath} />
-                      </div>
-                      <div className="content">
+        <h1 style={{ textAlign: "center", margin: 15 }}>Upcoming Tickets</h1>
+        {upComingTickets.length !== 0 ? (
+          <>
+            <p className="event__para">
+              Browse through our list of exciting upcoming events.
+            </p>
+            <div className="upcoming">
+              {upComingTickets.map((ticket) => {
+                return (
+                  <Box>
+                    <div className="box" style={{ cursor: "default" }}>
+                      <motion.div
+                        className="poster"
+                        variants={posterAnimationVariants}
+                        initial="offScreen"
+                        whileInView="onScreen"
+                        viewport={{ once: true, amount: 0.8 }}
+                        transition={{
+                          type: "twin",
+                          duration: 1.5,
+                        }}
+                      >
+                        <img src={ticket?.image?.filePath} />
+                      </motion.div>
+                      <motion.div
+                        className="content"
+                        variants={contentAnimationVariants}
+                        initial="offScreen"
+                        whileInView="onScreen"
+                        viewport={{ once: true, amount: 0.8 }}
+                        transition={{
+                          type: "twin",
+                          duration: 1.5,
+                        }}
+                      >
+                        <LockIcon className="lock_icon" />
                         <div>
-                          <div style={{ fontSize: 25, fontWeight: 500, color: '#789461' }}>{ticket.title.length > 20 ? ticket.title.slice(0, 20) + '...' : ticket.title}</div>
-                          <div style={{ border: '2px solid #789461', width: 90 }}></div>
+                          <div
+                            style={{
+                              fontSize: 25,
+                              fontWeight: 500,
+                              color: "#789461",
+                            }}
+                          >
+                            {ticket.title.length > 20
+                              ? ticket.title.slice(0, 20) + "..."
+                              : ticket.title}
+                          </div>
+                          <div
+                            style={{ border: "2px solid #789461", width: 90 }}
+                          ></div>
                         </div>
-                       
-                        <div style={{ display: 'flex', gap: 5, }}>
-                          <span><LocationOnIcon style={{ color: 'red' }} /></span>
-                          <span>{ticket.location.length > 13 ? ticket.location.slice(0, 13) + '...' : ticket.location}</span>
+
+                        <div style={{ display: "flex", gap: 5 }}>
+                          <span>
+                            <LocationOnIcon style={{ color: "red" }} />
+                          </span>
+                          <span>{ticket?.location}</span>
                         </div>
-                        <div style={{ display: 'flex', gap: 5, }}>
-                          <span style={{ fontSize: '13px' }}>{moment(ticket?.startDate).format('LL') + '-' + moment(ticket?.endDate).format('LL')}</span>
+                        <div style={{ display: "flex", gap: 5 }}>
+                          <span style={{ fontSize: "13px" }}>
+                            {moment(ticket?.startDate).format("LL") +
+                              " - " +
+                              moment(ticket?.endDate).format("LL")}
+                          </span>
                         </div>
-                      </div>
-                    
+                      </motion.div>
                     </div>
-                </Box>
-                )
-            })}
+                  </Box>
+                );
+              })}
+            </div>
+          </>
+        ) : (
+          <div style={{ textAlign: "center", fontSize: "20px", margin: 20 }}>
+            No upcoming tickets here
           </div>
-        </> : <div style={{ textAlign: 'center', fontSize: '20px', margin: 20 }}>No upcoming tickets here</div>}
+        )}
         <hr className="create__line" />
       </div>
       <div className="faq">
@@ -228,19 +413,15 @@ function Home() {
         <p className="faq__par__two">Contact us for further assistance.</p>
         <div className="phone">
           <span>
-            {" "}
             <FaPhoneAlt />
           </span>
           <p>+251 987 298989</p>
         </div>
         <div className="location">
           <span>
-            {" "}
             <FaMapMarkerAlt />
           </span>
-          <p>
-            Meskel Square, A.A Bazar & Exhibition Center, Addis Ababa, Ethiopia{" "}
-          </p>
+          <p>Mekanisa, Abo Mazorya Addis Ababa, Ethiopia </p>
         </div>
         <button className="contact__btn">
           <a href="">Contact</a>
@@ -258,7 +439,6 @@ function Home() {
   );
 }
 
-
 function AccordionItem({ num, title, text }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -267,13 +447,24 @@ function AccordionItem({ num, title, text }) {
   }
 
   return (
-    <div className={`item ${isOpen ? "open" : ""}`} onClick={handleToggle}>
-      <p className="number n">{num < 9 ? `0${num + 1}` : num + 1}</p>
-      <p className="title2">{title}</p>
-      <p className="icon2">{isOpen ? "-" : "+"}</p>
-
-      {isOpen && <div className="content-box">{text}</div>}
-    </div>
+    <Accordion>
+      <div className={`accordion_item ${isOpen ? "open" : ""}`}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2-content"
+          id="panel2-header"
+          onClick={handleToggle}
+        >
+          <p className="accordion_number">
+            {num < 9 ? `0${num + 1}` : num + 1}
+          </p>
+          <span className="title">{title}</span>
+        </AccordionSummary>
+      </div>
+      <AccordionDetails>
+        <div className="content-box">{text}</div>
+      </AccordionDetails>
+    </Accordion>
   );
 }
 
