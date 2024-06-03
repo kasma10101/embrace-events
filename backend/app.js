@@ -8,6 +8,7 @@ const tiicketRoute = require('./routes/ticketRoute');
 const blogRoute = require('./routes/blogRoute')
 const adminRoute = require('./routes/adminRoute')
 const transactionRoute = require('./routes/transactionRoute')
+const subscribedEmailRoute = require('./routes/subscribedEmailRoute')
 const cookieParser = require('cookie-parser')
 
 const app = express();
@@ -30,6 +31,7 @@ app.use('/api/blogs', blogRoute)
 app.use('/api/admin', adminRoute)
 app.use('/api/payment', paymentRoute);
 app.use('/api/transactions', transactionRoute);
+app.use('/api/subscribe', subscribedEmailRoute);
 
 
 const port = process.env.PORT || 5000;
