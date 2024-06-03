@@ -59,7 +59,7 @@ export default function Signup() {
   };
 
   return (
-    <div style={{ paddingTop: "15%" }}>
+    <div style={{ padding: "15% 0 2% 0" }}>
       <div className="login-container">
         <div className="user-icon" style={{ marginBottom: "400px" }}>
           <FaUser style={{ fontSize: 80, color: "#fff" }} />
@@ -114,7 +114,7 @@ export default function Signup() {
             </div>
           </Form>
           <div style={{ marginTop: "15px" }}>
-            <Link style={{ textDecoration: "none" }} href="/login">
+            <Link style={{ textDecoration: "none", color: "#13A014"}} href="/login">
               Have an Account ?
             </Link>
           </div>

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { Button, Form, FormGroup } from "react-bootstrap"
 import { FaPowerOff, FaSignOutAlt } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
-
+import '../style/profile.css'
 
 export default function Profile({adminData,token}) {
 
@@ -72,7 +72,7 @@ export default function Profile({adminData,token}) {
         <>
             <div style={{ paddingTop: '3%', display: 'flex', justifyContent: 'center', alignItems:  'center', height: '85vh' }}>
                 <div className="login-container">
-                    <Typography variant="h4" sx={{paddingTop:"25px"}}>Admin Profile</Typography>
+                    <Typography variant="h4" sx={{paddingTop:"25px", color: "#13A014"}}>Admin Profile</Typography>
                     <div style={{ marginTop: '2%' }}>
                         <Form onSubmit={handleSubmit}>
                             <FormGroup style={{ marginTop: 30 }}>
@@ -119,7 +119,7 @@ export default function Profile({adminData,token}) {
                                     </div>
                                 ) : (
                                     <Button
-                                    className="login-button"
+                                    className="update_button"
                                     type="submit"
                                     variant="outline-dark"
                                     >
@@ -128,7 +128,7 @@ export default function Profile({adminData,token}) {
                                 )}
                                 </div>
                         </Form>
-                      <Button variant="outline-dark" style={{margin: '10px 0px 20px', width: 300, padding: 10, display: 'flex', gap: '5px', alignItems: 'center', justifyContent: 'center'}}  onClick={logout}><FaPowerOff style={{color: '#12372a'}} /><span>Logout</span></Button>
+                      <Button variant="outline-dark" className="delete_btn"  onClick={logout}><FaPowerOff className="power_btn" /><span>Logout</span></Button>
                     </div>
                 </div>
             </div>

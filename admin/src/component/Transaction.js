@@ -4,6 +4,7 @@ import { useTable, usePagination } from 'react-table';
 import { getAllTransactionsThunk } from './redux/transactionSlice';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DataTable from './Table';
+import { Typography } from '@mui/material';
 
 const Transaction = () => {
     const dispatch = useDispatch();
@@ -41,7 +42,12 @@ const Transaction = () => {
     
     return (
         <div style={{ paddingTop: '3%', width: '90%', margin: '0px auto', overflow: 'auto', scrollbarWidth: 'none' }}>
-            <h2>Transactions</h2>
+            <Typography
+        variant="h3"
+        sx={{color: "#13A014", textAlign: "center", margin: "10px 0", paddingTop: "3%" }}
+      >
+        Transactions
+      </Typography>
             {loading && <p>Loading...</p>}
             {error && <p className="text-danger">{error}</p>}
            {data&&<div className='table-responsive'>

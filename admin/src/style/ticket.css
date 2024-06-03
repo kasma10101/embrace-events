@@ -1,0 +1,15 @@
+.primary_btn,
+.secondary_btn {
+    padding: .5rem 1rem;
+    margin: 1rem;
+    border-radius: 5px;
+}
+.primary_btn {
+    background-color: #13A014;
+    color: #fff;
+    transition: .5s;
+    border: none;
+}
+.secondary_btn{
+    border: 1px solid #13A014;
+}

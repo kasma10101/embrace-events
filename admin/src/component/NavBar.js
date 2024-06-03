@@ -2,20 +2,17 @@ import { useEffect, useState } from "react";
 import embraceLogo from "../assets/logo/embraceLogo.png";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "../style/navbar.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 
 export default function Navbar({ loggedIn }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [icon, setIcon] = useState(true);
-  const [text, setText] = useState(true);
   const navigate = useNavigate()
-
-  function handleClick() {
-    setIcon((icon) => !icon);
-    setText((text) => !text);
-    setIsMenuOpen(!isMenuOpen);
-  }
-
+  const showNavbar = () => {
+    setIsMenuOpen(true)
+  };
+  const hideNavbar = () => {
+    setIsMenuOpen(false)
+  };
   const location = useLocation()
 
   useEffect(() => {
@@ -39,28 +36,36 @@ export default function Navbar({ loggedIn }) {
   }, [loggedIn])
 
   return (
-    <div className="whole-nav-bar">
+    <header>
           <div className="logo">
             <img src={embraceLogo} alt="embraceLogo" />
               <span>Events.</span>
           </div>
-          <div className={isMenuOpen ? "nav_bar " : "hidden nav_bar"}>
-            {loggedIn ? <>
-              <Link className="each-nav-bar" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/blogs' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/blogs">Blog</Link>
-              <Link className="each-nav-bar" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/tickets' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/tickets">Tickets</Link>
-              <Link className="each-nav-bar" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/transaction' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/transaction">Transactions</Link>
-              <Link className="each-nav-bar" style={{color: '#f1f8ff', textDecoration: 'none',  borderBottom : location.pathname === '/profile' ? '1px solid #f1f8ff' : ''}} onClick={handleClick} to="/profile">Profile</Link>
-              </>: 
-              <Link className="each-nav-bar" to="/login">Login</Link>}
+            {loggedIn ? (
+            <>
+          <nav className={isMenuOpen ? "responsive_nav " : "nav_bar"}>
+              {/* <Link className="each-nav-bar" onClick={handleClick} to="/blogs">Blog</Link>
+              <Link className="each-nav-bar" onClick={handleClick} to="/tickets">Tickets</Link>
+              <Link className="each-nav-bar" onClick={handleClick} to="/transaction">Transactions</Link>
+              <Link className="each-nav-bar" onClick={handleClick} to="/profile">Profile</Link> */}
+              <NavLink to="/blogs" activeClassName="active" onClick={hideNavbar}>Blog</NavLink>
+              <NavLink to="/tickets" activeClassName="active" onClick={hideNavbar}>Tickets</NavLink>
+              <NavLink to="/transaction" activeClassName="active" onClick={hideNavbar}>Transactions</NavLink>
+              <NavLink to="/emails" activeClassName="active" onClick={hideNavbar}>Subscribers</NavLink>
+              <NavLink to="/profile" activeClassName="active" onClick={hideNavbar}>Profile</NavLink>
+              </nav>
+              <div className="nav-btn">
+                  {isMenuOpen ? (
+                    <FaTimes className="nav_menubar" onClick={hideNavbar}/>
+                  ) : (
+                    <FaBars className="nav-close-btn" onClick={showNavbar}/>
+                  )}
               </div>
-            <div className="icon" onClick={handleClick}>
-              {!isMenuOpen ? (
-                <FaBars cursor={"pointer"} style={{color: '#f1f8ff'}}/>
-              ) : (
-                <FaTimes cursor={"pointer"} />
-              )}
-          </div>
-        </div>
+                  </>
+            ):(
+              <p className="login_first">You Have To Login First</p>
+            )}
+      </header>
     // <>
 
     //   <div className={isMenuOpen ? "nav__link__two" : "nav__link__two close"}>

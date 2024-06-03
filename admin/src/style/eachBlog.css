@@ -1,0 +1,47 @@
+.edit_blog_btn {
+    color: #13A014;
+    width: 100px;
+    border: 1px solid #13A014;
+
+}
+
+.edit_blog_btn:hover {
+    background-color: #13A014;
+    color: #fff;
+    transition: .5s;
+    border: none;
+}
+
+.delete_blog_btn {
+    color: #13A014;
+    width: 100px;
+    border: 1px solid #ff0000;
+
+}
+
+.delete_blog_btn:hover {
+    background-color: #ff0000;
+    color: #fff;
+    transition: .5s;
+    border: none;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update_button {
+    color: #13A014;
+    width: 50%;
+    border: 1px solid #13A014;
+    margin: 1rem auto 2rem;
+}
+
+.update_button:hover {
+    background-color: #13A014;
+    color: #fff;
+    transition: .5s;
+    border: none;
+}

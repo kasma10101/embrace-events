@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap');
 .login-container{
     width: 25%;
     box-shadow: 0 10px 10px 5px rgba(100, 100, 100, .2);
@@ -10,18 +11,26 @@
     margin: 0px auto;
     /* padding: 50px; */
 }
-@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap');
 .login-button{
     width: 300px;
-    background-color: #1C3C07;
+    background-color: #13A014;
     padding: 10px 5px;
     color: white;    
     font-family: "Kumbh Sans", sans-serif;
     margin-top: 15px;
     font-size: 20px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+}
+.login-button:hover,
+.login-button:focus,
+.login-button:active,
+.login-button:checked {
+    background-color: #51c951;
+    border: none;
 }
 .user-icon{
-    background-color: #1C3C07; 
+    background-color: #13A014; 
     padding: 30px;
     border-radius: 50%; 
     position: absolute;

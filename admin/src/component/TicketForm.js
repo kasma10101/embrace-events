@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createTicketThunk, getTicketByIdThunk, getTicketsThunk, updateTicketThunk } from './redux/ticketSlice';
-import {Box, TextField, Typography} from '@mui/material'
+import {Box, CircularProgress, TextField, Typography} from '@mui/material'
 import { Button } from 'bootstrap';
 import '../style/ticketForm.css'
 
 const TicketForm = ({ onFormSubmit, editingTicket }) => {
+    const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
     const [ticketData, setTicketData] = useState({
         title: '',
@@ -42,6 +43,7 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const formData = new FormData();
         Object.keys(ticketData).forEach(key => {
             formData.append(key, ticketData[key]);
@@ -61,13 +63,14 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
             vipAmount: ''
         });
         onFormSubmit();
+        setLoading(false);
     };
 
 
     return (
         <div >
             <div>
-                <h2 style={{textAlign: 'center'}}>Create Ticket</h2>
+                <h2 style={{textAlign: 'center', color: "#13A014"}}>Create Ticket</h2>
                 <form onSubmit={handleSubmit} className='form-container' >
                        <Box>
                            <Typography>Title</Typography>
@@ -178,14 +181,20 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                             style={{width: 300}}
                             placeholder='Image'
                         />
-                       </Box>
+                       </Box>    
                         
-                        
-                        
-                        
-                    <button type="submit" className="btn btn-primary" style={{gridColumn: '1 / 3'}}>
+                   
+                    <div>
+          {loading ? (
+            <div style={{ marginTop: "20px", textAlign: "center" }}>
+              <CircularProgress />
+            </div>
+          ) : (
+            <button type="submit" className="save_btn" style={{gridColumn: '1 / 3', padding: ".4rem"}}>
                        Create Ticket
                     </button>
+          )}
+        </div>
                 </form>
             </div>
         </div>

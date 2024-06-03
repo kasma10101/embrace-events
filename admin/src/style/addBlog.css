@@ -1,4 +1,4 @@
-.add-blog-container{
+.add-blog-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,14 +8,31 @@
     flex-direction: column;
     height: 80vh;
     overflow: auto;
+    margin-top: 5rem;
 }
-@media(max-width: 680px){
-    .add-blog-container{
+
+.add_blog_btn {
+    color: #13A014;
+    width: 100px;
+    border: 1px solid #13A014;
+}
+
+.add_blog_btn:hover,
+.add_blog_btn:focus {
+    background-color: #13A014;
+    color: #fff;
+    transition: .5s;
+    border: none;
+}
+
+@media(max-width: 680px) {
+    .add-blog-container {
         width: 400px;
     }
 }
-@media(max-width: 420px){
-    .add-blog-container{
+
+@media(max-width: 420px) {
+    .add-blog-container {
         width: 350px;
     }
 }

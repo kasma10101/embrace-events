@@ -1,0 +1,38 @@
+.login-container {
+    padding: 1rem;
+}
+.update_button {
+    color: #13A014;
+    width: 100%;
+    border: 1px solid #13A014;
+    margin: 1rem auto 2rem;
+}
+
+.update_button:hover {
+    background-color: #13A014;
+    color: #fff;
+    transition: .5s;
+    border: none;
+}
+.delete_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    color: #13A014;
+    width: 100%;
+    border: 1px solid #ff0000;
+}
+
+.delete_btn:hover {
+    background-color: #ff0000;
+    color: #fff;
+    transition: .5s;
+    border: none;
+}
+.power_btn {
+    color: #ff0000;
+}
+.delete_btn:hover .power_btn {
+    color: #fff;
+}

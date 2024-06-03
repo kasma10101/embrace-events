@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Krona+One&family=Krub:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
-.blogs-container{
+
+.blogs-container {
     display: grid;
     grid-template-columns: auto auto auto;
     align-items: center;
     justify-content: center;
 }
-.each-blog-container{
+
+.each-blog-container {
     width: 350px;
     height: 460px;
     text-decoration: none;
@@ -16,50 +18,72 @@
     overflow-y: auto;
     scrollbar-width: none;
 }
-.blog-image{
+
+.blog-image {
     width: 100%;
     height: 280px;
     object-fit: cover;
 }
-.each-blog-container-title{
+
+.each-blog-container-title {
     font-family: "Krona One", sans-serif;
     font-size: 21px;
     padding: 10px 0px;
 }
-.title-underline{
+
+.title-underline {
     border: 2px solid #799a63;
     width: 100px;
     border-radius: 10px;
 }
-.each-blog-container-description{
+
+.each-blog-container-description {
     padding: 10px 20px 5px;
     height: 140px;
     word-break: break-all;
     overflow-wrap: break-word;
 }
-.add-blog-button{
-    color: #12372a
+
+.add-blog {
+    width: 100%;
+    height: max-content;
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: end;
+    align-items: center;
 }
-.add-blog-button:hover{
-    background-color: #12372a;
+
+.add-blog-button {
+    color: #13A014;
+    background-color: #f1f1ff;
+    padding: .7rem 1.5rem;
+    border-radius: .6rem;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid #13A014;
+}
+
+.add-blog-button:hover {
+    background-color: #13A014;
     color: #fff;
     transition: .5s;
 }
 
-.blog-modal{
+.blog-modal {
     width: 800px;
     display: flex;
     align-items: center;
     margin: 0px auto;
 }
 
-.each-blog-delete-button:hover{
+.each-blog-delete-button:hover {
     background-color: #000;
     color: white;
     transition: .5s;
 }
 
-.each-blog{
+.each-blog {
     width: 800px;
     background-color: white;
     max-height: 82vh;
@@ -67,33 +91,39 @@
     overflow-y: auto;
     scrollbar-width: none;
 }
-.each-blog-image{
+
+.each-blog-image {
     width: 100%;
     height: 400px;
     object-fit: cover;
 }
-.each-blog-description{
+
+.each-blog-description {
     width: 90%;
     color: #799a63;
     padding: 10px 30px 0px;
     word-break: break-all;
     overflow-wrap: break-word;
 }
-.each-blog-title{
+
+.each-blog-title {
     font-family: "Krona One", sans-serif;
     font-size: 21px;
     padding: 0px 0px 10px;
 }
-.title-underline{
+
+.title-underline {
     border: 2px solid #799a63;
     width: 100px;
     border-radius: 10px;
     margin: 0px 0px 10px;
 }
-.edit-input{
+
+.edit-input {
     width: 750px;
 }
-.edit-button{
+
+.edit-button {
     margin: 20px auto;
     display: flex;
     width: 300px;
@@ -101,58 +131,76 @@
 }
 
 
-@media(max-width: 1170px){
-    .blogs-container{
+@media(max-width: 1170px) {
+    .blogs-container {
         grid-template-columns: auto auto;
     }
 }
-@media(max-width: 777px){
-    .each-blog-container{
+
+@media(max-width: 777px) {
+    .each-blog-container {
         width: 300px;
     }
 }
-@media(max-width: 830px){
-    .blog-modal, .each-blog{
+
+@media(max-width: 830px) {
+
+    .blog-modal,
+    .each-blog {
         width: 650px;
     }
-    .edit-input{
+
+    .edit-input {
         width: 600px;
     }
 }
-@media(max-width: 680px){
-    .blogs-container{
+
+@media(max-width: 680px) {
+    .blogs-container {
         grid-template-columns: auto;
     }
-    .blog-modal, .each-blog{
+
+    .blog-modal,
+    .each-blog {
         width: 450px;
     }
-    .edit-input{
+
+    .edit-input {
         width: 400px;
     }
 }
-@media(max-width: 520px){
-    .blogs-container{
+
+@media(max-width: 520px) {
+    .blogs-container {
         grid-template-columns: auto;
     }
-    .each-blog-container{
+
+    .each-blog-container {
         width: 300px;
         height: 350px;
     }
-    .blog-image{
+
+    .blog-image {
         height: 180px;
     }
-    .each-blog-container-description{
+
+    .each-blog-container-description {
         height: 130px;
     }
 }
-@media(max-width: 500px){
-    .each-blog, .blog-modal{
+
+@media(max-width: 500px) {
+
+    .each-blog,
+    .blog-modal {
         width: 380px;
     }
-    .edit-input{
+
+    .edit-input {
         width: 300px;
     }
-    .edit-button{
+
+    .edit-button {
         margin-left: 20px;
     }
 }

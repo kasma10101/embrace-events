@@ -12,6 +12,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import PageNotFound from "./component/pageNotFound";
 import Transaction from "./component/Transaction";
+import Emails from "./component/Emails";
 import Ticket from "./component/Ticket";
 
 function App() {
@@ -98,6 +99,7 @@ function App() {
             <Route path="/blogs/addBlogs" element={<AddBlog equilizer={equilizer} setEquilizer={setEquilizer}  token={token} setshowAddModal={setshowAddModal} />} />
           </Route>
           <Route path="/transaction" element={<Transaction />} />
+          <Route path="/emails" element={<Emails token={token}/>} />
           <Route path="/tickets" element={<Ticket />} />
           <Route path="/profile" element={<Profile token={token} adminData={adminData} />} />
         
