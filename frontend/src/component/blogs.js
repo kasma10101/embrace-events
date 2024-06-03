@@ -26,6 +26,7 @@ export default function Blogs() {
     return (
         <>
             {/* <div className="blog-whole-body"> */}
+            <h2 style={{color: "#13A014", textAlign: "center", marginTop: "20px"}}>Blogs</h2>
                 <div className="blogs-container">
                     {blogs ? blogs.map((eachBlog, index) => {
                         return (

@@ -10,7 +10,7 @@ import home from "../assets/logo/home.png";
 import "../style/home.css";
 import eventTicket from "../assets/images/ticket.png";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Outlet, Link } from "react-router-dom";
 import {
   getAvailableTicketsThunk,
   getTicketsThunk,
@@ -28,6 +28,9 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Blogs from "./blogs";
+import axios from "axios";
+import { Grid, Modal } from '@mui/material'
+
 const faqs = [
   {
     title: "How to buy tickets?",
@@ -66,11 +69,33 @@ function Home() {
     duration: 1.5,
   });
 
+  const [blogs, setBlogs] = useState([]);
+
+  const fetchBlogs = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_API}/api/blogs`
+      );
+      const latestBlogs = response.data.slice(0, 3);
+      // console.log(latestBlogs);
+      setBlogs(latestBlogs);
+    } catch (error) {
+      console.error('Error fetching blogs:', error);
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    fetchBlogs();
+  }, [blogs]);
+
   let targetDate = new Date("Sep 11, 2024 00:00:00").getTime();
   const dispatch = useDispatch();
   const { tickets, loading, error, availableTickets, upComingTickets } =
     useSelector((state) => state.tickets);
-  const navigate = useNavigate();
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
@@ -323,66 +348,66 @@ function Home() {
               {upComingTickets.map((ticket) => {
                 return (
                   <div className="event__container">
-                  <Box>
-                    <div className="box" style={{ cursor: "default" }}>
-                      <motion.div
-                        className="poster"
-                        variants={posterAnimationVariants}
-                        initial="offScreen"
-                        whileInView="onScreen"
-                        viewport={{ once: true, amount: 0.8 }}
-                        transition={{
-                          type: "twin",
-                          duration: 1.5,
-                        }}
-                      >
-                        <img src={ticket?.image?.filePath} />
-                      </motion.div>
-                      <motion.div
-                        className="content"
-                        variants={contentAnimationVariants}
-                        initial="offScreen"
-                        whileInView="onScreen"
-                        viewport={{ once: true, amount: 0.8 }}
-                        transition={{
-                          type: "twin",
-                          duration: 1.5,
-                        }}
-                      >
-                        <LockIcon className="lock_icon" />
-                        <div>
-                          <div
-                            style={{
-                              fontSize: 25,
-                              fontWeight: 500,
-                              color: "#789461",
-                            }}
-                          >
-                            {ticket.title.length > 20
-                              ? ticket.title.slice(0, 20) + "..."
-                              : ticket.title}
+                    <Box>
+                      <div className="box" style={{ cursor: "default" }}>
+                        <motion.div
+                          className="poster"
+                          variants={posterAnimationVariants}
+                          initial="offScreen"
+                          whileInView="onScreen"
+                          viewport={{ once: true, amount: 0.8 }}
+                          transition={{
+                            type: "twin",
+                            duration: 1.5,
+                          }}
+                        >
+                          <img src={ticket?.image?.filePath} />
+                        </motion.div>
+                        <motion.div
+                          className="content"
+                          variants={contentAnimationVariants}
+                          initial="offScreen"
+                          whileInView="onScreen"
+                          viewport={{ once: true, amount: 0.8 }}
+                          transition={{
+                            type: "twin",
+                            duration: 1.5,
+                          }}
+                        >
+                          <LockIcon className="lock_icon" />
+                          <div>
+                            <div
+                              style={{
+                                fontSize: 25,
+                                fontWeight: 500,
+                                color: "#789461",
+                              }}
+                            >
+                              {ticket.title.length > 20
+                                ? ticket.title.slice(0, 20) + "..."
+                                : ticket.title}
+                            </div>
+                            <div
+                              style={{ border: "2px solid #789461", width: 90 }}
+                            ></div>
                           </div>
-                          <div
-                            style={{ border: "2px solid #789461", width: 90 }}
-                          ></div>
-                        </div>
 
-                        <div style={{ display: "flex", gap: 5 }}>
-                          <span>
-                            <LocationOnIcon style={{ color: "red" }} />
-                          </span>
-                          <span>{ticket?.location}</span>
-                        </div>
-                        <div style={{ display: "flex", gap: 5 }}>
-                          <span style={{ fontSize: "13px" }}>
-                            {moment(ticket?.startDate).format("LL") +
-                              " - " +
-                              moment(ticket?.endDate).format("LL")}
-                          </span>
-                        </div>
-                      </motion.div>
-                    </div>
-                  </Box>
+                          <div style={{ display: "flex", gap: 5 }}>
+                            <span>
+                              <LocationOnIcon style={{ color: "red" }} />
+                            </span>
+                            <span>{ticket?.location}</span>
+                          </div>
+                          <div style={{ display: "flex", gap: 5 }}>
+                            <span style={{ fontSize: "13px" }}>
+                              {moment(ticket?.startDate).format("LL") +
+                                " - " +
+                                moment(ticket?.endDate).format("LL")}
+                            </span>
+                          </div>
+                        </motion.div>
+                      </div>
+                    </Box>
                   </div>
                 );
               })}
@@ -394,10 +419,32 @@ function Home() {
           </div>
         )}
         <hr className="create__line" />
-        <div className="blogs">
-          <h2>Blogs</h2>
-          <Blogs />
-        </div>
+        <>
+                  <h2>Latest Blogs</h2>
+                <div className="blogs-container">
+                    {blogs ? blogs.map((eachBlog, index) => {
+                        return (
+                            <Link onClick={()=>setShowModal(true)} to={`/home/blogs/${eachBlog._id}`} className="each-blog-container" key={index}>
+                                <div><img className="blog-image" src={`${process.env.REACT_APP_BACKEND_API}/${eachBlog.blogImage}`} /></div>
+                                <div className="each-blog-container-description">
+                                    <div className="each-blog-container-title">{eachBlog.blogTitle.length>10 ? eachBlog.blogTitle.slice(0, 10) + '...':eachBlog.blogTitle}<div className="title-underline"></div></div>
+                                    <div>{eachBlog.blogDescription.length > 55 ? eachBlog.blogDescription.slice(0, 55) + '...' : eachBlog.blogDescription}</div>
+                                </div>
+                                <div style={{ float: "right", fontSize: 13, padding: 10 }}>{new Date(eachBlog?.createdAt).toLocaleString()}</div>
+                            </Link>
+                        )
+                    }) : <></>}
+                </div>
+            <Modal open={showModal} onClose={()=>{
+                setShowModal(false)
+                navigate('/')
+            }} className="blog-modal">
+                <Grid>
+                    <Outlet />
+                </Grid>
+            </Modal>
+            <Link to='/blogs' className="read_more">Read More</Link>
+        </>
         <hr className="create__line" />
       </div>
       <div className="faq">

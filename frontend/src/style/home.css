@@ -476,6 +476,24 @@ hr {
   color: var(--clr-font);
 }
 
+.read_more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: max-content;
+  margin: 1rem auto;
+  padding: .6rem .7rem;
+  border-radius: 4px;
+  color: #13A014;
+  border: 1px solid #13A014;
+  text-decoration: none;
+}
+.read_more:hover {
+  background-color: #13A014;
+  color: #fff;
+  transition: .5s;
+  border: none;
+}
 @media (max-width: 1140px) {
   .top_home .countdown {
     display: grid !important;

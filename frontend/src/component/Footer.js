@@ -8,18 +8,70 @@ import {
 import embraceLogo from "../assets/logo/embraceLogo.png";
 import "../style/footer.css";
 import { Link } from "react-router-dom";
+import { Form } from "react-bootstrap";
+import { CircularProgress, FormGroup, TextField } from "@mui/material";
+import { useState } from "react";
+import axios from "axios";
 
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_API}/api/subscribe/addEmail`,
+        { email }, // sending email as JSON
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log(response.data); // Handle the response as needed
+      setEmail('');
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="bottom">
       <div className="footer">
-        <div className="first">
-          <img src={embraceLogo} alt="embrace logo" />
-          <p>
-            Join our newsletter to receive updates on upcoming events and
-            releases.
-          </p>
+      <div className="first">
+      <img src={embraceLogo} alt="embrace logo" />
+      <p>
+        Join our newsletter to receive updates on upcoming events and releases.
+      </p>
+      <Form onSubmit={handleSubscribe} className="newsletter_form">
+        <FormGroup>
+          <TextField
+            label="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            style={{ width: 300 }}
+            value={email}
+            required
+          />
+        </FormGroup>
+        <div>
+          {loading ? (
+            <div style={{ marginTop: '20px', textAlign: 'center' }}>
+              <CircularProgress />
+            </div>
+          ) : (
+            <button className="login-button" type="submit">
+              Subscribe
+            </button>
+          )}
         </div>
+      </Form>
+    </div>
         <div className="second">
           <div className="one">
             <h6>Quick Links</h6>
