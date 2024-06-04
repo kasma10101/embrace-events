@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import styled from "styled-components";
 import { Button, CircularProgress } from "@mui/material";
+import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import "../style/contact.css";
 
 const Contact = () => {
   const [loading, setLoading] = useState(false);
@@ -71,17 +73,18 @@ const Contact = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        flexDirection: "column"
+        gap: "2rem",
       }}
       >
-        <h2 style={{color: "#13a014", marginTop: "1rem"}}>Contact Us</h2>
       <StyledContactForm>
-        <form ref={form} onSubmit={sendEmail}>
+        <h2 style={{color: "#13a014", marginTop: "1rem", textAlign: "center"}}>Contact Us</h2>
+        <form className="contact_form" ref={form} onSubmit={sendEmail}>
           <div
             style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "baseline",
+              flexDirection: "column",
               gap: "1rem",
             }}
           >
@@ -93,6 +96,7 @@ const Contact = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "baseline",
+              flexDirection: "column",
               gap: "1rem",
             }}
           >
@@ -104,6 +108,7 @@ const Contact = () => {
               display: "flex",
               justifyContent: "center",
               alignItems: "baseline",
+              flexDirection: "column",
               gap: "1rem",
             }}
           >
@@ -133,6 +138,21 @@ const Contact = () => {
           )}
         </form>
       </StyledContactForm>
+      <div className="contact_info">
+        <h2 style={{color: "#13a014", textAlign: "center"}}>Contact Info</h2>
+      <div className="phone" style={{justifyContent: "flex-start"}}>
+          <span>
+            <FaPhoneAlt />
+          </span>
+          <p>+251 987 298989</p>
+        </div>
+        <div className="location" style={{justifyContent: "flex-start"}}>
+          <span>
+            <FaMapMarkerAlt />
+          </span>
+          <p>Mekanisa, Abo Mazorya Addis Ababa, Ethiopia </p>
+        </div>
+      </div>
     </section>
   );
 };
@@ -142,24 +162,6 @@ export default Contact;
 // Styles
 const StyledContactForm = styled.div`
   width: 100%;
-
-  form {
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    flex-direction: column;
-    gap: 0.4rem;
-    font-size: 16px;
-    color: #13a014;
-    margin: 0 auto;
-    padding-left: 2rem;
-    border: 1px solid #13a014;
-    width: max-content;
-    width: 450px;
-    margin-top: 3rem;
-    background-color: #fff;
-    padding-bottom: 1rem;
-    border-radius: 10px;
 
     input {
       width: 100%;

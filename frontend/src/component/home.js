@@ -31,7 +31,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Blogs from "./blogs";
 import axios from "axios";
-import { Grid, Modal } from '@mui/material'
+import { Grid, Modal } from "@mui/material";
 
 const faqs = [
   {
@@ -78,10 +78,10 @@ function Home() {
       const response = await axios.get(
         `${process.env.REACT_APP_BACKEND_API}/api/blogs`
       );
-      const latestBlogs = response.data.slice(0, 3);
+      const latestBlogs = response.data.reverse().slice(0, 3);
       setBlogs(latestBlogs);
     } catch (error) {
-      console.error('Error fetching blogs:', error);
+      console.error("Error fetching blogs:", error);
     }
   };
 
@@ -139,7 +139,7 @@ function Home() {
 
       setTimeout(updateCountdown, 1000);
     };
-
+    upComingTickets.map((ticket) => console.log(ticket?.startDate));
     updateCountdown();
   }, [targetDate]);
   useEffect(() => {
@@ -177,7 +177,6 @@ function Home() {
 
     window.addEventListener("resize", handleResize);
     handleResize();
-
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -246,8 +245,8 @@ function Home() {
         <hr className="create__line" />
       </div>
       <>
-      <Statistics />
-      <Testimonial />
+        <Statistics />
+        <Testimonial />
       </>
       <div className="events">
         <section id="availableTickets">
@@ -425,30 +424,61 @@ function Home() {
         )}
         <hr className="create__line" />
         <>
-                  <h2>Latest Blogs</h2>
-                <div className="blogs-container">
-                    {blogs ? blogs.map((eachBlog, index) => {
-                        return (
-                            <Link onClick={()=>setShowModal(true)} to={`/home/blogs/${eachBlog._id}`} className="each-blog-container" key={index}>
-                                <div><img className="blog-image" src={`${process.env.REACT_APP_BACKEND_API}/${eachBlog.blogImage}`} /></div>
-                                <div className="each-blog-container-description">
-                                    <div className="each-blog-container-title">{eachBlog.blogTitle.length>10 ? eachBlog.blogTitle.slice(0, 10) + '...':eachBlog.blogTitle}<div className="title-underline"></div></div>
-                                    <div>{eachBlog.blogDescription.length > 55 ? eachBlog.blogDescription.slice(0, 55) + '...' : eachBlog.blogDescription}</div>
-                                </div>
-                                <div style={{ float: "right", fontSize: 13, padding: 10 }}>{new Date(eachBlog?.createdAt).toLocaleString()}</div>
-                            </Link>
-                        )
-                    }) : <></>}
-                </div>
-            <Modal open={showModal} onClose={()=>{
-                setShowModal(false)
-                navigate('/')
-            }} className="blog-modal">
-                <Grid>
-                    <Outlet />
-                </Grid>
-            </Modal>
-            <Link to='/blogs' className="read_more">Read More</Link>
+          <h2>Latest Blogs</h2>
+          <div className="blogs-container">
+            {blogs ? (
+              blogs.map((eachBlog, index) => {
+                return (
+                  <Link
+                    onClick={() => setShowModal(true)}
+                    to={`/home/blogs/${eachBlog._id}`}
+                    className="each-blog-container"
+                    key={index}
+                  >
+                    <div>
+                      <img
+                        className="blog-image"
+                        src={`${process.env.REACT_APP_BACKEND_API}/${eachBlog.blogImage}`}
+                      />
+                    </div>
+                    <div className="each-blog-container-description">
+                      <div className="each-blog-container-title">
+                        {eachBlog.blogTitle.length > 10
+                          ? eachBlog.blogTitle.slice(0, 10) + "..."
+                          : eachBlog.blogTitle}
+                        <div className="title-underline"></div>
+                      </div>
+                      <div>
+                        {eachBlog.blogDescription.length > 55
+                          ? eachBlog.blogDescription.slice(0, 55) + "..."
+                          : eachBlog.blogDescription}
+                      </div>
+                    </div>
+                    <div style={{ float: "right", fontSize: 13, padding: 10 }}>
+                      {new Date(eachBlog?.createdAt).toLocaleString()}
+                    </div>
+                  </Link>
+                );
+              })
+            ) : (
+              <></>
+            )}
+          </div>
+          <Modal
+            open={showModal}
+            onClose={() => {
+              setShowModal(false);
+              navigate("/");
+            }}
+            className="blog-modal"
+          >
+            <Grid>
+              <Outlet />
+            </Grid>
+          </Modal>
+          <Link to="/blogs" className="read_more">
+            Read More
+          </Link>
         </>
         <hr className="create__line" />
       </div>

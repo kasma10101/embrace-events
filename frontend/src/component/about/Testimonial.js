@@ -3,6 +3,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "../../style/about.css";
 import client1 from "../../assets/images/client1.png"
 import client2 from "../../assets/images/client2.png"
+import client from "../../assets/images/avatar.jpg"
 
 export default function Testimonial() {
   const testimonials = [
@@ -11,14 +12,14 @@ export default function Testimonial() {
       name: "Mesfin",
       quote:
         "Embrace Events now handle all operations functions at the Ethiopia Holi events. This includes coordination of accommodation, transport and vendor management in advance of the summits and venue management, logistics and operations throughout the delivery of the summits!",
-      image: client1,
+      image: client,
     },
     {
       id: 2,
       name: "Ahmed",
       quote:
         "We would like to express our thanks to the staff of Embrace Events for all their hard work and impressive professionalism in organizing our conference.",
-      image: client2,
+      image: client,
     },
   ];
 

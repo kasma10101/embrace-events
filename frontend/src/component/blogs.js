@@ -10,7 +10,7 @@ export default function Blogs() {
     const fetchBlogs = async () => {
         try {
             const response = await axios.get(`${process.env.REACT_APP_BACKEND_API}/api/blogs`);
-            setBlogs(response.data);
+            setBlogs(response.data.reverse());
         } catch (error) {
         }
     }
