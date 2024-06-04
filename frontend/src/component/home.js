@@ -77,7 +77,6 @@ function Home() {
         `${process.env.REACT_APP_BACKEND_API}/api/blogs`
       );
       const latestBlogs = response.data.slice(0, 3);
-      // console.log(latestBlogs);
       setBlogs(latestBlogs);
     } catch (error) {
       console.error('Error fetching blogs:', error);

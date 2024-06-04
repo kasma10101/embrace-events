@@ -36,7 +36,7 @@ export default function Navbar() {
         <NavLink to="/" activeClassName="active" onClick={hideNavbar}>Home</NavLink>
         <NavLink to="/about" activeClassName="active" onClick={hideNavbar}>About Us</NavLink>
         <NavLink to="/blogs" activeClassName="active" onClick={hideNavbar}>Blog</NavLink>
-        <NavLink to="/contact" activeClassName="active" onClick={hideNavbar}>Contact Us</NavLink>
+        {/* <NavLink to="/contact" activeClassName="active" onClick={hideNavbar}>Contact Us</NavLink> */}
         <NavLink to="/mytickets" activeClassName="active" onClick={hideNavbar}>My Tickets</NavLink>
       </nav>
         <div className="nav-btn">

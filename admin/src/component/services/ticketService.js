@@ -7,7 +7,6 @@ export const createTicket = async (ticketData) => {
                 'Content-Type': 'multipart/form-data',
             },
         });
-        console.log(response);
         return response.data;
     } catch (error) {
         throw error.response.data;
@@ -39,7 +38,6 @@ export const updateTicket = async (id, ticketData) => {
                 "Content-Type": "application/json",
             },
         });
-        console.log(response);
         return response.data;
     } catch (error) {
         throw error.response.data;

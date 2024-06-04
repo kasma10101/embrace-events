@@ -34,7 +34,6 @@ export default function EachBlog({
         blogImage: response.data.blogImage,
       });
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -59,11 +58,9 @@ export default function EachBlog({
           },
         }
       );
-      console.log(response);
       setEquilizer(equilizer + 2);
       setshowEditModal(false);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -79,11 +76,9 @@ export default function EachBlog({
           },
         }
       );
-      console.log(response);
       setshowEditModal(false);
       setEquilizer(equilizer + 2);
     } catch (error) {
-      console.log(error);
     }
   };
 

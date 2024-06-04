@@ -49,7 +49,6 @@ function App() {
       }
       else setLoggedIn(false)
     } catch (error) {
-      console.log(error);
       setLoggedIn(false)
     }
   }
@@ -76,7 +75,6 @@ function App() {
       }
       
     } catch (error) {
-      console.log(error);
       setIsSignUpAllowed(false)
     }
   }

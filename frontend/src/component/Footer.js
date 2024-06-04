@@ -32,10 +32,8 @@ export default function Footer() {
           },
         }
       );
-      console.log(response.data); // Handle the response as needed
       setEmail('');
     } catch (error) {
-      console.log(error);
     } finally {
       setLoading(false);
     }
