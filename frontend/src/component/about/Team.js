@@ -1,4 +1,8 @@
 import "../../style/about.css";
+import Elias from "../../assets/images/Elias.png"
+import kalkidan from "../../assets/images/Kal.png"
+import IDMK from "../../assets/images/IDMK.png"
+import Eyob from "../../assets/images/Eyob.png"
 
 export default function Team() {
   const teamMember = [
@@ -6,25 +10,25 @@ export default function Team() {
       id: 1,
       name: "Elias Wulle",
       title: "Manager",
-      image: '/Elias.png',
+      image: Elias,
     },
     {
       id: 2,
       name: "Kalkidan Mulugeta",
       title: "Marketing Officer",
-      image: "/kalkidan.jpg",
+      image: kalkidan,
     },
     {
       id: 3,
       name: "Metsakal Moges",
       title: "Marketing Officer",
-      image: "/IDMK.png",
+      image: IDMK,
     },
     {
       id: 4,
       name: "Eyob Yetmgeta",
       title: "Multimedia Designer",
-      image: "/Eyob.png",
+      image: Eyob,
     },
   ];
   return (
