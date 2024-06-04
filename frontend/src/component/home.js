@@ -7,6 +7,8 @@ import {
 } from "react-icons/fa";
 import { IoMdStopwatch } from "react-icons/io";
 import home from "../assets/logo/home.png";
+import Statistics from "./about/Statistics";
+import Testimonial from "./about/Testimonial";
 import "../style/home.css";
 import eventTicket from "../assets/images/ticket.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -243,6 +245,10 @@ function Home() {
         </p>
         <hr className="create__line" />
       </div>
+      <>
+      <Statistics />
+      <Testimonial />
+      </>
       <div className="events">
         <section id="availableTickets">
           <h1 style={{ textAlign: "center", marginTop: "3%" }}>
@@ -477,7 +483,7 @@ function Home() {
           <p>Mekanisa, Abo Mazorya Addis Ababa, Ethiopia </p>
         </div>
         <button className="contact__btn">
-          <a href="">Contact</a>
+          <Link to="/contact">Contact</Link>
         </button>
       </div>
       {/* {tickets.map((ticket, index)=>{

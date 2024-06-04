@@ -80,27 +80,29 @@ export default function Footer() {
           </div>
           <div className="three">
             <h6>Follow us</h6>
-            <a href="">
+            <a href="https://www.facebook.com/profile.php?id=61558596520935&mibextid=rS40aB7S9Ucbxw6v">
               <FaFacebookF
                 style={{
                   color: "#12372a",
                   fontSize: "15px",
                   marginRight: "1rem",
                 }}
+                className="social_icon"
               />
               Facebook
             </a>
-            <a href="">
+            <a href="https://www.instagram.com/embracevents?igsh=OXZndmN5MTYwMWIx">
               <FaInstagram
                 style={{
                   color: "#12372a",
                   fontSize: "15px",
                   marginRight: "1rem",
                 }}
+                className="social_icon"
               />
               Instagram
             </a>
-            <a href="">
+            {/* <a href="">
               <FaTwitter
                 style={{
                   color: "#12372a",
@@ -108,10 +110,11 @@ export default function Footer() {
                   marginRight: "1rem",
                 }}
                 id="twitter_icon"
+                className="social_icon"
               />
               Twitter
-            </a>
-            <a href="">
+            </a> */}
+            <a href="https://www.linkedin.com/company/embrace-events-organizer/">
               {" "}
               <FaLinkedinIn
                 style={{
@@ -119,19 +122,21 @@ export default function Footer() {
                   fontSize: "15px",
                   marginRight: "1rem",
                 }}
+                className="social_icon"
               />{" "}
               Linkedin
             </a>
-            <a href="">
+            {/* <a href="">
               <FaYoutube
                 style={{
                   color: "#12372a",
                   fontSize: "15px",
                   marginRight: "1rem",
                 }}
+                className="social_icon"
               />{" "}
               Youtube
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

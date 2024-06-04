@@ -115,10 +115,8 @@
 }
 
 .one a:hover,
-.two a:hover {
-  /* text-decoration: underline; */
-  /* text-decoration-color: var(--clr-dark); */
-  /* text-decoration-thickness: 2px; */
+.two a:hover,
+.three a:hover {
   color: #13A014;
 }
 

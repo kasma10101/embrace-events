@@ -1,7 +1,5 @@
 import Title from "./about/Title";
 import Offer from "./about/Offer";
-import Statistics from "./about/Statistics";
-import Testimonial from "./about/Testimonial";
 import VisionMission from "./about/VisionMission";
 import Team from "./about/Team";
 import Join from "./about/Join";
@@ -13,8 +11,8 @@ export default function About() {
       <Title />
       <Offer />
       <VisionMission />
-      <Statistics />
-      <Testimonial />
+      {/* <Statistics /> */}
+      {/* <Testimonial /> */}
       <Team />
       <Join />
     </div>
