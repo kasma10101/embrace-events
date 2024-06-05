@@ -3,6 +3,7 @@ import emailjs from "@emailjs/browser";
 import styled from "styled-components";
 import { Button, CircularProgress } from "@mui/material";
 import { FaMapMarkerAlt, FaPhoneAlt } from "react-icons/fa";
+import { MdEmail, MdContactMail } from "react-icons/md";
 import "../style/contact.css";
 
 const Contact = () => {
@@ -86,6 +87,7 @@ const Contact = () => {
               alignItems: "baseline",
               flexDirection: "column",
               gap: "1rem",
+              width: "100%"
             }}
           >
             <label>Name</label>
@@ -98,6 +100,7 @@ const Contact = () => {
               alignItems: "baseline",
               flexDirection: "column",
               gap: "1rem",
+              width: "100%"
             }}
           >
             <label>Email</label>
@@ -110,6 +113,7 @@ const Contact = () => {
               alignItems: "baseline",
               flexDirection: "column",
               gap: "1rem",
+              width: "100%"
             }}
           >
             <label>Message</label>
@@ -139,7 +143,10 @@ const Contact = () => {
         </form>
       </StyledContactForm>
       <div className="contact_info">
-        <h2 style={{color: "#13a014", textAlign: "center"}}>Contact Info</h2>
+        <div style={{color: "#13a014", textAlign: "center", display: "flex", justifyContent: "center", alignItems: "first baseline", gap: ".5rem"}}>
+        <h2><MdContactMail/></h2>
+        <h2>Contact Info</h2>
+        </div>
       <div className="phone" style={{justifyContent: "flex-start"}}>
           <span>
             <FaPhoneAlt />
@@ -152,6 +159,12 @@ const Contact = () => {
           </span>
           <p>Mekanisa, Abo Mazorya Addis Ababa, Ethiopia </p>
         </div>
+        <div className="email_address" style={{justifyContent: "flex-start"}}>
+          <span>
+            <MdEmail />
+          </span>
+          <a href="mailto:contact@embracevents.com">contact@embracevents.com</a>
+        </div>
       </div>
     </section>
   );
@@ -163,53 +176,6 @@ export default Contact;
 const StyledContactForm = styled.div`
   width: 100%;
 
-    input {
-      width: 100%;
-      height: 35px;
-      padding: 7px;
-      outline: none;
-      border-radius: 5px;
-      border: 1px solid rgb(220, 220, 220);
-
-      &:focus {
-        border: 1px solid #13a014;
-      }
-    }
-
-    textarea {
-      max-width: 300px;
-      min-width: 300px;
-      max-height: 150px;
-      min-height: 150px;
-      padding: 7px;
-      outline: none;
-      border-radius: 5px;
-      border: 1px solid rgb(220, 220, 220);
-
-      &:focus {
-        border: 1px solid #13a014;
-      }
-    }
-
-    label {
-      margin-top: 1rem;
-    }
-
-    input[type="submit"] {
-        cursor: pointer;
-        color: #13a014;
-        border: none;
-        border: 1px solid #13a014;
-        width: 50%;
-        align-self: center;
-        margin: 1rem auto 0;
-        
-      &:hover {
-        background-color: #13a014;
-        border: none;
-        color: #fff;
-        transition: 0.3s;
-      }
-    }
+   
   }
 `;

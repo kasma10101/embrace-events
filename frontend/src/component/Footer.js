@@ -14,7 +14,7 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function Footer() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -28,11 +28,11 @@ export default function Footer() {
         { email }, // sending email as JSON
         {
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
-      setEmail('');
+      setEmail("");
     } catch (error) {
     } finally {
       setLoading(false);
@@ -40,36 +40,40 @@ export default function Footer() {
   };
   return (
     <div className="bottom">
+      <div>
+        <p className="join_par">
+          Join our newsletter to receive updates on upcoming events and
+          releases.
+        </p>
+        <Form onSubmit={handleSubscribe} className="newsletter_form">
+          <FormGroup>
+            <input
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter Email"
+              style={{ width: 300, padding: "25px" }}
+              value={email}
+              required
+            />
+          </FormGroup>
+
+          <div>
+            {loading ? (
+              <div style={{ marginTop: "20px", textAlign: "center" }}>
+                <CircularProgress />
+              </div>
+            ) : (
+              <button className="login-button" type="submit">
+                Subscribe
+              </button>
+            )}
+          </div>
+        </Form>
+      </div>
       <div className="footer">
-      <div className="first">
-      <img src={embraceLogo} alt="embrace logo" />
-      <p>
-        Join our newsletter to receive updates on upcoming events and releases.
-      </p>
-      <Form onSubmit={handleSubscribe} className="newsletter_form">
-        <FormGroup>
-          <TextField
-            label="Email"
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-            style={{ width: 300 }}
-            value={email}
-            required
-          />
-        </FormGroup>
-        <div>
-          {loading ? (
-            <div style={{ marginTop: '20px', textAlign: 'center' }}>
-              <CircularProgress />
-            </div>
-          ) : (
-            <button className="login-button" type="submit">
-              Subscribe
-            </button>
-          )}
+        <div className="first">
+          <img src={embraceLogo} alt="embrace logo" />
         </div>
-      </Form>
-    </div>
         <div className="second">
           <div className="one">
             <h6>Quick Links</h6>

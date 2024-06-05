@@ -5,6 +5,7 @@
     margin: 0 2rem;
     width: 500px;
     border: 1px solid #13a014;
+    border-radius: 7px;
 }
 
 .contact_form {
@@ -25,6 +26,76 @@
     border-radius: 10px;
 }
 
+input {
+    width: 90%;
+    height: 35px;
+    padding: 7px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid rgb(220, 220, 220);
+
+    &:focus {
+        border: 1px solid #13a014;
+    }
+}
+
+textarea {
+    width: 90%;
+    max-height: 150px;
+    min-height: 150px;
+    padding: 7px;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid rgb(220, 220, 220);
+
+    &:focus {
+        border: 1px solid #13a014;
+    }
+}
+
+label {
+    margin-top: 1rem;
+}
+
+input[type="submit"] {
+    cursor: pointer;
+    color: #13a014;
+    border: none;
+    border: 1px solid #13a014;
+    width: 100%;
+    align-self: center;
+    margin: 1rem auto 0;
+
+    &:hover {
+        background-color: #13a014;
+        border: none;
+        color: #fff;
+        transition: 0.3s;
+    }
+}
+
+.email_address {
+    text-align: center;
+    padding: 2rem 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+.email_address a{
+    text-decoration: none;
+    color: #000000;
+}
+.email_address a:hover{
+    color: #13a014;
+}
+.email_address span {
+    font-size: 1.4em;
+    color: var(--main-color);
+    padding-right: 1rem;
+  }
+  .location p {
+    text-align: left;
+  }
 @media(max-width: 830px) {
     .contact_container {
         flex-direction: column;
@@ -33,7 +104,8 @@
     .contact_info {
         width: 300px;
     }
+
     .contact_form {
-        width: max-content;
+        width: 300px;
     }
 }

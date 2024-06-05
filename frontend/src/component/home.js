@@ -93,10 +93,11 @@ function Home() {
     fetchBlogs();
   }, [blogs]);
 
-  let targetDate = new Date("Sep 11, 2024 00:00:00").getTime();
   const dispatch = useDispatch();
   const { tickets, loading, error, availableTickets, upComingTickets } =
     useSelector((state) => state.tickets);
+
+  const [targetDate, setTargetDate] = useState(null);
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
@@ -118,30 +119,39 @@ function Home() {
 
   useEffect(() => {
     const updateCountdown = () => {
-      const now = new Date().getTime();
-      const target = new Date(targetDate).getTime();
-      const gap = target - now;
+      if (targetDate) {
+        const now = new Date().getTime();
+        const target = new Date(targetDate).getTime();
+        const gap = target - now;
 
-      const second = 1000;
-      const minute = second * 60;
-      const hour = minute * 60;
-      const day = hour * 24;
+        const second = 1000;
+        const minute = second * 60;
+        const hour = minute * 60;
+        const day = hour * 24;
 
-      const d = Math.floor(gap / day);
-      const h = Math.floor((gap % day) / hour);
-      const m = Math.floor((gap % hour) / minute);
-      const s = Math.floor((gap % minute) / second);
+        const d = Math.floor(gap / day);
+        const h = Math.floor((gap % day) / hour);
+        const m = Math.floor((gap % hour) / minute);
+        const s = Math.floor((gap % minute) / second);
 
-      setDays(d);
-      setHours(h);
-      setMinutes(m);
-      setSeconds(s);
+        setDays(d);
+        setHours(h);
+        setMinutes(m);
+        setSeconds(s);
 
-      setTimeout(updateCountdown, 1000);
+        setTimeout(updateCountdown, 1000);
+      }
     };
-    upComingTickets.map((ticket) => console.log(ticket?.startDate));
-    updateCountdown();
-  }, [targetDate]);
+
+    if (upComingTickets.length > 0) {
+      const nearestEvent = upComingTickets.reduce((nearest, ticket) => {
+        const ticketDate = new Date(ticket.startDate).getTime();
+        return ticketDate < nearest ? ticketDate : nearest;
+      }, Infinity);
+      setTargetDate(nearestEvent);
+      updateCountdown();
+    }
+  }, [upComingTickets, targetDate]);
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -186,29 +196,68 @@ function Home() {
         <div className="top_home">
           <div className="home__logo">
             {/* <img src={home} alt="the ethiopia holi" className="home__img" /> */}
+            <motion.div
+              variants={{
+                offScreen: { opacity: 0, y: "-20%" },
+                onScreen: { opacity: 1, y: 0 },
+              }}
+              initial="offScreen"
+              animate="onScreen"
+              transition={{
+                type: "spring",
+                delay: 1.5,
+                stiffness: 800,
+              }}
+            >
+              <h2>Embrace <span>Events</span></h2>
+            </motion.div>
             <p>
               Join us for an unforgettable experience filled with excitement and
               entertainment.
             </p>
           </div>
-          <div className="countdown">
-            <div className="time">
-              <span> {days}</span>
-              <p> days</p>
+          {targetDate && (
+            <div className="counter_container">
+              {/* <div className="counter_title">
+                <motion.div
+                  variants={{
+                    offScreen: { opacity: 0, y: "50%" },
+                    onScreen: { opacity: 1, y: 0 },
+                  }}
+                  initial="offScreen"
+                  animate="onScreen"
+                  transition={{
+                    type: "twin",
+                    delay: 1.5,
+                    duration: 0.5,
+                    // stiffness: 8,
+                  }}
+                >
+                  <h2>Countdown to Upcoming Event</h2>
+                </motion.div>
+              </div> */}
+              <div className="countdown">
+                <div className="time" style={{backgroundColor: "#E3F2FD"}}>
+                  <span>{days}</span>
+                  <p>days</p>
+                </div>
+                <div className="time" style={{backgroundColor: "#FFF3E0"}}>
+                  <span>{hours}</span>
+                  <p>hours</p>
+                </div>
+                <div className="time" style={{backgroundColor: "#FFEBEE"}}>
+                  <span>{minutes}</span>
+                  <p>minutes</p>
+                </div>
+                <div className="time" style={{backgroundColor: "#F1F8E9"}}>
+                  <span>{seconds}</span>
+                  <p>seconds</p>
+                </div>
+              </div>
             </div>
-            <div className="time">
-              <span>{hours}</span>
-              <p>hours</p>{" "}
-            </div>
-            <div className="time">
-              <span> {minutes}</span> <p>minutes</p>{" "}
-            </div>
-            <div className="time">
-              <span>{seconds}</span> <p>seconds</p>
-            </div>
-          </div>
+          )}
         </div>
-        <div className="home__para">
+        {/* <div className="home__para">
           <p>
             Welcome to Embrace Events, where we bring the vibrant spirit of the
             Holi Festival to Ethiopia. We create unforgettable experiences that
@@ -217,7 +266,7 @@ function Home() {
             community. Let Embrace Events transform your vision into memorable
             moments of happiness and togetherness.
           </p>
-        </div>
+        </div> */}
         <div className="btn">
           {/* <button className="learnmore">
             <Link to="/about">
@@ -232,6 +281,34 @@ function Home() {
             Available Tickets
           </button>
         </div>
+      </div>
+      <div className="create">
+        <hr className="create__line" />
+        <motion.div
+          variants={{
+            offScreen: { opacity: 0, y: "10%" },
+            onScreen: { opacity: 1, y: 0 },
+          }}
+          initial="offScreen"
+          whileInView="onScreen"
+          viewport={{ once: true, amount: 0.8 }}
+          transition={{
+            type: "twin",
+            // delay: 1.5,
+            duration: 0.5,
+            // stiffness: 8,
+          }}
+        >
+          <p style={{ marginTop: "2%" }}>
+            Welcome to Embrace Events, where we bring the vibrant spirit of the
+            Holi Festival to Ethiopia. We create unforgettable experiences that
+            blend education with entertainment, fostering unity and joy. Join us
+            in Addis Ababa for a celebration of color, music, dance, and
+            community. Let Embrace Events transform your vision into memorable
+            moments of happiness and togetherness.
+          </p>
+        </motion.div>
+        <hr className="create__line" />
       </div>
       <div className="create">
         <hr className="create__line" />
