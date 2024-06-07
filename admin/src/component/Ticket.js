@@ -62,6 +62,7 @@ const Ticket = () => {
   }, [dispatch]);
 
   const data = useMemo(() => tickets, [tickets]);
+ 
   const [tableData, setTableData] = useState([]);
   useEffect(() => {
     if (data && data.length > 0) {
@@ -72,6 +73,8 @@ const Ticket = () => {
           title: ticket.title,
           description: ticket.description,
           startDate: ticket.startDate,
+          eventEndDate: ticket.eventEndDate,
+          eventStartedDate: ticket.eventStartedDate,
           endDate: ticket.endDate,
           standardAmount: ticket.standardAmount,
           vipAmount: ticket.vipAmount,
@@ -91,6 +94,8 @@ const Ticket = () => {
       ...ticket,
       startDate: formatDate(ticket.startDate),
       endDate: formatDate(ticket.endDate),
+      eventStartedDate: formatDate(ticket.eventStartedDate),
+      eventEndDate: formatDate(ticket.eventEndDate),
     });
     setOpenEdit(true);
   };
@@ -195,7 +200,7 @@ const Ticket = () => {
       {
         accessorFn: (row) => `${row?.startDate}`,
         enableClickToCopy: true,
-        header: "Start date",
+        header: "Ticket Sale Start date",
         size: 300,
         Cell: ({ renderedCellValue, row }) => (
           <Box sx={{ width: 200, overflowWrap: "break-word" }}>
@@ -206,7 +211,29 @@ const Ticket = () => {
       {
         accessorFn: (row) => `${row?.endDate}`,
         enableClickToCopy: true,
-        header: "End date",
+        header: "Ticket Sale End date",
+        size: 300,
+        Cell: ({ renderedCellValue, row }) => (
+          <Box sx={{ width: 200, overflowWrap: "break-word" }}>
+            {moment(renderedCellValue).format("LL")}
+          </Box>
+        ),
+      },
+      {
+        accessorFn: (row) => `${row?.eventStartedDate}`,
+        enableClickToCopy: true,
+        header: "Actual Event Start date",
+        size: 300,
+        Cell: ({ renderedCellValue, row }) => (
+          <Box sx={{ width: 200, overflowWrap: "break-word" }}>
+            {moment(renderedCellValue).format("LL")}
+          </Box>
+        ),
+      },
+      {
+        accessorFn: (row) => `${row?.eventEndDate}`,
+        enableClickToCopy: true,
+        header: "Actual Event End date",
         size: 300,
         Cell: ({ renderedCellValue, row }) => (
           <Box sx={{ width: 200, overflowWrap: "break-word" }}>
@@ -487,7 +514,7 @@ const Ticket = () => {
             rows={5}
           />
 
-          <Typography sx={{ color: "#13A014" }}>Start Date</Typography>
+          <Typography sx={{ color: "#13A014" }}>Ticket Sale Start Date</Typography>
           <TextField
             type="date"
             className="form-control"
@@ -499,12 +526,36 @@ const Ticket = () => {
             placeholder="Start Date"
           />
 
-          <Typography sx={{ color: "#13A014" }}>End Date</Typography>
+          <Typography sx={{ color: "#13A014" }}>Ticket Sale End Date</Typography>
           <TextField
             type="date"
             className="form-control"
             name="endDate"
             value={editingTicket?.endDate}
+            onChange={handleChange}
+            required
+            style={{ width: 300 }}
+            placeholder="End Date"
+          />
+
+          <Typography sx={{ color: "#13A014" }}>Actual Event Start Date</Typography>
+          <TextField
+            type="date"
+            className="form-control"
+            name="eventStartedDate"
+            value={editingTicket?.eventStartedDate}
+            onChange={handleChange}
+            required
+            style={{ width: 300 }}
+            placeholder="Start Date"
+          />
+
+          <Typography sx={{ color: "#13A014" }}>Actual Event End Date</Typography>
+          <TextField
+            type="date"
+            className="form-control"
+            name="eventEndDate"
+            value={editingTicket?.eventEndDate}
             onChange={handleChange}
             required
             style={{ width: 300 }}

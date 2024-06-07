@@ -34,6 +34,14 @@ const ticketSchema = new mongoose.Schema({
         type: Boolean,
         default:false
     },
+    eventStartedDate:{
+        type: Date,
+        required: true
+    },
+    eventEndDate:{
+         type: Date,
+        required: true
+    },
     image: { type: Object, default: {} },
 },{
     timestamps: true 

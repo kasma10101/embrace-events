@@ -16,6 +16,8 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
         endDate: '',
         standardAmount: '',
         vipAmount: '',
+        eventEndDate:"",
+        eventStartedDate:""
     });
     const [image, setImage] = useState(null);
 
@@ -33,6 +35,7 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
         setImage(e.target.files[0]);
     };
 
+    console.log(ticketData);
     
     useEffect(()=>{
         if (editingTicket) {
@@ -116,7 +119,7 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                        </Box>
                       
                        <Box>
-                           <Typography>Start Date</Typography>
+                           <Typography>Ticket Sale Start Date</Typography>
                            <TextField
                             type="date"
                             className="form-control"
@@ -130,12 +133,40 @@ const TicketForm = ({ onFormSubmit, editingTicket }) => {
                        </Box>
 
                        <Box>
-                           <Typography>End Date</Typography>
+                           <Typography>Ticket Sale End Date</Typography>
                            <TextField
                             type="date"
                             className="form-control"
                             name="endDate"
                             value={ticketData.endDate}
+                            onChange={handleChange}
+                            required
+                            style={{width: 300}}
+                            placeholder='End Date'
+                        />
+                       </Box>
+
+                       <Box>
+                           <Typography>Actual Event Start Date</Typography>
+                           <TextField
+                            type="date"
+                            className="form-control"
+                            name="eventStartedDate"
+                            value={ticketData.eventStartedDate}
+                            onChange={handleChange}
+                            required
+                            style={{width: 300}}
+                            placeholder='Start Date'
+                        />
+                       </Box>
+
+                       <Box>
+                           <Typography>Actual Event End Date</Typography>
+                           <TextField
+                            type="date"
+                            className="form-control"
+                            name="eventEndDate"
+                            value={ticketData.eventEndDate}
                             onChange={handleChange}
                             required
                             style={{width: 300}}
