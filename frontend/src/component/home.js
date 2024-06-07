@@ -91,7 +91,7 @@ function Home() {
 
   useEffect(() => {
     fetchBlogs();
-  }, [blogs]);
+  }, []);
 
   const dispatch = useDispatch();
   const { tickets, loading, error, availableTickets, upComingTickets } =
@@ -117,41 +117,44 @@ function Home() {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
+  const updateCountdown = () => {
+    if (targetDate) {
+      const now = new Date().getTime();
+      const target = new Date(targetDate).getTime();
+      const gap = target - now;
+
+      const second = 1000;
+      const minute = second * 60;
+      const hour = minute * 60;
+      const day = hour * 24;
+
+      const d = Math.floor(gap / day);
+      const h = Math.floor((gap % day) / hour);
+      const m = Math.floor((gap % hour) / minute);
+      const s = Math.floor((gap % minute) / second);
+
+      setDays(d);
+      setHours(h);
+      setMinutes(m);
+      setSeconds(s);
+
+      setTimeout(updateCountdown, 1000);
+    }
+  };
+  useEffect(()=>{
+    updateCountdown();
+  },[targetDate])
   useEffect(() => {
-    const updateCountdown = () => {
-      if (targetDate) {
-        const now = new Date().getTime();
-        const target = new Date(targetDate).getTime();
-        const gap = target - now;
 
-        const second = 1000;
-        const minute = second * 60;
-        const hour = minute * 60;
-        const day = hour * 24;
-
-        const d = Math.floor(gap / day);
-        const h = Math.floor((gap % day) / hour);
-        const m = Math.floor((gap % hour) / minute);
-        const s = Math.floor((gap % minute) / second);
-
-        setDays(d);
-        setHours(h);
-        setMinutes(m);
-        setSeconds(s);
-
-        setTimeout(updateCountdown, 1000);
-      }
-    };
-
-    if (upComingTickets.length > 0) {
-      const nearestEvent = upComingTickets.reduce((nearest, ticket) => {
-        const ticketDate = new Date(ticket.startDate).getTime();
+    if (availableTickets.length > 0) {
+      const nearestEvent = availableTickets.reduce((nearest, ticket) => {
+        const ticketDate = new Date(ticket.eventStartedDate).getTime();
         return ticketDate < nearest ? ticketDate : nearest;
       }, Infinity);
       setTargetDate(nearestEvent);
-      updateCountdown();
     }
-  }, [upComingTickets, targetDate]);
+  }, [availableTickets]);
+
   useEffect(() => {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
@@ -190,6 +193,14 @@ function Home() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  function showDateDifference(startDate, endDate) {
+    const dateDifference = new Date(endDate).getTime() - new Date(startDate).getTime();
+    const daysDifference = Math.ceil(dateDifference / (1000 * 60 * 60 * 24));
+  
+    return daysDifference
+  }
+
+  
   return (
     <>
       <div className="home">
@@ -396,11 +407,24 @@ function Home() {
                             style={{ display: "flex", gap: 5 }}
                             className="ticket_time"
                           >
-                            <IoMdStopwatch style={{ color: "13A014" }} />
+                            <IoMdStopwatch style={{ color: "13A014" }} /> Ticket Sale Date
                             <span style={{ fontSize: "13px" }}>
                               {moment(ticket?.startDate).format("LL") +
                                 " - " +
                                 moment(ticket?.endDate).format("LL")}
+                            </span>
+                          </div>
+                          <div
+                            style={{ display: "flex", gap: 5 }}
+                            className="ticket_time"
+                          >
+                            <IoMdStopwatch style={{ color: "13A014" }} /> Actual Event
+                            <span style={{ fontSize: "13px" }}>
+                              {moment(ticket?.eventStartedDate).format("LL") +
+                                " - " +
+                                moment(ticket?.eventEndDate).format("LL")}
+                                 
+                                &endp; &endp; for {showDateDifference(ticket?.eventStartedDate,ticket?.eventEndDate)} Days
                             </span>
                           </div>
                         </motion.div>
@@ -484,6 +508,19 @@ function Home() {
                               {moment(ticket?.startDate).format("LL") +
                                 " - " +
                                 moment(ticket?.endDate).format("LL")}
+                            </span>
+                          </div>
+                          <div
+                            style={{ display: "flex", gap: 5 }}
+                            className="ticket_time"
+                          >
+                            <IoMdStopwatch style={{ color: "13A014" }} /> Actual Event
+                            <span style={{ fontSize: "13px" }}>
+                              {moment(ticket?.eventStartedDate).format("LL") +
+                                " - " +
+                                moment(ticket?.eventEndDate).format("LL")}
+                                 
+                                 &endp; &endp; for {showDateDifference(ticket?.eventStartedDate,ticket?.eventEndDate)} Days
                             </span>
                           </div>
                         </motion.div>

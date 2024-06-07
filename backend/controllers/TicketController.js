@@ -19,13 +19,24 @@ const ticketSchema = Joi.object({
 const createTicket = async (req, res) => {
     try {
         // Validate request body against Joi schema
-        const { error } = ticketSchema.validate(req.body);
-        if (error) {
-            return res.status(400).json({ message: error.details[0].message });
+        // const { error } = ticketSchema.validate(req.body);
+        // if (error) {
+        //     return res.status(400).json({ message: error.details[0].message });
+        // }
+
+        const { title, description, startDate, endDate, eventStartedDate, eventEndDate,standardAmount, vipAmount, location } = req.body;
+
+        if(!title || !description || !startDate || !endDate || !eventStartedDate || !eventEndDate ||!standardAmount ||!vipAmount ||!location ){
+            return  res.status(400).json({ message: 'Please fill all fields' });
         }
 
-        const { title, description, startDate, endDate, standardAmount, vipAmount, location } = req.body;
-
+        console.log(new Date(eventEndDate),new Date(eventStartedDate));
+        if(new Date(eventEndDate).getTime() - new Date(eventStartedDate).getTime() < 1 * 24 * 60 * 60 * 1000){
+            return  res.status(400).json({ message: 'Event End Date and Start Date Difference Should be at least 1 day' });
+        }
+        if(new Date(endDate).getTime() - new Date(startDate).getTime() < 1 * 24 * 60 * 60 * 1000){
+            return  res.status(400).json({ message: 'Ticket End Date and Start Date Difference Should be at least 1 day' });
+        }
         let imageInfo = {};
         if (req.file) {
             const imagePath = `${process.env.REACT_APP_BACKEND_API}/uploads/${req.file.filename}`;
@@ -39,6 +50,8 @@ const createTicket = async (req, res) => {
 
         const ticket = await Ticket.create({
             title,
+            eventEndDate,
+            eventStartedDate,
             description,
             startDate,
             endDate,
@@ -49,6 +62,7 @@ const createTicket = async (req, res) => {
         });
         res.status(201).json(ticket);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };
@@ -109,6 +123,8 @@ const updateTicket = async (req, res) => {
         ticket.standardAmount = req.body.standardAmount;
         ticket.vipAmount = req.body.vipAmount;
         ticket.location = req.body.location;
+        ticket.eventStartedDate = req.body.eventStartedDate;
+        ticket.eventEndDate = req.body.eventEndDate;
 
         // Save the updated ticket
         const updatedTicket = await ticket.save();
