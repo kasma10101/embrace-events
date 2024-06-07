@@ -26,19 +26,15 @@ export default function Statistics() {
   return (
     <div className="statistics">
       <div className="statistics__box">
-        <p><CountUp n={60} />+</p>
+        <p><CountUp n={10} />+</p>
         <h2>Events</h2>
       </div>
       <div className="statistics__box">
-        <p><CountUp n={25} />+</p>
-        <h2>Workshop</h2>
-      </div>
-      <div className="statistics__box">
-        <p><CountUp n={4500} />+</p>
+        <p><CountUp n={1500} />+</p>
         <h2>Participants</h2>
       </div>
       <div className="statistics__box">
-        <p><CountUp n={12} />+</p>
+        <p><CountUp n={10} />+</p>
         <h2>International Events</h2>
       </div>
     </div>

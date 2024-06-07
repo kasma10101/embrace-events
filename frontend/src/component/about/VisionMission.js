@@ -13,13 +13,8 @@ export default function VisionMission() {
           <p className="card_title">Vision</p>
           <div className="card_par">
             <p>
-              Our vision is to inspire and entertain young audiences with
-              diverse, high-quality music and arts. We aim to enrich our
-              community with family-friendly events, support emerging artists,
-              and grow through innovative promotions and digital marketing. Over
-              the next five years, we plan to host vibrant festivals across
-              Addis Ababa and Ethiopia, creating memorable experiences and
-              lasting connections.
+              To be the vibrant heartbeat of cultural celebration, igniting
+              connections, and radiating joy throughout communities.
             </p>
           </div>
         </div>
@@ -30,12 +25,11 @@ export default function VisionMission() {
           <p className="card_title">Mission</p>
           <div className="card_par">
             <p>
-              Our mission is to enrich lives through exceptional community
-              service and to introduce the vibrant Holi Festival to Ethiopia. By
-              celebrating color, harmony, and love, we aim to unite diverse
-              cultures in Addis Ababa and beyond. We strive to create an annual
-              event that promotes joy and understanding among the younger
-              generation.
+              <ol>
+                <li> Organize exceptional events.</li>
+                <li> Promote cultural exchange andunity.</li>
+                <li>Create memorable experiences that embrace diversity.</li>
+              </ol>
             </p>
           </div>
         </div>

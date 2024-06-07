@@ -17,20 +17,20 @@
   text-align: center;
   font-size: 2em;
   height: 100vh;
-  background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/61fae657983099.59eb3a814f174.gif');
+  background-image: url('../assets/images/about.jpg');
   background-repeat: no-repeat;
   width: 100%;
   background-size: cover;
   object-fit: cover;
-  background-position: center;
-  /* background-attachment: fixed; */
+  background-position: top;
+  background-attachment: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-.about__title::before {
+/* .about__title::before {
   content: '';
   position: absolute;
   top: 0;
@@ -38,7 +38,7 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
-}
+} */
 
 .title_container {
   display: flex;
@@ -156,11 +156,18 @@
 
 .statistics {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 3rem;
   padding: 5rem 4rem;
   text-align: center;
-  background: var(--clr-light);
+  /* background: var(--clr-light); */
+  background-image: url('../assets/images/statistics.jpg');
+  background-repeat: no-repeat;
+  width: 100%;
+  background-size: cover;
+  object-fit: cover;
+  background-position: top;
+  background-attachment: fixed;
 }
 
 .statistics__box p {
@@ -313,7 +320,14 @@
 }
 
 .join {
-  background: var(--clr-light);
+  /* background: var(--clr-light); */
+  background-image: url('../assets/images/twoGirls.jpg');
+  background-repeat: no-repeat;
+  width: 100%;
+  background-size: cover;
+  object-fit: cover;
+  background-position: top;
+  background-attachment: fixed;
 }
 
 .join h2 {
@@ -378,6 +392,7 @@
   .testimonial__text p {
     margin: 0 16rem;
   }
+
   .cards {
     gap: 4rem;
   }
@@ -426,12 +441,15 @@
     grid-template-columns: repeat(1, 1fr);
     gap: 3rem 0;
   }
+
   .cards {
     flex-direction: column;
   }
+
   .card_box {
     width: 70%;
   }
+
   .offer__text p {
     font-size: 1.2em;
     padding-top: 0.5rem;
@@ -474,7 +492,7 @@
 
   .statistics {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
   }
 
   .testimonial__text p {

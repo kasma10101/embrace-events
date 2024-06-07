@@ -6,11 +6,9 @@ import {
   FaMapMarkerAlt,
 } from "react-icons/fa";
 import { IoMdStopwatch } from "react-icons/io";
-import home from "../assets/logo/home.png";
 import Statistics from "./about/Statistics";
 import Testimonial from "./about/Testimonial";
 import "../style/home.css";
-import eventTicket from "../assets/images/ticket.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Outlet, Link } from "react-router-dom";
 import {
@@ -22,7 +20,6 @@ import moment from "moment";
 import LockIcon from "@mui/icons-material/Lock";
 import { motion } from "framer-motion";
 import { Box } from "@mui/material";
-import CircleIcon from "@mui/icons-material/Circle";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import Accordion from "@mui/material/Accordion";
@@ -32,6 +29,8 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Blogs from "./blogs";
 import axios from "axios";
 import { Grid, Modal } from "@mui/material";
+import defaultImage from '../assets/images/home_back.jpg'
+import homeCard from '../assets/images/home.png'
 
 const faqs = [
   {
@@ -48,7 +47,7 @@ const faqs = [
   },
   {
     title: "How do I contact support?",
-    text: "For any support or assistance, please visit our contact page or email us at support@example.com.",
+    text: "For any support or assistance, please visit our contact page or email us at contact@embracevents.com.",
   },
   {
     title: "Can I transfer my ticket?",
@@ -57,6 +56,7 @@ const faqs = [
 ];
 
 function Home() {
+  const [counterImage, setCounterImage] = useState("");
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [posterAnimationVariants, setPosterAnimationVariants] = useState({
     offScreen: { opacity: 0, x: "-50%" },
@@ -141,19 +141,36 @@ function Home() {
       setTimeout(updateCountdown, 1000);
     }
   };
-  useEffect(()=>{
-    updateCountdown();
-  },[targetDate])
   useEffect(() => {
-
+    updateCountdown();
+  }, [targetDate]);
+  useEffect(() => {
     if (availableTickets.length > 0) {
       const nearestEvent = availableTickets.reduce((nearest, ticket) => {
         const ticketDate = new Date(ticket.eventStartedDate).getTime();
-        return ticketDate < nearest ? ticketDate : nearest;
+        if (ticketDate < nearest) {
+          setCounterImage(ticket?.image?.filePath || defaultImage);
+          return ticketDate;
+        }
+        return nearest;
       }, Infinity);
       setTargetDate(nearestEvent);
     }
   }, [availableTickets]);
+
+  useEffect(() => {
+    if (availableTickets.length > 0) {
+      const nearestEvent = availableTickets.reduce((nearest, ticket) => {
+        const ticketDate = new Date(ticket.eventStartedDate).getTime();
+        if (ticketDate < nearest) {
+          setCounterImage(ticket?.image?.filePath || defaultImage);
+          return ticketDate;
+        }
+        return nearest;
+      }, Infinity);
+      setTargetDate(nearestEvent);
+    }
+  }, [])
 
   useEffect(() => {
     const handleResize = () => {
@@ -194,16 +211,25 @@ function Home() {
   }, []);
 
   function showDateDifference(startDate, endDate) {
-    const dateDifference = new Date(endDate).getTime() - new Date(startDate).getTime();
+    const dateDifference =
+      new Date(endDate).getTime() - new Date(startDate).getTime();
     const daysDifference = Math.ceil(dateDifference / (1000 * 60 * 60 * 24));
-  
-    return daysDifference
-  }
 
-  
+    return daysDifference;
+  }
+  const containerStyle = {
+    backgroundImage: `url(${defaultImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'top',
+    position: "relative",
+    height: "max-content",
+    backgroundColor: "#f1f8ff",
+     fontFamily: `"Work Sans", "sans-serif"`
+  };
+
   return (
     <>
-      <div className="home">
+      <div className="home" style={containerStyle}>
         <div className="top_home">
           <div className="home__logo">
             {/* <img src={home} alt="the ethiopia holi" className="home__img" /> */}
@@ -220,7 +246,9 @@ function Home() {
                 stiffness: 800,
               }}
             >
-              <h2>Embrace <span>Events</span></h2>
+              <h2>
+                Embrace <span>Events</span>
+              </h2>
             </motion.div>
             <p>
               Join us for an unforgettable experience filled with excitement and
@@ -229,7 +257,7 @@ function Home() {
           </div>
           {targetDate && (
             <div className="counter_container">
-              {/* <div className="counter_title">
+              <div className="counter_title">
                 <motion.div
                   variants={{
                     offScreen: { opacity: 0, y: "50%" },
@@ -243,24 +271,26 @@ function Home() {
                     duration: 0.5,
                     // stiffness: 8,
                   }}
+                  className="counter_poster"
                 >
-                  <h2>Countdown to Upcoming Event</h2>
+                  {/* <h2>Countdown to Upcoming Event</h2> */}
+                  <img src={homeCard} alt=""  onClick={() => scrollToSection("availableTickets")}/>
                 </motion.div>
-              </div> */}
+              </div>
               <div className="countdown">
-                <div className="time" style={{backgroundColor: "#E3F2FD"}}>
+                <div className="time" style={{ backgroundColor: "#00CC00",color: "#fff"}}>
                   <span>{days}</span>
                   <p>days</p>
                 </div>
-                <div className="time" style={{backgroundColor: "#FFF3E0"}}>
+                <div className="time" style={{ backgroundColor: "#FF8C00",color: "#fff"}}>
                   <span>{hours}</span>
                   <p>hours</p>
                 </div>
-                <div className="time" style={{backgroundColor: "#FFEBEE"}}>
+                <div className="time" style={{ backgroundColor: "#00CCCC",color: "#fff"}}>
                   <span>{minutes}</span>
                   <p>minutes</p>
                 </div>
-                <div className="time" style={{backgroundColor: "#F1F8E9"}}>
+                <div className="time" style={{ backgroundColor: "#CC0000",color: "#fff"}}>
                   <span>{seconds}</span>
                   <p>seconds</p>
                 </div>
@@ -407,7 +437,8 @@ function Home() {
                             style={{ display: "flex", gap: 5 }}
                             className="ticket_time"
                           >
-                            <IoMdStopwatch style={{ color: "13A014" }} /> Ticket Sale Date
+                            <IoMdStopwatch style={{ color: "13A014" }} /> Ticket
+                            Sale Date
                             <span style={{ fontSize: "13px" }}>
                               {moment(ticket?.startDate).format("LL") +
                                 " - " +
@@ -418,13 +449,18 @@ function Home() {
                             style={{ display: "flex", gap: 5 }}
                             className="ticket_time"
                           >
-                            <IoMdStopwatch style={{ color: "13A014" }} /> Actual Event
+                            <IoMdStopwatch style={{ color: "13A014" }} /> Actual
+                            Event
                             <span style={{ fontSize: "13px" }}>
                               {moment(ticket?.eventStartedDate).format("LL") +
                                 " - " +
                                 moment(ticket?.eventEndDate).format("LL")}
-                                 
-                                &endp; &endp; for {showDateDifference(ticket?.eventStartedDate,ticket?.eventEndDate)} Days
+                               &nbsp;&nbsp; for{" "}
+                              {showDateDifference(
+                                ticket?.eventStartedDate,
+                                ticket?.eventEndDate
+                              )}{" "}
+                              Days
                             </span>
                           </div>
                         </motion.div>
@@ -514,13 +550,18 @@ function Home() {
                             style={{ display: "flex", gap: 5 }}
                             className="ticket_time"
                           >
-                            <IoMdStopwatch style={{ color: "13A014" }} /> Actual Event
+                            <IoMdStopwatch style={{ color: "13A014" }} /> Actual
+                            Event
                             <span style={{ fontSize: "13px" }}>
                               {moment(ticket?.eventStartedDate).format("LL") +
                                 " - " +
                                 moment(ticket?.eventEndDate).format("LL")}
-                                 
-                                 &endp; &endp; for {showDateDifference(ticket?.eventStartedDate,ticket?.eventEndDate)} Days
+                              &endp; &endp; for{" "}
+                              {showDateDifference(
+                                ticket?.eventStartedDate,
+                                ticket?.eventEndDate
+                              )}{" "}
+                              Days
                             </span>
                           </div>
                         </motion.div>

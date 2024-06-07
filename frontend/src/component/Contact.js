@@ -175,6 +175,13 @@ export default Contact;
 // Styles
 const StyledContactForm = styled.div`
   width: 100%;
+  background-image: url('../assets/images/statistics.jpg');
+  background-repeat: no-repeat;
+  width: 100%;
+  background-size: cover;
+  object-fit: cover;
+  background-position: top;
+  background-attachment: fixed;
 
    
   }
