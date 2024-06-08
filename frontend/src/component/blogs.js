@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import '../style/blogs.css'
-import { Grid, Modal } from '@mui/material'
+import { Grid, Modal, Typography } from '@mui/material'
 
 export default function Blogs() {
 
@@ -40,6 +40,11 @@ export default function Blogs() {
                             </Link>
                         )
                     }) : <></>}
+                     
+                    {(!blogs || blogs?.length ===0)&&
+                    
+                       <Typography>No blog is Found</Typography>
+                    }
                 </div>
             {/* </div> */}
             <Modal open={showModal} onClose={()=>{

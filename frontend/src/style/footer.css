@@ -38,6 +38,7 @@
 
 .bottom {
   background-color: var(--clr-font);
+  margin-top: 5rem;
 }
 
 .footer .first {
@@ -58,7 +59,7 @@
   padding: 1rem 5rem;
   text-align: center;
   line-height: 1.4;
-  font-size: 25px;
+  font-size: 20px;
   color: #13A014;
   font-weight: 500;
 }
