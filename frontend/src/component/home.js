@@ -227,6 +227,8 @@ function Home() {
      fontFamily: `"Work Sans", "sans-serif"`
   };
 
+
+
   return (
     <>
       <div className="home" style={containerStyle}>
@@ -257,7 +259,7 @@ function Home() {
           </div>
           {targetDate && (
             <div className="counter_container">
-              <div className="counter_title">
+              {/* <div className="counter_title">
                 <motion.div
                   variants={{
                     offScreen: { opacity: 0, y: "50%" },
@@ -273,27 +275,61 @@ function Home() {
                   }}
                   className="counter_poster"
                 >
-                  {/* <h2>Countdown to Upcoming Event</h2> */}
-                  <img src={homeCard} alt=""  onClick={() => scrollToSection("availableTickets")}/>
+                 <img src={homeCard} alt=""  onClick={() => scrollToSection("availableTickets")}/>
                 </motion.div>
-              </div>
+              </div> */}
               <div className="countdown">
-                <div className="time" style={{ backgroundColor: "#00CC00",color: "#fff"}}>
-                  <span>{days}</span>
-                  <p>days</p>
-                </div>
-                <div className="time" style={{ backgroundColor: "#FF8C00",color: "#fff"}}>
-                  <span>{hours}</span>
-                  <p>hours</p>
-                </div>
-                <div className="time" style={{ backgroundColor: "#00CCCC",color: "#fff"}}>
-                  <span>{minutes}</span>
-                  <p>minutes</p>
-                </div>
-                <div className="time" style={{ backgroundColor: "#CC0000",color: "#fff"}}>
-                  <span>{seconds}</span>
-                  <p>seconds</p>
-                </div>
+                <motion.div 
+                  initial={{y:-100,opacity:0}}
+                  whileInView={{y:0,opacity:1}}
+                  transition={{
+                    type: "twin",
+                    duration: 0.6,
+                    // stiffness: 8,
+                  }}
+                  className="time" >
+                  <span style={{ backgroundColor: "rgba(31, 110, 43)",color: "#fff"}}>{days}</span>
+                  <p>Days</p>
+                </motion.div>
+
+                <motion.div 
+                  initial={{y:100,opacity:0}}
+                  whileInView={{y:0,opacity:1}}
+                  transition={{
+                    type: "twin",
+                    duration: 0.6,
+                    delay:0.5
+                    // stiffness: 8,
+                  }} className="time" >
+                  <span style={{ backgroundColor: "rgba(31, 110, 43)",color: "#fff"}}>{hours}</span>
+                  <p>Hours</p>
+                </motion.div>
+
+                 <motion.div 
+                  initial={{y:-100,opacity:0}}
+                  whileInView={{y:0,opacity:1}}
+                  transition={{
+                    type: "twin",
+                    duration: 0.6,
+                    delay:0.8
+                    // stiffness: 8,
+                  }}className="time">
+                  <span style={{ backgroundColor: "rgba(31, 110, 43)",color: "#fff"}}>{minutes}</span>
+                  <p>Minutes</p>
+
+                </motion.div>
+                <motion.div 
+                  initial={{y:100,opacity:0}}
+                  whileInView={{y:0,opacity:1}}
+                  transition={{
+                    type: "twin",
+                    duration: 0.6,
+                    delay:1
+                    // stiffness: 8,
+                  }}className="time">
+                  <span style={{ backgroundColor: "rgba(31, 110, 43)",color: "#fff"}}>{seconds}</span>
+                  <p>Seconds</p>
+                </motion.div>
               </div>
             </div>
           )}
@@ -380,91 +416,96 @@ function Home() {
                 {availableTickets.map((ticket) => {
                   return (
                     <div className="event__container">
-                      <Link
-                        to={`/payment/${ticket._id}`}
-                        style={{ color: "#789461", textDecoration: "none" }}
-                        className="box"
-                      >
-                        <motion.div
-                          className="poster"
-                          variants={posterAnimationVariants}
-                          initial="offScreen"
-                          whileInView="onScreen"
-                          viewport={{ once: true, amount: 0.8 }}
-                          transition={{
-                            type: "twin",
-                            duration: 1.5,
-                          }}
-                        >
-                          <img src={ticket?.image?.filePath} />
-                        </motion.div>
-                        <motion.div
-                          className="content"
-                          variants={contentAnimationVariants}
-                          initial="offScreen"
-                          whileInView="onScreen"
-                          viewport={{ once: true, amount: 0.8 }}
-                          transition={{
-                            type: "twin",
-                            duration: 1.5,
-                          }}
-                        >
-                          <div>
-                            <div
-                              style={{
-                                fontSize: 25,
-                                fontWeight: 500,
-                                color: "#13A014",
+                       <div>
+                          <span
+                            className="box"
+                          >
+                            <motion.div
+                              className="poster"
+                              variants={posterAnimationVariants}
+                              initial="offScreen"
+                              whileInView="onScreen"
+                              viewport={{ once: true, amount: 0.8 }}
+                              transition={{
+                                type: "twin",
+                                duration: 1.5,
                               }}
                             >
-                              {ticket?.title}
-                            </div>
-                            <div
-                              style={{ border: "2px solid #789461", width: 90 }}
-                            ></div>
-                          </div>
+                              <img style={{cursor:"pointer"}} onClick={()=>navigate(`/payment/${ticket?._id}`)} src={ticket?.image?.filePath} />
+                            </motion.div>
+                            <motion.div
+                              className="content"
+                              variants={contentAnimationVariants}
+                              initial="offScreen"
+                              whileInView="onScreen"
+                              viewport={{ once: true, amount: 0.8 }}
+                              transition={{
+                                type: "twin",
+                                duration: 1.5,
+                              }}
+                              style={{cursor:"pointer"}}
+                              onClick={()=>navigate(`/payment/${ticket?._id}`)}
+                            >
+                                 <div>
+                                <div
+                                  style={{
+                                    fontSize: 25,
+                                    fontWeight: 500,
+                                    color: "#13A014",
+                                  }}
+                                >
+                                  {ticket?.title}
+                                </div>
+                                <div
+                                  style={{ border: "2px solid #789461", width: 90 }}
+                                ></div>
+                                    </div>
 
-                          <div
-                            style={{ display: "flex", gap: 5 }}
-                            className="ticket_location"
-                          >
-                            <span>
-                              <LocationOnIcon style={{ color: "red" }} />
-                            </span>
-                            <span>{ticket.location}</span>
-                          </div>
-                          <div
-                            style={{ display: "flex", gap: 5 }}
-                            className="ticket_time"
-                          >
-                            <IoMdStopwatch style={{ color: "13A014" }} /> Ticket
-                            Sale Date
-                            <span style={{ fontSize: "13px" }}>
-                              {moment(ticket?.startDate).format("LL") +
-                                " - " +
-                                moment(ticket?.endDate).format("LL")}
-                            </span>
-                          </div>
-                          <div
-                            style={{ display: "flex", gap: 5 }}
-                            className="ticket_time"
-                          >
-                            <IoMdStopwatch style={{ color: "13A014" }} /> Actual
-                            Event
-                            <span style={{ fontSize: "13px" }}>
-                              {moment(ticket?.eventStartedDate).format("LL") +
-                                " - " +
-                                moment(ticket?.eventEndDate).format("LL")}
-                               &nbsp;&nbsp; for{" "}
-                              {showDateDifference(
-                                ticket?.eventStartedDate,
-                                ticket?.eventEndDate
-                              )}{" "}
-                              Days
-                            </span>
-                          </div>
-                        </motion.div>
-                      </Link>
+                                    <div className="eventLasting">
+                                      {showDateDifference(
+                                          ticket?.eventStartedDate,
+                                          ticket?.eventEndDate
+                                        )}{" "}
+                                        Days Event
+                                    </div>
+                                    <div
+                                      style={{ display: "flex", gap: 5 }}
+                                      className="ticket_location"
+                                    >
+                                      <span>
+                                        <LocationOnIcon style={{ color: "red" }} />
+                                      </span>
+                                      <span>{ticket.location}</span>
+                                    </div>
+                                    <div
+                                      style={{ display: "flex", gap: 5,fontSize:"11px" }}
+                                      className="ticket_time"
+                                    >
+                                      <IoMdStopwatch style={{ color: "13A014" }} /> Ticket
+                                      Sale Date
+                                      <span style={{ fontSize: "13px" }}>
+                                        {moment(ticket?.startDate).format("LL") +
+                                          " - " +
+                                          moment(ticket?.endDate).format("LL")}
+                                      </span>
+                                    </div>
+                                    <div
+                                      style={{ display: "flex", gap: 5,fontSize:"11px" }}
+                                      className="ticket_time"
+                                    >
+                                      <IoMdStopwatch style={{ color: "13A014" }} /> Actual
+                                      Event
+                                      <span style={{ fontSize: "13px" }}>
+                                        {moment(ticket?.eventStartedDate).format("LL") +
+                                          " - " +
+                                          moment(ticket?.eventEndDate).format("LL")}
+                                        
+                                      </span>
+                                    </div>
+                            </motion.div>
+                          </span>
+
+                       </div>
                     </div>
                   );
                 })}

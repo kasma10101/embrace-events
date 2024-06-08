@@ -1,9 +1,11 @@
 .whole-payment-container{
-    display: grid;
-    grid-template-columns: auto auto;
-    align-items: flex-start;
-    gap: 20px;
-    padding-top: 3%;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    margin-top: 60px;
+    width: 100%;
 }
 .ticket-detail{
     border: 2px solid #12372a;
@@ -26,9 +28,18 @@
     padding: 10px 0px 5px;
     line-height: 30px;
 }
+.container-form{
+    width: 400px;
+}
+@media(max-width: 1000px){
+    .whole-payment-container{
+         gap: 30px;
+         padding: 0 20px 0 20px;
+      }
+}
 @media(max-width: 830px){
     .whole-payment-container{
-        grid-template-columns: auto auto;
+        flex-direction: column-reverse;
         align-items: center;
         justify-content: center;
     }
@@ -39,6 +50,12 @@
     }
 }
 @media(max-width: 460px){
+    .ticket-detail{
+        width: 90%;
+    }
+    .container-form{
+        width: 90%;
+    }
     .ticket-detail{
         justify-content: center;
         margin: 0 auto;

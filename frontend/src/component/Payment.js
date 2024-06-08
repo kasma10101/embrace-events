@@ -4,7 +4,7 @@ import { createPaymentThunk, verifyPaymentThunk } from '../redux/paymentSlice';
 import { getAvailableTicketsThunk, getTicketsThunk } from '../redux/ticketSlice';
 import ButtonLoading from './Loader/ButtonLoader';
 import { useLocation, useParams } from 'react-router-dom';
-import { InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import Button from 'react-bootstrap/esm/Button';
 import '../style/payment.css'
 import { FaCircle } from 'react-icons/fa';
@@ -22,7 +22,7 @@ const PaymentComponent = () => {
 
     const [paymentData, setPaymentData] = useState({
         ticketID: ticket?._id || '',
-        ticketType: '',
+        ticketType: 'standard',
         email: '',
         phone: '',
         fname: '',
@@ -75,9 +75,9 @@ const PaymentComponent = () => {
     };
     return (
         <div className='whole-payment-container'>
-            <div className="container" >
-                <h4 style={{ textAlign: 'center' }}>Billing address</h4>
-                <form className='input-group p-2 border border-0'>
+            <div className="container-form" >
+                <h4 style={{ textAlign: 'center',fontWeight:"800" }}>Billing address</h4>
+                <form className='input-group p-2 border border-0' style={{width:"100%"}}>
                     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: '100%', gap: 20 }}>
                         <TextField
                             type="text"
@@ -86,7 +86,7 @@ const PaymentComponent = () => {
                             placeholder="First Name"
                             onChange={handleChange}
                             value={paymentData.fname}
-                            style={{ width: 400 }}
+                            style={{ width: '100%' }}
                         />
                         <TextField
                             type="text"
@@ -95,7 +95,7 @@ const PaymentComponent = () => {
                             placeholder="Last Name"
                             onChange={handleChange}
                             value={paymentData.lname}
-                            style={{ width: 400 }}
+                            style={{ width: '100%' }}
                         />
                         <TextField
                             type="email"
@@ -104,7 +104,7 @@ const PaymentComponent = () => {
                             placeholder="you@example.com"
                             onChange={handleChange}
                             value={paymentData.email}
-                            style={{ width: 400 }}
+                            style={{ width: '100%' }}
                         />
                         <TextField
                             type="text"
@@ -113,54 +113,38 @@ const PaymentComponent = () => {
                             placeholder="0911111... or +25191111..."
                             onChange={handleChange}
                             value={paymentData.phone}
-                            style={{ width: 400 }}
+                            style={{ width: '100%' }}
                         />
-                        <div>
-                            <InputLabel>Ticket type</InputLabel>
-                            <Select
-                                name="ticketType"
-                                onChange={handleChange}
-                                value={paymentData.ticketType}
-                                style={{ width: 400, backgroundColor: '#fff' }}
-                            >
-                                <MenuItem value="">Select Ticket Type</MenuItem>
-                                <MenuItem value="standard">Standard</MenuItem>
-                                <MenuItem value="vip">VIP</MenuItem>
-                            </Select>
+                        <div style={{width:"100%", }} >
+                                <FormControl fullWidth sx={{backgroundColor: '#fff'}}>
+                                    <InputLabel  id="demo-simple-select-standard-label">Ticket Type</InputLabel>
+                                    <Select
+                                        name="ticketType"
+                                        value={paymentData.ticketType}
+                                        label="Ticket Type"
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        onChange={handleChange}
+                                        
+                                    >
+                                        <MenuItem value="standard">Standard</MenuItem>
+                                        <MenuItem value="vip">VIP</MenuItem>
+                                    </Select>
+                            </FormControl>
                         </div>
-                        <div>
-                            <InputLabel>Currency</InputLabel>
-                            <Select
-                                name="currency"
-                                onChange={handleChange}
-                                value={paymentData.currency}
-                                style={{ width: 400, backgroundColor: '#fff' }}
-                            >
-                                <MenuItem value="ETB">ETB</MenuItem>
-                            </Select>
-                        </div>
-                        {loading ? (
-                            <ButtonLoading className="w-100 btn btn-primary btn-lg" type="submit" disabled>Loading...</ButtonLoading>
-                        ) : (
-                            <Button style={{ width: 400, backgroundColor: '#12372a', border: 0, padding: 10 }} onClick={handleCreatePayment}>Continue to checkout</Button>
-                        )}
+                       <div style={{width:"100%"}}>
+
+                            {loading ? (
+                                <ButtonLoading  className="w-100 btn btn-primary btn-lg" type="submit" disabled>Loading...</ButtonLoading>
+                            ) : (
+                                <Button style={{ width: 400, backgroundColor: '#12372a', border: 0, padding: 10 }} onClick={handleCreatePayment}>Continue to checkout</Button>
+                            )}
+                       </div>
                     </div>
                 </form>
                 {/* </div> */}
                 {/* {error && <p className="text-danger">{error}</p>} */}
-                {payment && (
-                    <div className="mt-3">
-                        <h3>Payment Created</h3>
-                        <p>Transaction Reference: {payment.tx_ref}</p>
-                        <button className="btn btn-success" onClick={handleVerifyPayment}>Verify Payment</button>
-                    </div>
-                )}
-                {verification && (
-                    <div className="mt-3">
-                        <h3>Payment Verification</h3>
-                        <p>Status: {verification.status}</p>
-                    </div>
-                )}
+                
             </div>
             <div className='ticket-detail'>
                 <div>
@@ -185,8 +169,12 @@ const PaymentComponent = () => {
                          <div><span style={{fontWeight:"800"}}>Standard</span> {ticket?.standardAmount}ETB</div>
 
                     </div>
+
+                    <div style={{ fontSize: '13px',textAlign:"center",marginTop:"15px" }}>
+                      Ticket Sale Date:  <span>{moment(ticket?.startDate).format('LL') + ' - ' + moment(ticket?.endDate).format('LL')}</span>
+                    </div>
                     <div style={{ fontSize: '13px',textAlign:"center",marginTop:"5px" }}>
-                        <span>{moment(ticket?.startDate).format('LL') + ' - ' + moment(ticket?.endDate).format('LL')}</span>
+                      Evnt Date:  <span>{moment(ticket?.eventStartedDate).format('LL') + ' - ' + moment(ticket?.eventEndDate).format('LL')}</span>
                     </div>
               </div>
 
@@ -196,3 +184,20 @@ const PaymentComponent = () => {
 };
 
 export default PaymentComponent;
+
+
+/*
+{!payment && (
+                    <div className="mt-3">
+                        <h3>Payment Created</h3>
+                        <p>Transaction Reference: {payment?.tx_ref}</p>
+                        <button className="btn btn-success" onClick={handleVerifyPayment}>Verify Payment</button>
+                    </div>
+                )}
+                {verification && (
+                    <div className="mt-3">
+                        <h3>Payment Verification</h3>
+                        <p>Status: {verification.status}</p>
+                    </div>
+                )}
+*/ 
