@@ -120,13 +120,13 @@ nav {
   font-size: 60px;
 }
 
-@media only screen and (max-width: 875px) {
+@media only screen and (max-width: 990px) {
   nav {
     gap: 4rem;
   }
 }
 
-@media only screen and (max-width: 745px) {
+@media only screen and (max-width: 900px) {
   .responsive_nav a {
     font-size: 15px;
   }
@@ -136,7 +136,7 @@ nav {
   }
 }
 
-@media only screen and (max-width: 670px) {
+@media only screen and (max-width: 800px) {
   .nav-btn {
     display: block;
     color: #fff;

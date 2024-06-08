@@ -74,10 +74,11 @@ const Contact = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        gap: "2rem",
+        gap: "3rem",
+        flexWrap:"wrap"
       }}
       >
-      <StyledContactForm>
+      <div className="contact_container">
         <h2 style={{color: "#13a014", marginTop: "1rem", textAlign: "center"}}>Contact Us</h2>
         <form className="contact_form" ref={form} onSubmit={sendEmail}>
           <div
@@ -141,7 +142,7 @@ const Contact = () => {
             </p>
           )}
         </form>
-      </StyledContactForm>
+      </div>
       <div className="contact_info">
         <div style={{color: "#13a014", textAlign: "center", display: "flex", justifyContent: "center", alignItems: "first baseline", gap: ".5rem"}}>
         <h2><MdContactMail/></h2>
@@ -175,14 +176,11 @@ export default Contact;
 // Styles
 const StyledContactForm = styled.div`
   width: 100%;
-  background-image: url('../assets/images/statistics.jpg');
-  background-repeat: no-repeat;
   width: 100%;
   background-size: cover;
   object-fit: cover;
   background-position: top;
   background-attachment: fixed;
-
    
   }
 `;
