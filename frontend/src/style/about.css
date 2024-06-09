@@ -151,7 +151,8 @@
 .card_box .card_par p {
   font-size: 20px;
   text-align: justify;
-  color: #1c351c
+  color: #1c351c;
+  line-height: 1.7;
 }
 
 .statistics {

@@ -466,7 +466,7 @@ function Home() {
                                           ticket?.eventStartedDate,
                                           ticket?.eventEndDate
                                         )}{" "}
-                                        Days Event
+                                        Day Event
                                     </div>
                                     <div
                                       style={{ display: "flex", gap: 5 }}
@@ -520,105 +520,118 @@ function Home() {
           )}
         </section>
         <hr className="create__line" />
-        <h1 style={{ textAlign: "center", margin: 15 }}>Upcoming Tickets</h1>
-        {upComingTickets.length !== 0 ? (
-          <>
-            <p className="event__para">
-              Browse through our list of exciting upcoming events.
-            </p>
-            <div className="upcoming">
-              {upComingTickets.map((ticket) => {
-                return (
-                  <div className="event__container">
-                    <Box>
-                      <div className="box" style={{ cursor: "default" }}>
-                        <motion.div
-                          className="poster"
-                          variants={posterAnimationVariants}
-                          initial="offScreen"
-                          whileInView="onScreen"
-                          viewport={{ once: true, amount: 0.8 }}
-                          transition={{
-                            type: "twin",
-                            duration: 1.5,
-                          }}
-                        >
-                          <img src={ticket?.image?.filePath} />
-                        </motion.div>
-                        <motion.div
-                          className="content"
-                          variants={contentAnimationVariants}
-                          initial="offScreen"
-                          whileInView="onScreen"
-                          viewport={{ once: true, amount: 0.8 }}
-                          transition={{
-                            type: "twin",
-                            duration: 1.5,
-                          }}
-                        >
-                          <LockIcon className="lock_icon" />
-                          <div>
-                            <div
-                              style={{
-                                fontSize: 25,
-                                fontWeight: 500,
-                                color: "#789461",
-                              }}
-                            >
-                              {ticket.title.length > 20
-                                ? ticket.title.slice(0, 20) + "..."
-                                : ticket.title}
-                            </div>
-                            <div
-                              style={{ border: "2px solid #789461", width: 90 }}
-                            ></div>
-                          </div>
+        {upComingTickets.length>0&&
+           <>
+              <h1 style={{ textAlign: "center", margin: 15 }}>Upcoming Tickets</h1>
+              {upComingTickets.length !== 0 ? (
+                <>
+                  <p className="event__para">
+                    Browse through our list of exciting upcoming events.
+                  </p>
+                  <div className="upcoming">
+                    {upComingTickets.map((ticket) => {
+                      return (
+                        <div className="event__container">
+                          <Box>
+                            <div className="box" style={{ cursor: "default" }}>
+                              <motion.div
+                                className="poster"
+                                variants={posterAnimationVariants}
+                                initial="offScreen"
+                                whileInView="onScreen"
+                                viewport={{ once: true, amount: 0.8 }}
+                                transition={{
+                                  type: "twin",
+                                  duration: 1.5,
+                                }}
+                              >
+                                <img src={ticket?.image?.filePath} />
+                              </motion.div>
+                              <motion.div
+                                className="content"
+                                variants={contentAnimationVariants}
+                                initial="offScreen"
+                                whileInView="onScreen"
+                                viewport={{ once: true, amount: 0.8 }}
+                                transition={{
+                                  type: "twin",
+                                  duration: 1.5,
+                                }}
+                              >
+                                <LockIcon className="lock_icon" />
+                                <div>
+                                  <div
+                                    style={{
+                                      fontSize: 25,
+                                      fontWeight: 500,
+                                      color: "#789461",
+                                    }}
+                                  >
+                                    {ticket.title.length > 20
+                                      ? ticket.title.slice(0, 20) + "..."
+                                      : ticket.title}
+                                  </div>
+                                  <div
+                                    style={{ border: "2px solid #789461", width: 90 }}
+                                  ></div>
+                                </div>
 
-                          <div style={{ display: "flex", gap: 5 }}>
-                            <span>
-                              <LocationOnIcon style={{ color: "red" }} />
-                            </span>
-                            <span>{ticket?.location}</span>
-                          </div>
-                          <div style={{ display: "flex", gap: 5 }}>
-                            <span style={{ fontSize: "13px" }}>
-                              {moment(ticket?.startDate).format("LL") +
-                                " - " +
-                                moment(ticket?.endDate).format("LL")}
-                            </span>
-                          </div>
-                          <div
-                            style={{ display: "flex", gap: 5 }}
-                            className="ticket_time"
-                          >
-                            <IoMdStopwatch style={{ color: "13A014" }} /> Actual
-                            Event
-                            <span style={{ fontSize: "13px" }}>
-                              {moment(ticket?.eventStartedDate).format("LL") +
-                                " - " +
-                                moment(ticket?.eventEndDate).format("LL")}
-                              &endp; &endp; for{" "}
-                              {showDateDifference(
-                                ticket?.eventStartedDate,
-                                ticket?.eventEndDate
-                              )}{" "}
-                              Days
-                            </span>
-                          </div>
-                        </motion.div>
-                      </div>
-                    </Box>
+                                <div className="eventLasting">
+                                      {showDateDifference(
+                                          ticket?.eventStartedDate,
+                                          ticket?.eventEndDate
+                                        )}{" "}
+                                        Day Event
+                                </div>
+
+                                <div style={{ display: "flex", gap: 5 }}>
+                                  <span>
+                                    <LocationOnIcon style={{ color: "red" }} />
+                                  </span>
+                                  <span>{ticket?.location}</span>
+                                </div>
+                                
+                                <div
+                                      style={{ display: "flex", gap: 5,fontSize:"11px" }}
+                                      className="ticket_time"
+                                    >
+                                      <IoMdStopwatch style={{ color: "13A014" }} /> Ticket
+                                      Sale Date
+                                      <span style={{ fontSize: "13px" }}>
+                                        {moment(ticket?.startDate).format("LL") +
+                                          " - " +
+                                          moment(ticket?.endDate).format("LL")}
+                                      </span>
+                                    </div>
+                                    <div
+                                      style={{ display: "flex", gap: 5,fontSize:"11px" }}
+                                      className="ticket_time"
+                                    >
+                                      <IoMdStopwatch style={{ color: "13A014" }} /> Actual
+                                      Event
+                                      <span style={{ fontSize: "13px" }}>
+                                        {moment(ticket?.eventStartedDate).format("LL") +
+                                          " - " +
+                                          moment(ticket?.eventEndDate).format("LL")}
+                                        
+                                      </span>
+                                    </div>
+                              </motion.div>
+                            </div>
+                          </Box>
+                        </div>
+                      );
+                    })}
                   </div>
-                );
-              })}
-            </div>
-          </>
-        ) : (
-          <div style={{ textAlign: "center", fontSize: "20px", margin: 20 }}>
-            No upcoming tickets here
-          </div>
-        )}
-        <hr className="create__line" />
+                </>
+              ) : (
+                <div style={{ textAlign: "center", fontSize: "20px", margin: 20 }}>
+                  No upcoming tickets here
+                </div>
+              )}
+              <hr className="create__line" />
+           </>
+        }
         <>
           <h2>Latest Blogs</h2>
           <div className="blogs-container">
