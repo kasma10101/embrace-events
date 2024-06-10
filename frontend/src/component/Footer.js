@@ -146,9 +146,10 @@ export default function Footer() {
       </div>
       <hr className="footer__line" />
       <div className="bottom__two">
-        <div className="right">
-          <p>© 2024 Embrace Events. All rights reserved.</p>
-        </div>
+          © 2024 Embrace Events. All rights reserved.
+      </div>
+      <div style={{textAlign:"center",opacity:0.5,wordSpacing:"1px"}}>
+          <p>Developed By Kasma Software Solutions</p>
       </div>
     </div>
   );

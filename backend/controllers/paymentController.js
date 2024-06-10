@@ -16,8 +16,8 @@ const createPayment = async (req, res) => {
     if(!ticketID || !email || !phone){
         return res.status(400).send({error:"Ticket or email or phone not found"})
     }
-    
-    const currentDate = new Date();
+     const currentDate = new Date();
+
     const ticket = await Ticket.findOne({
                             _id:ticketID, 
                             startDate: { $lte: currentDate },
@@ -52,15 +52,14 @@ const createPayment = async (req, res) => {
             first_name: fname,
             last_name: lname,
             email: email,
+            phone: phone,
             currency: currency,
             amount: amount,
             tx_ref: tx_ref,
             callback_url: callback_url,
             return_url: return_url,
-            customization: {
-                title: 'Test Title',
-                description: 'Test Description',
-            },
+           
+            
         });
 
         // Create TicketTransaction with pending status
@@ -82,8 +81,9 @@ const createPayment = async (req, res) => {
 
         res.status(200).json({ response, tx_ref });
     } catch (error) {
+        console.log(error)
 
-        res.status(500).json({ error });
+        res.status(500).json({ error:error?.message||'Error occured' });
     }
 }
 

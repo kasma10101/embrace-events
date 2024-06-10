@@ -259,6 +259,7 @@ body {
 .event__container {
   display: flex;
   flex-direction: column;
+
 }
 
 .events {
@@ -428,6 +429,7 @@ hr {
   padding: 1rem;
   transition: all .3s ease;
 }
+
 
 .accordion_summary {
   display: flex;
@@ -640,8 +642,16 @@ hr {
 @media(max-width:800px){
   .register {
     font-size: 1em;
-    padding: 14px 24px;
+    padding: 10px 20px;
   }
+    .accordion_item {
+      padding: 0.3rem;
+      
+    }
+    .title{
+      font-size: 17px;
+    }
+  
 }
 
 
@@ -711,10 +721,12 @@ hr {
     background-position: center;
     margin-bottom: 1rem;
   }
+  .box {
+    width: 90%;
+  }
 
   
 }
-
 
 
 @media (max-width: 510px) {
@@ -729,6 +741,10 @@ hr {
     padding-bottom: 3rem;
     font-size: 1em;
   }
+  .title{
+    font-size: 15px;
+  }
+
 
 }
 

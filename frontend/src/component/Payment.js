@@ -137,7 +137,7 @@ const PaymentComponent = () => {
                             {loading ? (
                                 <ButtonLoading  className="w-100 btn btn-primary btn-lg" type="submit" disabled>Loading...</ButtonLoading>
                             ) : (
-                                <Button style={{ width: 400, backgroundColor: '#12372a', border: 0, padding: 10 }} onClick={handleCreatePayment}>Continue to checkout</Button>
+                                <Button style={{ width: '100%', backgroundColor: '#12372a', border: 0, padding: 10 }} onClick={handleCreatePayment}>Continue to checkout</Button>
                             )}
                        </div>
                     </div>
