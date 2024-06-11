@@ -368,35 +368,7 @@ const Ticket = () => {
       shape: "rounded",
       variant: "outlined",
     },
-    renderTopToolbarCustomActions: ({ table }) => (
-      <Box
-        sx={{
-          display: "flex",
-          gap: "16px",
-          padding: "8px",
-          flexWrap: "wrap",
-        }}
-      >
-        <Button
-          //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
-          onClick={handleExportData}
-          startIcon={<FileDownloadIcon />}
-        >
-          Export All Data in CSV
-        </Button>
-
-        <Button
-          disabled={table.getPrePaginationRowModel().rows.length === 0}
-          //export all rows, including from the next page, (still respects filtering and sorting)
-          onClick={() =>
-            handleExportRowsPdf(table.getPrePaginationRowModel().rows)
-          }
-          startIcon={<FileDownloadIcon />}
-        >
-          Export All Rows in Pdf
-        </Button>
-      </Box>
-    ),
+   
   });
 
   function formatDate(dateString) {

@@ -203,7 +203,15 @@ function Emails({ token }) {
     const emails = await response.json();
     setLoading(false);
     if (!emails.error) {
-      setEmails(emails);
+        if(emails.length>0){
+          const organizedEmails= emails.map(e=>{
+           return {...e,createdAt:moment(e.createdAt).format("LLL")}
+          })
+         setEmails(organizedEmails);
+        }
+        else{
+          setEmails(emails)
+        }
     } else {
       setError(emails.error);
     }

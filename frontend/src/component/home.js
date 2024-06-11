@@ -211,6 +211,7 @@ function Home() {
   }, []);
 
   function showDateDifference(startDate, endDate) {
+    if(!startDate || !endDate) return 0
     const dateDifference =
       new Date(endDate).getTime() - new Date(startDate).getTime();
     const daysDifference = Math.ceil(dateDifference / (1000 * 60 * 60 * 24));
@@ -466,7 +467,10 @@ function Home() {
                                           ticket?.eventStartedDate,
                                           ticket?.eventEndDate
                                         )}{" "}
-                                        Day Event
+                                       {showDateDifference(
+                                          ticket?.eventStartedDate,
+                                          ticket?.eventEndDate
+                                        )<=1?"Day":"Days"}  Event
                                     </div>
                                     <div
                                       style={{ display: "flex", gap: 5 }}
@@ -495,12 +499,21 @@ function Home() {
                                     >
                                       <IoMdStopwatch style={{ color: "13A014" }} /> Actual
                                       Event
-                                      <span style={{ fontSize: "13px" }}>
-                                        {moment(ticket?.eventStartedDate).format("LL") +
-                                          " - " +
-                                          moment(ticket?.eventEndDate).format("LL")}
-                                        
-                                      </span>
+                                        {showDateDifference(
+                                          ticket?.eventStartedDate,
+                                          ticket?.eventEndDate
+                                        )<=1?
+                                        <span style={{ fontSize: "13px" }}>
+                                        {moment(ticket?.eventStartedDate).format("LL")}
+                                          </span>
+                                          :
+                                        <span style={{ fontSize: "13px" }}>
+                                            {moment(ticket?.eventStartedDate).format("LL") +
+                                            " - " +
+                                            moment(ticket?.eventEndDate).format("LL")}
+                                          
+                                        </span>
+                                       }
                                     </div>
                             </motion.div>
                           </span>

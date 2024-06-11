@@ -28,10 +28,17 @@
     padding: 10px 0px 5px;
     line-height: 30px;
 }
-@media(max-width:700px){
+.ticket-description{
+    line-height: 1.5;
+    font-size: 16px;
+}
+@media(max-width:600px){
     .ticket-title{
-        font-size: 18px;
-     
+        font-size: 16px;
+        line-height: 20px;
+    }
+    .ticket-description{
+        font-size: 14px;
     }
 }
 .container-form{

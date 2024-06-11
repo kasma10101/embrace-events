@@ -73,6 +73,15 @@ const PaymentComponent = () => {
             dispatch(verifyPaymentThunk(payment.tx_ref));
         }
     };
+
+    function showDateDifference(startDate, endDate) {
+        if(!startDate || !endDate) return 0
+        const dateDifference =
+          new Date(endDate).getTime() - new Date(startDate).getTime();
+        const daysDifference = Math.ceil(dateDifference / (1000 * 60 * 60 * 24));
+    
+        return daysDifference;
+      }
     return (
         <div className='whole-payment-container'>
             <div className="container-form" >
@@ -157,9 +166,9 @@ const PaymentComponent = () => {
                         <div className='title-underline'></div>
                     </div>
                     <div style={{ marginBottom:"10px", }}>
-                        <span>{ticket?.description}</span>
+                        <span className='ticket-description'>{ticket?.description}</span>
                     </div>
-                    <div style={{marginBottom:"10px",color:"red",fontSize:"14px" }}>
+                    <div style={{marginBottom:"10px",color:"red",fontSize:"14px",textAlign:"center" }}>
                         <span><LocationOnIcon style={{ color: 'red', fontSize: 25,padding:0 }} /></span>
                         <span>{ticket?.location}</span>
                     </div>
@@ -174,7 +183,19 @@ const PaymentComponent = () => {
                       Ticket Sale Date:  <span>{moment(ticket?.startDate).format('LL') + ' - ' + moment(ticket?.endDate).format('LL')}</span>
                     </div>
                     <div style={{ fontSize: '13px',textAlign:"center",marginTop:"5px" }}>
-                      Evnt Date:  <span>{moment(ticket?.eventStartedDate).format('LL') + ' - ' + moment(ticket?.eventEndDate).format('LL')}</span>
+                      Event Date:
+                      {showDateDifference(ticket?.eventStartedDate, ticket?.eventEndDate)<=1?
+                            <span style={{ fontSize: "13px",paddingLeft:"5px" }}>
+                            {moment(ticket?.eventStartedDate).format("LL")}
+                                </span>
+                                :
+                            <span style={{ fontSize: "13px",paddingLeft:"5px" }}>
+                                {moment(ticket?.eventStartedDate).format("LL") +
+                                " - " +
+                                moment(ticket?.eventEndDate).format("LL")}
+                                
+                            </span>
+                        }
                     </div>
               </div>
 
