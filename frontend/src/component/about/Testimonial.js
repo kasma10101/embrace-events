@@ -9,18 +9,25 @@ export default function Testimonial() {
   const testimonials = [
     {
       id: 1,
-      name: "Mesfin",
+      name: "Client",
       quote:
         "Embrace Events now handle all operations functions at the Ethiopia Holi events. This includes coordination of accommodation, transport and vendor management in advance of the summits and venue management, logistics and operations throughout the delivery of the summits!",
       image: client,
     },
     {
       id: 2,
-      name: "Ahmed",
+      name: "Client",
       quote:
         "We would like to express our thanks to the staff of Embrace Events for all their hard work and impressive professionalism in organizing our conference.",
       image: client,
     },
+    {
+      id: 3,
+      name: "Nejat Wulle",
+      quote:
+        "Embrace events are the best event organizers I have ever experienced.... Me and my family had the best time.... Their customer service is up to the chart... I highly recommend them...",
+      image: client,
+    }
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
